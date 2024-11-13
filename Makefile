@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+         #
+#    By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 14:34:27 by danpalac          #+#    #+#              #
-#    Updated: 2024/11/11 01:39:49 by danpalac         ###   ########.fr        #
+#    Updated: 2024/11/13 12:21:10 by danpalac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,39 +56,40 @@ MOVE_UP     = \033[1A
 
 #==========NAMES===============================================================#
 
-NAME		:= memtrack.a
-EXEC		:= exec
+NAME		:= exe.a
+EXE			:= exe
 
 #==========DIRECTORIES=======================================================#
 
 INC 			:= inc/
 SRC_DIR 		:= src/
 OBJ_DIR 		:= obj/
+LIBFT_DIR		:= ../libft/
+LIB_DIR			:= ../lib/
 
-ALLOC_DIR		:= alloc/
-DEALLOC_DIR		:= dealloc/
-MEMTRACK_DIR	:= memtrack/
+INPUT_DIR		:= input/
+
+LIBFT			:= $(LIBFT_DIR)libft.a
+INCLUDES		:= $(INC)*.h
 
 #==========COMMANDS============================================================#
 
 CC			:= gcc
-CFLAGS		:= -Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS		:= -Wall -Wextra -Werror -g3 #-fsanitize=address
 RM			:= rm -rf
 AR			:= ar rcs
 LIB			:= ranlib
 MKDIR 		:= mkdir -p
-IFLAGS		:= -I$(INC)
-LFLAGS		:= -L.
+IFLAGS		:= -I$(INC) -I$(BUILTINS_DIR) -I$(CMD_DIR) -I$(ENV_DIR) -I$(LIB_DIR)
+LFLAGS		:= -L. -L$(LIB_DIR)
 
 #==========SOURCES============================================================#
 
-ALLOC_FILES		:= #mt_calloc mt_malloc mt_realloc mt_strdup mt_strndup
-DEALLOC_FILES	:= #mt_free mt_free_all mt_free_node mt_free_list
-MEMTRACK_FILES	:= ft_mtnew
+INPUT_FILES	:= parser
 
 #==========FILES==============================================================#
 
-SRC_FILES+=$(addprefix $(MEMTRACK_DIR), $(MEMTRACK_FILES))
+SRC_FILES := $(addprefix $(INPUT_DIR), $(INPUT_FILES))
 
 SRCS := $(addsuffix .c, $(SRC_FILES))
 OBJS := $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))
@@ -101,26 +102,33 @@ all: $(NAME)
 
 $(OBJ_DIR)%.o: %.c Makefile
 	@$(MKDIR) $(dir $@)	
-	@$(CC) $(CFLAGS) $(IFLAGS) -MP -MMD -c $< -o $@
+	@$(CC) $(CFLAGS) $(LFLAGS) $(IFLAGS) -MP -MMD -c $< -o $@
 
-$(NAME): $(OBJS)
+$(NAME): $(LIBFT) $(OBJS)
 	@$(AR) $(NAME) $(OBJS)
 	@$(LIB) $(NAME)
 	@echo "$(BOLD_BLUE)[$(BRIGHT_GREEN)$(NAME)$(DEF_COLOR)$(BOLD_BLUE)] compiled!$(DEF_COLOR)"
 	@echo "$(TURQUOISE)------------\n| Done! 👌 |\n------------$(DEF_COLOR)"
+	@$(MKDIR) $(LIB_DIR)
+	@cp -R $(INCLUDES) $(NAME) $(LIB_DIR)
 
-exe: $(NAME)
-	@$(CC) $(CFLAGS) $(IFLAGS) $(LFLAGS) -o exec main.c $(NAME)
-	@echo "$(BOLD_BLUE)[$(BRIGHT_GREEN)$(EXEC)$(DEF_COLOR)$(BOLD_BLUE)] compiled!$(DEF_COLOR)"
+$(EXE): $(NAME)
+	@$(CC) $(CFLAGS) $(LFLAGS) $(IFLAGS) main.c $(NAME) -lft -o $(EXE)
+	@echo "$(BOLD_BLUE)[$(BRIGHT_GREEN)$(EXE)$(DEF_COLOR)$(BOLD_BLUE)] compiled!$(DEF_COLOR)"
 	@echo "$(TURQUOISE)------------\n| Done! 👌 |\n------------$(DEF_COLOR)"
 
+$(LIBFT):
+	@make -sC $(LIBFT_DIR)
+	
 clean:
 	@$(RM) -rf $(OBJ_DIR) $(DEPS)
+	@make clean -sC $(LIBFT_DIR)
 	@echo "$(CYAN)[$(NAME)]:\tobject files $(GREEN) => Cleaned!$(DEF_COLOR)"
 
 fclean: clean
-	@$(RM) -rf $(NAME) $(EXEC)
-	@echo "$(CYAN)[$(NAME)]:\texec. files $(GREEN) => Cleaned!$(DEF_COLOR)"
+	@$(RM) -rf $(NAME) $(EXE)
+	@make fclean -sC $(LIBFT_DIR)
+	@echo "$(CYAN)[$(NAME)]:\tEXE. files $(GREEN) => Cleaned!$(DEF_COLOR)"
 
 re: fclean all
 
