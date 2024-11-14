@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:52:53 by danpalac          #+#    #+#             */
-/*   Updated: 2024/11/14 17:27:38 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/11/14 18:05:38 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,12 @@ int	sort_by_priority(t_mt **input)
 			if (tmp->n > tmp->next->n)
 			{
 				ft_mtpush(&tmp, &b);
-				ft_mtpush(&b);
 			}
 			tmp = tmp->next;
 		}
 		tmp = *input;
 	}
+	ft_mtreplace(input, &b);
 	return (1);
 }
 
