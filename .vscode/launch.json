@@ -9,9 +9,9 @@
 			"type": "cppdbg",
 			"request": "launch",
 			"program": "${workspaceFolder}/exe",
-			"args": [],
+			"args": ["arg1 arg2 cat > | cat <"],
 			"stopAtEntry": false,
-			"cwd": "${fileDirname}",
+			"cwd": "${workspaceFolder}",
 			"environment": [],
 			"externalConsole": false,
 			"MIMode": "gdb",
@@ -27,8 +27,7 @@
 					"ignoreFailures": true
 				}
 			],
-			"preLaunchTask": "make",
-			"postDebugTask": "clean"
+			"preLaunchTask": "make"
 		}
 
 	]

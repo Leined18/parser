@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2024/11/14 12:54:39 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/11/14 16:18:49 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,22 @@
 
 int	main(int argc, char **argv)
 {
-	char *str;
-	t_mt *tracker;
+	char	*str;
+	t_mt	*cmd;
 
 	if (argc != 2)
 	{
 		printf("Usage: %s <string>\n", argv[0]);
 		return (1);
 	}
-	tracker = NULL;
+	cmd = NULL;
 	str = ft_strdup(argv[1]);
-	tokenize(str, &tracker);
-	ft_mtprint(tracker, 0);
+	tokenize(str, &cmd);
+	ft_mtprint(cmd, 1, "\n");
+	if (!parser(&cmd))
+		return (1);
+	ft_mtprint_n(cmd, 1, "\n");
+	ft_mtprint(cmd, 1, "\n");
 	(void)str;
-	(void)tracker;
 	return (0);
 }
