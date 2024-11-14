@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 12:15:25 by danpalac          #+#    #+#             */
-/*   Updated: 2024/11/14 12:15:35 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/11/14 12:45:43 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	tokenize(char *str, t_mt **list)
 
 	i = 0;
 	if (!str || !list)
-		return (1);
+		return (0);
 	token = ft_strtok(str, " ");
 	while (token)
 	{
@@ -27,5 +27,5 @@ int	tokenize(char *str, t_mt **list)
 		token = ft_strtok(NULL, " ");
 		i++;
 	}
-	return (0);
+	return (1);
 }

@@ -1,7 +1,7 @@
 #ifndef INPUT_H
 # define INPUT_H
 
-# include "parse.h"
+# include "memtrack.h"
 
 int	parser(char *input);
 int	tokenize(char *str, t_mt **list);

@@ -6,7 +6,7 @@
 #    By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 14:34:27 by danpalac          #+#    #+#              #
-#    Updated: 2024/11/14 12:25:01 by danpalac         ###   ########.fr        #
+#    Updated: 2024/11/14 13:04:19 by danpalac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -119,7 +119,7 @@ $(NAME): $(LIBFT) $(MEMTRACK) $(OBJS)
 	@cp $(NAME) $(INCLUDES) $(LIB_DIR)
 
 $(EXE): main.c $(NAME)
-	@$(CC) $(CFLAGS) $(LFLAGS) -L. $(IFLAGS) main.c $(NAME) -lmt -lft -fsanitize=address -o $(EXE)
+	@$(CC) $(CFLAGS) $(LFLAGS) -L. $(IFLAGS)  main.c $(NAME) -lmt -lft -o $(EXE)
 	@echo "$(BOLD_BLUE)[$(BRIGHT_GREEN)$(EXE)$(DEF_COLOR)$(BOLD_BLUE)] compiled!$(DEF_COLOR)"
 	@echo "$(TURQUOISE)------------\n| Done! 👌 |\n------------$(DEF_COLOR)"
 
