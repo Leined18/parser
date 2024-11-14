@@ -6,7 +6,7 @@
 #    By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 14:34:27 by danpalac          #+#    #+#              #
-#    Updated: 2024/11/14 10:11:02 by danpalac         ###   ########.fr        #
+#    Updated: 2024/11/14 11:26:27 by danpalac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,9 +58,8 @@ MOVE_UP     = \033[1A
 
 NAME		:= parse.a
 EXE			:= exe
-MEMTRACK	:= libmt.a
-LIBFT		:= libft.a
-
+MEMTRACK_LIB:= libmt.a
+LIBFT_LIB	:= libft.a
 
 #==========DIRECTORIES=======================================================#
 
@@ -71,6 +70,8 @@ LIBFT_DIR		:= ../libft/
 LIB_DIR			:= ../lib/
 MEMTRACK_DIR 	:= ../memtrack/
 
+MEMTRACK	:= $(MEMTRACK_DIR)$(MEMTRACK_LIB)
+LIBFT		:= $(LIBFT_DIR)$(LIBFT_LIB)
 INPUT_DIR		:= input/
 INTERPRETER_DIR	:= interpreter/
 INCLUDES		:= $(INC)*.h $(INPUT_DIR)*.h $(INTERPRETER_DIR)*.h
@@ -81,10 +82,10 @@ CC			:= gcc
 CFLAGS		:= -Wall -Wextra -Werror -g3 -fsanitize=address
 RM			:= rm -rf
 AR			:= ar rcs
-LIB			:= ranlib
 MKDIR 		:= mkdir -p
+LIB 		:= -L$(LIB_DIR) -lmt -lft
 IFLAGS		:= -I$(LIB_DIR) -I$(INC) -I$(INPUT_DIR) -I$(INTERPRETER_DIR)
-LFLAGS		:= -L$(LIB_DIR) -lmt -lft
+LFLAGS		:= -L$(LIB_DIR) -lmt -lft -fsanitize=address
 
 #==========SOURCES============================================================#
 
@@ -102,23 +103,23 @@ DEPS := $(addprefix $(OBJ_DIR), $(addsuffix .d, $(SRC_FILES)))
 
 #==========RULES==============================================================#
 
-all: $(NAME)
 -include $(DEPS)
+all: $(NAME)
 
 $(OBJ_DIR)%.o: %.c Makefile
 	@$(MKDIR) $(dir $@)	
 	@$(CC) $(CFLAGS) $(LFLAGS) $(IFLAGS) -MP -MMD -c $< -o $@
 
-$(NAME): $(MEMTRACK) $(LIBFT) $(OBJS)
+$(NAME): $(LIBFT) $(MEMTRACK) $(OBJS)
 	@$(AR) $(NAME) $(OBJS)
-	@$(LIB) $(NAME)
 	@echo "$(BOLD_BLUE)[$(BRIGHT_GREEN)$(NAME)$(DEF_COLOR)$(BOLD_BLUE)] compiled!$(DEF_COLOR)"
 	@echo "$(TURQUOISE)------------\n| Done! 👌 |\n------------$(DEF_COLOR)"
-	@$(MKDIR) $(LIB_DIR)
-	@cp -R $(INCLUDES) $(NAME) $(LIB_DIR)
+	@mkdir -p $(LIB_DIR)
+	@$(MKDIR) $(LIB_DIR) 
+	@cp $(NAME) $(INCLUDES) $(LIB_DIR)
 
-$(EXE): $(NAME)
-	@$(CC) $(CFLAGS) $(LFLAGS) $(IFLAGS) main.c $(NAME) -L. -lmt -lft -o $(EXE)
+$(EXE): main.c $(NAME)
+	@$(CC) $(CFLAGS) $(LFLAGS) -L. $(IFLAGS) main.c $(NAME) -lmt -lft -fsanitize=address -o $(EXE)
 	@echo "$(BOLD_BLUE)[$(BRIGHT_GREEN)$(EXE)$(DEF_COLOR)$(BOLD_BLUE)] compiled!$(DEF_COLOR)"
 	@echo "$(TURQUOISE)------------\n| Done! 👌 |\n------------$(DEF_COLOR)"
 
@@ -129,16 +130,17 @@ $(MEMTRACK):
 	@make -sC $(MEMTRACK_DIR)
 	
 clean:
-	@$(RM) -rf $(OBJ_DIR) $(DEPS)
-	@make clean -sC $(LIBFT_DIR)
+	@make clean -sC $(LIBFT_DIR)	
 	@make clean -sC $(MEMTRACK_DIR)
-	@echo "$(CYAN)[$(NAME)]:\tobject files $(GREEN) => Cleaned!$(DEF_COLOR)"
+	@$(RM) $(OBJ_DIR) $(LIB_DIR)
 
 fclean: clean
-	@$(RM) -rf $(NAME) $(EXE)
-	@echo "$(CYAN)[$(NAME)]:\tEXE. files $(GREEN) => Cleaned!$(DEF_COLOR)"
+	@make fclean -sC $(LIBFT_DIR)
+	@make fclean -sC $(MEMTRACK_DIR)
+	@$(RM) $(NAME) $(EXE)
+	@echo "$(CYAN)[$(NAME)]:\tfiles $(GREEN) => Cleaned!$(DEF_COLOR)"
 
 re: fclean all
 
 .SILENT: all clean fclean
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re
