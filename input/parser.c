@@ -3,12 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 13:33:24 by danpalac          #+#    #+#             */
-/*   Updated: 2024/11/13 12:20:39 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/11/14 09:36:06 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "input.h"
 
+int	parser(char *input)
+{
+	// Code
+	(void)input;
+	return (0);
+}

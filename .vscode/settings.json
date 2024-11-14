@@ -1,5 +1,7 @@
 {
 	"files.associations": {
-		"memtrack.h": "c"
+		"memtrack.h": "c",
+		"input.h": "c",
+		"parse.h": "c"
 	}
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+         #
+#    By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 14:34:27 by danpalac          #+#    #+#              #
-#    Updated: 2024/11/13 12:21:10 by danpalac         ###   ########.fr        #
+#    Updated: 2024/11/14 10:11:02 by danpalac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,8 +56,11 @@ MOVE_UP     = \033[1A
 
 #==========NAMES===============================================================#
 
-NAME		:= exe.a
+NAME		:= parse.a
 EXE			:= exe
+MEMTRACK	:= libmt.a
+LIBFT		:= libft.a
+
 
 #==========DIRECTORIES=======================================================#
 
@@ -66,30 +69,32 @@ SRC_DIR 		:= src/
 OBJ_DIR 		:= obj/
 LIBFT_DIR		:= ../libft/
 LIB_DIR			:= ../lib/
+MEMTRACK_DIR 	:= ../memtrack/
 
 INPUT_DIR		:= input/
-
-LIBFT			:= $(LIBFT_DIR)libft.a
-INCLUDES		:= $(INC)*.h
+INTERPRETER_DIR	:= interpreter/
+INCLUDES		:= $(INC)*.h $(INPUT_DIR)*.h $(INTERPRETER_DIR)*.h
 
 #==========COMMANDS============================================================#
 
 CC			:= gcc
-CFLAGS		:= -Wall -Wextra -Werror -g3 #-fsanitize=address
+CFLAGS		:= -Wall -Wextra -Werror -g3 -fsanitize=address
 RM			:= rm -rf
 AR			:= ar rcs
 LIB			:= ranlib
 MKDIR 		:= mkdir -p
-IFLAGS		:= -I$(INC) -I$(BUILTINS_DIR) -I$(CMD_DIR) -I$(ENV_DIR) -I$(LIB_DIR)
-LFLAGS		:= -L. -L$(LIB_DIR)
+IFLAGS		:= -I$(LIB_DIR) -I$(INC) -I$(INPUT_DIR) -I$(INTERPRETER_DIR)
+LFLAGS		:= -L$(LIB_DIR) -lmt -lft
 
 #==========SOURCES============================================================#
 
 INPUT_FILES	:= parser
+INTERPRETER_FILES := 
 
 #==========FILES==============================================================#
 
-SRC_FILES := $(addprefix $(INPUT_DIR), $(INPUT_FILES))
+SRC_FILES +=$(addprefix $(INPUT_DIR), $(INPUT_FILES))
+SRC_FILES +=$(addprefix $(INTERPRETER_DIR), $(INTERPRETER_FILES))
 
 SRCS := $(addsuffix .c, $(SRC_FILES))
 OBJS := $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))
@@ -104,7 +109,7 @@ $(OBJ_DIR)%.o: %.c Makefile
 	@$(MKDIR) $(dir $@)	
 	@$(CC) $(CFLAGS) $(LFLAGS) $(IFLAGS) -MP -MMD -c $< -o $@
 
-$(NAME): $(LIBFT) $(OBJS)
+$(NAME): $(MEMTRACK) $(LIBFT) $(OBJS)
 	@$(AR) $(NAME) $(OBJS)
 	@$(LIB) $(NAME)
 	@echo "$(BOLD_BLUE)[$(BRIGHT_GREEN)$(NAME)$(DEF_COLOR)$(BOLD_BLUE)] compiled!$(DEF_COLOR)"
@@ -113,21 +118,24 @@ $(NAME): $(LIBFT) $(OBJS)
 	@cp -R $(INCLUDES) $(NAME) $(LIB_DIR)
 
 $(EXE): $(NAME)
-	@$(CC) $(CFLAGS) $(LFLAGS) $(IFLAGS) main.c $(NAME) -lft -o $(EXE)
+	@$(CC) $(CFLAGS) $(LFLAGS) $(IFLAGS) main.c $(NAME) -L. -lmt -lft -o $(EXE)
 	@echo "$(BOLD_BLUE)[$(BRIGHT_GREEN)$(EXE)$(DEF_COLOR)$(BOLD_BLUE)] compiled!$(DEF_COLOR)"
 	@echo "$(TURQUOISE)------------\n| Done! 👌 |\n------------$(DEF_COLOR)"
 
 $(LIBFT):
 	@make -sC $(LIBFT_DIR)
+
+$(MEMTRACK):
+	@make -sC $(MEMTRACK_DIR)
 	
 clean:
 	@$(RM) -rf $(OBJ_DIR) $(DEPS)
 	@make clean -sC $(LIBFT_DIR)
+	@make clean -sC $(MEMTRACK_DIR)
 	@echo "$(CYAN)[$(NAME)]:\tobject files $(GREEN) => Cleaned!$(DEF_COLOR)"
 
 fclean: clean
 	@$(RM) -rf $(NAME) $(EXE)
-	@make fclean -sC $(LIBFT_DIR)
 	@echo "$(CYAN)[$(NAME)]:\tEXE. files $(GREEN) => Cleaned!$(DEF_COLOR)"
 
 re: fclean all

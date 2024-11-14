@@ -6,18 +6,17 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2024/11/11 01:39:34 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/11/14 10:07:27 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "memtrack.h"
+#include "parse.h"
 
-int main(void)
+int	main(void)
 {
-	t_mt	*list;
+	char	*str;
 
-	list = ft_mtnew("Hello, World!");
-	printf("%s\n", (char *)list->data);
-	free(list);
+	str = chaosmatrix(1, 1, 0);
+	(void)str;
 	return (0);
 }
