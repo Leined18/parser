@@ -6,7 +6,7 @@
 #    By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 14:34:27 by danpalac          #+#    #+#              #
-#    Updated: 2024/11/14 11:26:27 by danpalac         ###   ########.fr        #
+#    Updated: 2024/11/14 12:15:55 by danpalac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -89,7 +89,7 @@ LFLAGS		:= -L$(LIB_DIR) -lmt -lft -fsanitize=address
 
 #==========SOURCES============================================================#
 
-INPUT_FILES	:= parser
+INPUT_FILES	:= parser tokenizer
 INTERPRETER_FILES := 
 
 #==========FILES==============================================================#

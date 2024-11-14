@@ -6,39 +6,25 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2024/11/14 10:37:18 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/11/14 12:15:20 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
 
-int	tokenize(char *str, t_mt **list)
+int	main(int argc, char **argv)
 {
-	char	*token;
-	int		i;
+	char *str;
+	t_mt *tracker;
 
-	i = 0;
-	token = ft_strtok(str, " ");
-	return (0);
-	while (token)
+	if (argc != 2)
 	{
-		printf("Token %d: %s\n", i, token);
-		ft_mtpush_data(list, token);
-		token = ft_strtok(NULL, " ");
-		i++;
+		printf("Usage: %s <string>\n", argv[0]);
+		return (1);
 	}
-	return (0);
-
-}
-
-int	main(void)
-{
-	char	*str;
-	t_mt	*tracker;
-
-	str = ft_strdup("Hello world");
+	tracker = NULL;
+	str = ft_strdup(argv[1]);
 	tokenize(str, &tracker);
-
 	ft_mtprint(tracker, 0);
 	(void)str;
 	(void)tracker;
