@@ -6,7 +6,7 @@
 #    By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 14:34:27 by danpalac          #+#    #+#              #
-#    Updated: 2024/11/14 12:15:55 by danpalac         ###   ########.fr        #
+#    Updated: 2024/11/14 12:25:01 by danpalac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,7 @@ MOVE_UP     = \033[1A
 
 #==========NAMES===============================================================#
 
-NAME		:= parse.a
+NAME		:= libparse.a
 EXE			:= exe
 MEMTRACK_LIB:= libmt.a
 LIBFT_LIB	:= libft.a
