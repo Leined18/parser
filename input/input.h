@@ -1,7 +1,7 @@
 #ifndef INPUT_H
 # define INPUT_H
 
-# include "memtrack.h"
+# include "mt.h"
 
 typedef enum e_nodetype
 {
