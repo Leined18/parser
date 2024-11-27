@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 12:15:25 by danpalac          #+#    #+#             */
-/*   Updated: 2024/11/14 15:37:47 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/11/27 10:35:00 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,7 @@
 
 int	tokenize(char *str, t_mt **list)
 {
-	char *token;
-	int i;
-
-	i = 0;
-	if (!str || !list)
-		return (0);
-	token = ft_strtok(str, " ");
-	while (token)
-	{
-		ft_mtpush_data_back(list, token);
-		token = ft_strtok(NULL, " ");
-		i++;
-	}
+    (void)str;
+    (void)list;
 	return (1);
 }

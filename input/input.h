@@ -15,9 +15,9 @@ typedef enum e_nodetype
 	NODE_PIPE,       // Pipe '|'
 	NODE_ASSIGNMENT, // Asignación '='
 	NODE_COMMAND     // Comando individual
-}	t_nodetype;
+}				t_nodetype;
 
-int	parser(t_mt **input);
-int	tokenize(char *str, t_mt **list);
+t_hash_table	*parser(char *input);
+int				tokenize(char *str, t_mt **list);
 
 #endif // INPUT_H

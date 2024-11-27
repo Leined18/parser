@@ -6,14 +6,10 @@
 /*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:52:53 by danpalac          #+#    #+#             */
-/*   Updated: 2024/11/26 13:51:52 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/11/27 10:22:22 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "input.h"
 
-int	parser(t_mt **input)
-{
-    (void)input;
-	return (1);
-}
+
