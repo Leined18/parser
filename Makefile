@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+         #
+#    By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 14:34:27 by danpalac          #+#    #+#              #
-#    Updated: 2024/11/14 13:04:19 by danpalac         ###   ########.fr        #
+#    Updated: 2024/12/02 13:31:45 by danpalac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -89,7 +89,7 @@ LFLAGS		:= -L$(LIB_DIR) -lmt -lft -fsanitize=address
 
 #==========SOURCES============================================================#
 
-INPUT_FILES	:= parser tokenizer
+INPUT_FILES	:= parse_token tokenizer
 INTERPRETER_FILES := 
 
 #==========FILES==============================================================#

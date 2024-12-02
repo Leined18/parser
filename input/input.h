@@ -18,6 +18,7 @@ typedef enum e_nodetype
 }				t_nodetype;
 
 t_hash_table	*parser(char *input);
-int				tokenize(char *str, t_mt **list);
+void			parse_token(char *str, int *i, t_mt **tokens);
+t_mt			*tokenize(char *str);
 
 #endif // INPUT_H
