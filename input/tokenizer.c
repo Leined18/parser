@@ -6,12 +6,11 @@
 /*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 12:15:25 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/02 13:30:52 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/09 13:02:33 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "input.h"
-#include "libft.h"
 
 /**
  * tokenize - Divide una línea de entrada en tokens.
@@ -28,6 +27,6 @@ t_mt	*tokenize(char *str)
 	if (!str)
 		return (NULL);
 	while (str[i])
-		parse_token(str, &i, &tokens);
+		process_token(str, &i, &tokens);
 	return (tokens);
 }

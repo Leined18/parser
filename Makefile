@@ -6,7 +6,7 @@
 #    By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 14:34:27 by danpalac          #+#    #+#              #
-#    Updated: 2024/12/02 13:31:45 by danpalac         ###   ########.fr        #
+#    Updated: 2024/12/09 13:03:02 by danpalac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,7 +74,7 @@ MEMTRACK	:= $(MEMTRACK_DIR)$(MEMTRACK_LIB)
 LIBFT		:= $(LIBFT_DIR)$(LIBFT_LIB)
 INPUT_DIR		:= input/
 INTERPRETER_DIR	:= interpreter/
-INCLUDES		:= $(INC)*.h $(INPUT_DIR)*.h $(INTERPRETER_DIR)*.h
+INCLUDES		:= $(INC)*.h
 
 #==========COMMANDS============================================================#
 
@@ -84,12 +84,12 @@ RM			:= rm -rf
 AR			:= ar rcs
 MKDIR 		:= mkdir -p
 LIB 		:= -L$(LIB_DIR) -lmt -lft
-IFLAGS		:= -I$(LIB_DIR) -I$(INC) -I$(INPUT_DIR) -I$(INTERPRETER_DIR)
+IFLAGS		:= -I$(LIB_DIR) -I$(INC)
 LFLAGS		:= -L$(LIB_DIR) -lmt -lft -fsanitize=address
 
 #==========SOURCES============================================================#
 
-INPUT_FILES	:= parse_token tokenizer
+INPUT_FILES	:= process_token tokenizer helpers-1 helpers-2 tree 
 INTERPRETER_FILES := 
 
 #==========FILES==============================================================#
