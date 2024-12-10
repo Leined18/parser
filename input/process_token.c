@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:52:53 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/09 13:29:59 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/10 12:25:40 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,19 @@ void	process_word(char *input, int *i, t_mt **tree)
 	token = extract_word_token(input, i);
 	if (token)
 	{
-		*tree = add_node(*tree, create_node(token));
+		ft_mtadd_back(tree, create_node(token, WORD));
+		free(token);
+	}
+}
+
+void	process_quote(char *input, int *i, t_mt **tree)
+{
+	char	*token;
+
+	token = extract_quoted_token(input, i);
+	if (token)
+	{
+		ft_mtadd_back(tree, create_node(token, QUOTE));
 		free(token);
 	}
 }
@@ -43,7 +55,19 @@ void	process_operator(char *input, int *i, t_mt **tree)
 	token = extract_operator_token(input, i);
 	if (token)
 	{
-		*tree = add_node(*tree, create_node(token));
+		ft_mtadd_back(tree, create_node(token, OPERATOR));
+		free(token);
+	}
+}
+
+void	process_redirection(char *input, int *i, t_mt **tree)
+{
+	char	*token;
+
+	token = extract_operator_token(input, i);
+	if (token)
+	{
+		ft_mtadd_back(tree, create_node(token, REDIRECTION));
 		free(token);
 	}
 }
@@ -54,6 +78,7 @@ void	process_operator(char *input, int *i, t_mt **tree)
  * @i: Pointer to the current index
  * @tree: Pointer to the root of the tree
  */
+
 void	process_parentheses(char *input, int *i, t_mt **tree)
 {
 	t_mt	*subtree;
@@ -65,7 +90,7 @@ void	process_parentheses(char *input, int *i, t_mt **tree)
 	if (input[*i] == ')') // Skip ')'
 		(*i)++;
 	if (subtree)
-		*tree = add_node(*tree, create_node_with_children("()", subtree));
+		ft_mtadd_child(*tree, subtree);
 }
 
 /**

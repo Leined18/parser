@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 11:57:04 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/09 13:22:45 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/10 12:50:49 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*extract_quoted_token(char *str, int *i)
 	char	quote;
 	int		start;
 
-	if (!str[*i])
+	if (!str || !i)
 		return (NULL);
 	quote = str[(*i)++];
 	start = *i;
@@ -55,7 +55,7 @@ char	*extract_word_token(char *str, int *i)
 {
 	int	start;
 
-	if (!str[*i])
+	if (!i || !str)
 		return (NULL);
 	start = *i;
 	while (!is_whitespace(str[*i]) && !is_operator(str[*i])

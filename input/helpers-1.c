@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 11:47:38 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/09 13:19:30 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/10 10:15:20 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,35 +31,19 @@ int	is_quoted(char c)
  */
 int	is_operator(char c)
 {
-	return (c == '|' || c == '&' || c == ';' || c == '<' || c == '>' || c == '='
-		|| c == '!');
+	return (c == '|' || c == '&' || c == ';' || c == '=' || c == '!');
 }
 
 /**
- * is_operator_token - Verifica si el token es un operador válido.
- * La función avanza el índice si encuentra un operador.
- * @token: El token que se está verificando.
- * @i: El índice actual dentro del token.
+ * is_redirection - Verifica si el caracter es un operador de redirección
+ * @c: El caracter a verificar
  *
- * Return: TRUE si el token es un operador, FALSE si no lo es.
+ * Return: 1 si es un operador de redirección, 0 si no lo es.
  */
-int	is_operator_token(char *token, int *i)
+
+int	is_redirection(char c)
 {
-	if (!i)
-		return (FALSE);
-	if (is_operator(token[*i]))
-	{
-		(*i)++;
-		return (TRUE);
-	}
-	if (token[*i] == '=')
-	{
-		(*i)++;
-		if (token[*i] == '=')
-			(*i)++;
-		return (TRUE);
-	}
-	return (FALSE);
+	return (c == '<' || c == '>');
 }
 
 /**

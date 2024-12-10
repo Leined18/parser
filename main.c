@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/09 12:45:55 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/10 13:02:40 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,30 @@
  * @input: The input string
  * Returns: A hash table with the parsed data
  */
-t_hash_table	*parser(char *input)
+
+int	main(void)
+{
+	char	*input;
+	t_mt	*list;
+	t_mt	*first;
+
+	/* t_hash_table	*ptable; */
+	input = get_next_line(0);
+	input[ft_strlen(input) - 1] = '\0';
+	list = NULL;
+	list = parse_input(input);
+	first = list;
+	while (list)
+	{
+		printf("Data: %s\n", (char *)list->data);
+		list = list->right;
+	}
+	ft_mtclear(&first);
+	free(input);
+	return (0);
+}
+
+/* t_hash_table	*parser(char *input)
 {
 	t_hash_table	*ptable;
 	t_mt			*tree;
@@ -28,6 +51,7 @@ t_hash_table	*parser(char *input)
 	if (!ptable)
 		return (NULL);
 	tree = tokenize(input);
+	parse_input(input);
 	if (!tree)
 	{
 		ft_mthash_table_free((void **)&ptable);
@@ -35,20 +59,4 @@ t_hash_table	*parser(char *input)
 	}
 	ptable->methods.add_child(ptable, "tree", tree);
 	return (ptable);
-}
-
-int	main(void)
-{
-	t_hash_table	*ptable;
-	char			*input;
-
-	input = get_next_line(0);
-	input[ft_strlen(input) - 1] = '\0';
-	ptable = parser(input);
-	free(input);
-	if (!ptable)
-		return (1);
-	ptable->methods.print(ptable);
-	ptable->methods.free_table(ptable);
-	return (0);
-}
+} */

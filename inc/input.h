@@ -4,38 +4,53 @@
 # include "libft.h"
 # include "mt.h"
 
-typedef enum e_nodetype
+typedef enum e_state
 {
-	NODE_GROUP,      // Agrupación de comandos '()'
-	NODE_SUBSHELL,   // Subshells '$( ... )' o backticks `` `...` ``
-	NODE_REDIRECT,   // Redirección '>', '<', '>>', '<<'
-	NODE_BACKGROUND, // Ejecución en segundo plano '&'
-	NODE_AND,        // Operador lógico '&&'
-	NODE_OR,         // Operador lógico '||'
-	NODE_SEQUENCE,   // Secuencia de comandos ';' o newline
-	NODE_PIPE,       // Pipe '|'
-	NODE_ASSIGNMENT, // Asignación '='
-	NODE_COMMAND     // Comando individual
-}				t_nodetype;
+	START,               // Estado inicial
+	WORD,                // Procesando una palabra (comando o argumento)
+	REDIRECTION,         // Procesando redirecciones: >, >>
+	QUOTE,               // Procesando contenido entre comillas
+	OPERATOR,            // Operadores como |, &&, ||
+	ASSIGNMENT,          // Procesando una asignación (VAR=value)
+	SEPARATOR,           // Procesando un separador (;)
+	HISTORY_OR_NEGATION, // Procesando `!` (negación o historial)
+	END                  // Estado final
+}				e_state;
+
+typedef struct t_automation
+{
+	e_state		current_state;
+	char		current_char;
+	e_state		(*transition)(e_state, char);
+}				t_automation;
+
+// state.c
+
+e_state			transition(e_state current, char c);
+e_state			handle_start(char c);
+e_state			handle_word(char c);
+e_state			handle_redirection(char c);
+e_state			handle_quote(char c);
+e_state			handle_operator(char c);
+// parser.c
 
 t_hash_table	*parser(char *input);
 t_mt			*tokenize(char *str);
 
 /* Add a node to the binary tree */
-t_mt			*add_node(t_mt *root, t_mt *node);
-t_mt			*create_node(char *data);
-t_mt			*create_node_with_children(char *value, t_mt *children);
+t_mt			*create_node(char *data, e_state state);
 
 /* Parse a token and add it to the tree */
 void			parse_token(char *input, int *i, t_mt **tree);
+t_mt			*parse_input(const char *input);
 
 /* Helpers */
 
-int				is_operator_token(char *token, int *i);
 int				has_higher_precedence(char *op1, char *op2);
 int				is_whitespace(char c);
 int				is_quoted(char c);
 int				is_operator(char c);
+int				is_redirection(char c);
 
 void			add_token(t_mt **tokens, char *token);
 char			*extract_quoted_token(char *str, int *i);
@@ -46,5 +61,7 @@ void			process_token(char *input, int *i, t_mt **tree);
 void			process_word(char *input, int *i, t_mt **tree);
 void			process_operator(char *input, int *i, t_mt **tree);
 void			process_parentheses(char *input, int *i, t_mt **tree);
+void			process_redirection(char *input, int *i, t_mt **tree);
+void			process_quote(char *input, int *i, t_mt **tree);
 
 #endif // INPUT_H
