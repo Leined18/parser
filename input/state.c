@@ -6,11 +6,13 @@
 /*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:28:51 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/10 13:03:40 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/10 13:58:09 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "input.h"
+
+e_state	handle_options(char c);
 
 // Función principal
 e_state	transition(e_state current, char c)
@@ -30,9 +32,22 @@ e_state	transition(e_state current, char c)
 		return (handle_quote(c));
 	case OPERATOR:
 		return (handle_operator(c));
+	case OPTIONS:
+		return (handle_options(c));
 	default:
 		return (END);
 	}
+}
+
+e_state	handle_options(char c)
+{
+	if (c == ' ' || c == '\t')
+		return (START);
+	if (c == '|' || c == '&')
+		return (OPERATOR);
+	if (c == '>' || c == '<')
+		return (REDIRECTION);
+	return (OPTIONS);
 }
 
 // Implementación de funciones específicas para cada estado
@@ -46,6 +61,8 @@ e_state	handle_start(char c)
 		return (OPERATOR);
 	if (c == '>' || c == '<')
 		return (REDIRECTION);
+	if (c == '-')
+		return (OPTIONS);
 	return (WORD); // Asumimos que cualquier otro carácter inicia una palabra
 }
 
@@ -57,6 +74,8 @@ e_state	handle_word(char c)
 		return (OPERATOR);
 	if (c == '>' || c == '<')
 		return (REDIRECTION);
+	if (c == '-')
+		return (OPTIONS);
 	return (WORD);
 }
 

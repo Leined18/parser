@@ -6,15 +6,14 @@
 
 typedef enum e_state
 {
-	START,               // Estado inicial
-	WORD,                // Procesando una palabra (comando o argumento)
-	REDIRECTION,         // Procesando redirecciones: >, >>
-	QUOTE,               // Procesando contenido entre comillas
-	OPERATOR,            // Operadores como |, &&, ||
-	ASSIGNMENT,          // Procesando una asignación (VAR=value)
-	SEPARATOR,           // Procesando un separador (;)
-	HISTORY_OR_NEGATION, // Procesando `!` (negación o historial)
-	END                  // Estado final
+	START,       // Estado inicial
+	WORD,        // Procesando una palabra (comando o argumento)
+	REDIRECTION, // Procesando redirecciones: >, >>
+	QUOTE,       // Procesando contenido entre comillas
+	OPERATOR,    // Operadores como |, &&, ||
+	ASSIGNMENT,  // Procesando una asignación (VAR=value)
+	OPTIONS,     // Procesando un argumento
+	END          // Estado final
 }				e_state;
 
 typedef struct t_automation
@@ -63,5 +62,6 @@ void			process_operator(char *input, int *i, t_mt **tree);
 void			process_parentheses(char *input, int *i, t_mt **tree);
 void			process_redirection(char *input, int *i, t_mt **tree);
 void			process_quote(char *input, int *i, t_mt **tree);
+void			process_option(char *input, int *i, t_mt **tree);
 
 #endif // INPUT_H

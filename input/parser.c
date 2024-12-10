@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:19:37 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/10 12:43:31 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/10 14:08:25 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ t_mt	*parse_input(const char *input)
 			process_operator(str, &i, &list);
 		else if (state == REDIRECTION)
 			process_redirection(str, &i, &list);
+		else if (state == OPTIONS)
+			process_option(str, &i, &list, &state);
 		else
 			i++;
 	}

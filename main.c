@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/10 13:02:40 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/10 13:49:07 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int	main(void)
 	first = list;
 	while (list)
 	{
-		printf("Data: %s\n", (char *)list->data);
+		printf("Data: %s ", (char *)list->data);
+		printf("State: %d\n", list->values.state);
 		list = list->right;
 	}
 	ft_mtclear(&first);

@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:52:53 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/10 12:25:40 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/10 14:09:50 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,23 @@ void	process_word(char *input, int *i, t_mt **tree)
 	if (token)
 	{
 		ft_mtadd_back(tree, create_node(token, WORD));
+		free(token);
+	}
+}
+
+void	process_option(char *input, int *i, t_mt **tree, e_state **state)
+{
+	char	*token;
+
+	if (is_whitespace(input[*i + 1]))
+	{
+		(*state) = START;
+		return ;
+	}
+	token = extract_word_token(input, i);
+	if (token)
+	{
+		ft_mtadd_back(tree, create_node(token, OPTIONS));
 		free(token);
 	}
 }
