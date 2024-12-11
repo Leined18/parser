@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:28:51 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/10 13:58:09 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/11 11:18:54 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ e_state	transition(e_state current, char c)
 
 e_state	handle_options(char c)
 {
-	if (c == ' ' || c == '\t')
+	if (is_whitespace(c))
 		return (START);
-	if (c == '|' || c == '&')
+	if (is_operator(c))
 		return (OPERATOR);
-	if (c == '>' || c == '<')
+	if (is_redirection(c))
 		return (REDIRECTION);
 	return (OPTIONS);
 }
@@ -53,16 +53,18 @@ e_state	handle_options(char c)
 // Implementación de funciones específicas para cada estado
 e_state	handle_start(char c)
 {
-	if (c == ' ' || c == '\t')
+	if (is_whitespace(c) || is_parentesis(c))
 		return (START);
-	if (c == '\'' || c == '\"')
+	if (is_quoted(c))
 		return (QUOTE);
-	if (c == '|' || c == '&')
+	if (is_operator(c))
 		return (OPERATOR);
-	if (c == '>' || c == '<')
+	if (is_redirection(c))
 		return (REDIRECTION);
 	if (c == '-')
 		return (OPTIONS);
+	if (is_asignation(c))
+		return (ASSIGNMENT);
 	return (WORD); // Asumimos que cualquier otro carácter inicia una palabra
 }
 

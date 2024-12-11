@@ -12,6 +12,7 @@ typedef enum e_state
 	QUOTE,       // Procesando contenido entre comillas
 	OPERATOR,    // Operadores como |, &&, ||
 	ASSIGNMENT,  // Procesando una asignación (VAR=value)
+	PARENTESIS,  // Procesando paréntesis
 	OPTIONS,     // Procesando un argumento
 	END          // Estado final
 }				e_state;
@@ -34,7 +35,7 @@ e_state			handle_operator(char c);
 // parser.c
 
 t_hash_table	*parser(char *input);
-t_mt			*tokenize(char *str);
+t_mt			*tokenize(const char *input, int *i);
 
 /* Add a node to the binary tree */
 t_mt			*create_node(char *data, e_state state);
@@ -50,13 +51,15 @@ int				is_whitespace(char c);
 int				is_quoted(char c);
 int				is_operator(char c);
 int				is_redirection(char c);
+int				is_asignation(char c);
+int				is_parentesis(char c);
 
 void			add_token(t_mt **tokens, char *token);
 char			*extract_quoted_token(char *str, int *i);
 char			*extract_operator_token(char *str, int *i);
 char			*extract_word_token(char *str, int *i);
 
-void			process_token(char *input, int *i, t_mt **tree);
+void			process_token(char *input, int *i, t_mt **tree, e_state state);
 void			process_word(char *input, int *i, t_mt **tree);
 void			process_operator(char *input, int *i, t_mt **tree);
 void			process_parentheses(char *input, int *i, t_mt **tree);

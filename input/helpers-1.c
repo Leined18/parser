@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 11:47:38 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/10 10:15:20 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/11 10:55:09 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	is_quoted(char c)
  */
 int	is_operator(char c)
 {
-	return (c == '|' || c == '&' || c == ';' || c == '=' || c == '!');
+	return (c == '|' || c == '&' || c == ';' || c == '!');
 }
 
 /**
@@ -74,4 +74,14 @@ int	has_higher_precedence(char *op1, char *op2)
 int	is_whitespace(char c)
 {
 	return (c == ' ' || c == '\t' || c == '\n');
+}
+
+int	is_asignation(char c)
+{
+	return (c == '=');
+}
+
+int	is_parentesis(char c)
+{
+	return (c == '(' || c == ')');
 }

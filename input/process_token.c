@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:52:53 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/10 14:09:50 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/11 11:45:12 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,10 @@ void	process_word(char *input, int *i, t_mt **tree)
 	}
 }
 
-void	process_option(char *input, int *i, t_mt **tree, e_state **state)
+void	process_option(char *input, int *i, t_mt **tree)
 {
 	char	*token;
 
-	if (is_whitespace(input[*i + 1]))
-	{
-		(*state) = START;
-		return ;
-	}
 	token = extract_word_token(input, i);
 	if (token)
 	{
@@ -99,15 +94,18 @@ void	process_redirection(char *input, int *i, t_mt **tree)
 void	process_parentheses(char *input, int *i, t_mt **tree)
 {
 	t_mt	*subtree;
+	t_mt	*new_node;
 
 	subtree = NULL;
-	(*i)++; // Skip '('
+	(*i)++;
 	while (input[*i] && input[*i] != ')')
-		process_token(input, i, &subtree);
+		process_token(input, i, &subtree, transition(START, input[*i]));
 	if (input[*i] == ')') // Skip ')'
 		(*i)++;
+	new_node = create_node("()", PARENTESIS);
 	if (subtree)
-		ft_mtadd_child(*tree, subtree);
+		ft_mtadd_child(new_node, subtree);
+	ft_mtadd_back(tree, new_node);
 }
 
 /**
@@ -116,16 +114,20 @@ void	process_parentheses(char *input, int *i, t_mt **tree)
  * @i: Pointer to the current index
  * @tree: Pointer to the root of the tree
  */
-void	process_token(char *input, int *i, t_mt **tree)
+void	process_token(char *input, int *i, t_mt **tree, e_state state)
 {
 	if (!i || !input || !tree)
 		return ;
-	while (is_whitespace(input[*i]))
-		(*i)++; // Skip whitespace
 	if (input[*i] == '(')
-		process_parentheses(input, i, tree);
-	else if (is_operator(input[*i]))
-		process_operator(input, i, tree);
+		process_parentheses(input, i, &(*tree));
+	else if (state == WORD)
+		process_word(input, i, &(*tree));
+	else if (state == QUOTE)
+		process_quote(input, i, &(*tree));
+	else if (state == OPERATOR)
+		process_operator(input, i, &(*tree));
+	else if (state == REDIRECTION)
+		process_redirection(input, i, &(*tree));
 	else
-		process_word(input, i, tree);
+		(*i)++;
 }

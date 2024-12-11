@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 11:57:04 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/10 12:50:49 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/11 11:16:43 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ char	*extract_word_token(char *str, int *i)
 		return (NULL);
 	start = *i;
 	while (!is_whitespace(str[*i]) && !is_operator(str[*i])
-		&& !is_quoted(str[*i]) && str[*i])
+		&& !is_quoted(str[*i]) && str[*i] && !is_redirection(str[*i])
+		&& !is_parentesis(str[*i]))
 		(*i)++;
 	return (ft_substr(str, start, *i - start));
 }

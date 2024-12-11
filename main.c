@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/10 13:49:07 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/11 11:11:30 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,27 @@
 
 int	main(void)
 {
-	char	*input;
-	t_mt	*list;
-	t_mt	*first;
+	char			*input;
+	t_mt			*list;
+	t_hash_table	*ptable;
 
 	/* t_hash_table	*ptable; */
 	input = get_next_line(0);
 	input[ft_strlen(input) - 1] = '\0';
 	list = NULL;
 	list = parse_input(input);
-	first = list;
+	ptable = ft_mthash_new_table(3, "parser");
+	if (!ptable)
+		return (1);
+	ptable->methods.add_child(ptable, "tree", list);
 	while (list)
 	{
 		printf("Data: %s ", (char *)list->data);
 		printf("State: %d\n", list->values.state);
 		list = list->right;
 	}
-	ft_mtclear(&first);
+	ptable->methods.print(ptable);
+	ptable->methods.free_table(ptable);
 	free(input);
 	return (0);
 }

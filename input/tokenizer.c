@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 12:15:25 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/09 13:02:33 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/11 11:23:35 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,24 @@
  * @str: Cadena de entrada.
  * @return: Lista de tokens.
  */
-t_mt	*tokenize(char *str)
+t_mt	*tokenize(const char *input, int *i)
 {
-	t_mt	*tokens;
-	int		i;
+	e_state	state;
+	t_mt	*list;
+	char	*str;
 
-	tokens = NULL;
-	i = 0;
-	if (!str)
+	if (!input)
 		return (NULL);
-	while (str[i])
-		process_token(str, &i, &tokens);
-	return (tokens);
+	state = START;
+	list = NULL;
+	str = ft_strdup(input);
+	while (str[*i])
+	{
+		state = transition(state, str[*i]);
+		if (state == END)
+			break ;
+		process_token(str, i, &list, state);
+	}
+	free(str);
+	return (list);
 }
