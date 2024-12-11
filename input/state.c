@@ -6,18 +6,17 @@
 /*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:28:51 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/11 11:18:54 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/11 14:42:22 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "input.h"
 
-e_state	handle_options(char c);
-
+e_state	handle_parentesis(char c);
 // Función principal
 e_state	transition(e_state current, char c)
 {
-	if (current == END || !c)
+	if (current == END || c == '\0')
 		return (END);
 	// Delegar la lógica a funciones específicas según el estado actual
 	switch (current)
@@ -32,37 +31,25 @@ e_state	transition(e_state current, char c)
 		return (handle_quote(c));
 	case OPERATOR:
 		return (handle_operator(c));
-	case OPTIONS:
-		return (handle_options(c));
+	case PARENTESIS:
+		return (handle_parentesis(c));
 	default:
 		return (END);
 	}
 }
-
-e_state	handle_options(char c)
-{
-	if (is_whitespace(c))
-		return (START);
-	if (is_operator(c))
-		return (OPERATOR);
-	if (is_redirection(c))
-		return (REDIRECTION);
-	return (OPTIONS);
-}
-
 // Implementación de funciones específicas para cada estado
 e_state	handle_start(char c)
 {
-	if (is_whitespace(c) || is_parentesis(c))
+	if (is_whitespace(c))
 		return (START);
+	if (is_parentesis(c))
+		return (PARENTESIS);
 	if (is_quoted(c))
 		return (QUOTE);
 	if (is_operator(c))
 		return (OPERATOR);
 	if (is_redirection(c))
 		return (REDIRECTION);
-	if (c == '-')
-		return (OPTIONS);
 	if (is_asignation(c))
 		return (ASSIGNMENT);
 	return (WORD); // Asumimos que cualquier otro carácter inicia una palabra
@@ -70,14 +57,14 @@ e_state	handle_start(char c)
 
 e_state	handle_word(char c)
 {
-	if (c == ' ' || c == '\t')
+	if (is_whitespace(c))
 		return (START);
-	if (c == '|' || c == '&')
+	if (is_operator(c))
 		return (OPERATOR);
-	if (c == '>' || c == '<')
+	if (is_redirection(c))
 		return (REDIRECTION);
-	if (c == '-')
-		return (OPTIONS);
+	if (is_parentesis(c))
+		return (PARENTESIS);
 	return (WORD);
 }
 
@@ -97,5 +84,12 @@ e_state	handle_quote(char c)
 e_state	handle_operator(char c)
 {
 	(void)c;
+	return (START);
+}
+
+e_state	handle_parentesis(char c)
+{
+	if (c == '(')
+		return (PARENTESIS);
 	return (START);
 }

@@ -13,7 +13,7 @@ typedef enum e_state
 	OPERATOR,    // Operadores como |, &&, ||
 	ASSIGNMENT,  // Procesando una asignación (VAR=value)
 	PARENTESIS,  // Procesando paréntesis
-	OPTIONS,     // Procesando un argumento
+	ARGUMENT,    // Procesando un argumento
 	END          // Estado final
 }				e_state;
 
@@ -54,17 +54,16 @@ int				is_redirection(char c);
 int				is_asignation(char c);
 int				is_parentesis(char c);
 
-void			add_token(t_mt **tokens, char *token);
 char			*extract_quoted_token(char *str, int *i);
 char			*extract_operator_token(char *str, int *i);
 char			*extract_word_token(char *str, int *i);
 
-void			process_token(char *input, int *i, t_mt **tree, e_state state);
-void			process_word(char *input, int *i, t_mt **tree);
-void			process_operator(char *input, int *i, t_mt **tree);
-void			process_parentheses(char *input, int *i, t_mt **tree);
-void			process_redirection(char *input, int *i, t_mt **tree);
-void			process_quote(char *input, int *i, t_mt **tree);
-void			process_option(char *input, int *i, t_mt **tree);
+int				process_token(char *input, int *i, t_mt **tree, e_state state);
+int				process_word(char *input, int *i, t_mt **tree, e_state state);
+int				process_operator(char *input, int *i, t_mt **tree);
+int				process_parentheses(char *input, int *i, t_mt **tree);
+int				process_redirection(char *input, int *i, t_mt **tree);
+int				process_quote(char *input, int *i, t_mt **tree);
+int				process_argument(char *input, int *i, t_mt **tree);
 
 #endif // INPUT_H
