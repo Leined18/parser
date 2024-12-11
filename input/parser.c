@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:19:37 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/11 16:41:18 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/11 16:51:24 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,11 @@ int	extend_until_close(char **input)
 
 	if (!input || !*input)
 		return (0);
+	if (check_is_close(input, '(', 0) && check_is_close(input, '{', 0))
+		return (1);
 	ptr = *input;
 	while (!check_is_close(&ptr, '(', ')') || !check_is_close(&ptr, '{', '}')
-		|| check_is_close(&ptr, '\'', '\'') || check_is_close(&ptr, '\"',
-			'\"'))
+		|| check_is_close(&ptr, '\'', '\'') || check_is_close(&ptr, '\"', '\"'))
 	{
 		ft_printf("> ");
 		add = get_next_line(0);
