@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/12 09:43:39 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/12 15:57:39 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	main(void)
 	t_mt			*list;
 	t_hash_table	*ptable;
 
-	/* t_hash_table	*ptable; */
 	input = get_next_line(0);
 	input[ft_strlen(input) - 1] = '\0';
 	list = NULL;

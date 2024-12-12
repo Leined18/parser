@@ -39,14 +39,20 @@ e_state			handle_operator(char c);
 t_hash_table	*parser(char *input);
 t_mt			*tokenize(const char *input, int *i);
 
-/* Add a node to the binary tree */
-t_mt			*create_node(char *data, e_state state);
+// tree.c
+t_mt			*tree_by_priority(t_mt **tokens);
 
 /* Parse a token and add it to the tree */
 void			parse_token(char *input, int *i, t_mt **tree);
 t_mt			*parse_input(const char *input);
 
 /* Helpers */
+
+// helpers_tree_1.c
+
+t_mt			*find_highest_priority_node(t_mt *tokens);
+int				get_operator_priority(t_mt *node);
+t_mt			*create_node(char *data, e_state state);
 
 // helpers_parse.c
 int				check_operators_mt(t_mt *op);

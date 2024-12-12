@@ -6,7 +6,7 @@
 #    By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 14:34:27 by danpalac          #+#    #+#              #
-#    Updated: 2024/12/12 10:57:48 by danpalac         ###   ########.fr        #
+#    Updated: 2024/12/12 14:43:34 by danpalac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -91,7 +91,7 @@ LFLAGS		:= -L$(LIB_DIR) -lmt -lft -fsanitize=address
 
 INPUT_FILES	:= process_token process parser state tokenizer tree \
 			helpers_is_1 helpers_is_2 helpers_parse_1 helpers_extract_1 \
-			helpers_process_1
+			helpers_process_1 helpers_tree_1
 INTERPRETER_FILES := 
 
 #==========FILES==============================================================#

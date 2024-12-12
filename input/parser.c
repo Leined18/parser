@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:19:37 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/12 12:14:01 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/12 16:52:30 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,26 +43,27 @@ int	extend_until_close(char **input)
 int	validate_list(t_mt *list)
 {
 	t_mt	*current;
+	int		res;
 
 	if (!list)
-		return (0); // Lista vacía
+		return (0);
 	current = list;
+	res = 0;
 	while (current)
 	{
 		if (current->values.state == REDIRECTION)
-			return (check_redirections_mt(current)); // checkeo Redirecciones
+			res = check_redirections_mt(current);
 		if (current->values.state == OPERATOR)
-			return (check_operators_mt(current)); // checkeo Operadores
+			res = check_operators_mt(current);
 		if (current->values.state == PARENTESIS)
 		{ // Paréntesis
 			if (!current->children)
 				ft_printf("syntax error near unexpected token `)'\n");
-			if (!validate_list(current->children))
-				return (0); // Paréntesis no balanceados
+			res = validate_list(current->children);
 		}
 		current = current->right;
 	}
-	return (1); // Paréntesis balanceados
+	return (res != 0);
 }
 
 t_mt	*parse_input(const char *input)
