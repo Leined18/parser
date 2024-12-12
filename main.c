@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/11 11:11:30 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/12 09:43:39 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@ int	main(void)
 	input[ft_strlen(input) - 1] = '\0';
 	list = NULL;
 	list = parse_input(input);
+	if (!list)
+	{
+		free(input);
+		ft_printf("Error: Invalid input\n");
+		return (1);
+	}
 	ptable = ft_mthash_new_table(3, "parser");
 	if (!ptable)
 		return (1);

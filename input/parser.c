@@ -3,50 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:19:37 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/11 16:51:24 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/12 12:14:01 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "input.h"
-
-char	*ft_strjoin_free(char **s1, char **s2)
-{
-	char	*result;
-
-	if (!s1 || !s2)
-		return (NULL);
-	result = ft_strjoin(*s1, *s2);
-	free_null((void **)s1);
-	free_null((void **)s2);
-	return (result);
-}
-
-int	check_is_close(char **input, char open, char close)
-{
-	int	open_count;
-	int	close_count;
-	int	i;
-
-	if (!input || !*input)
-		return (-1);
-	open_count = 0;
-	close_count = 0;
-	i = 0;
-	while ((*input)[i])
-	{
-		if ((*input)[i] == open)
-			open_count++;
-		else if ((*input)[i] == close)
-			close_count++;
-		i++;
-	}
-	if (open == close)
-		return (open_count % 2 != 0);
-	return (open_count == close_count);
-}
 
 int	extend_until_close(char **input)
 {
@@ -55,11 +19,13 @@ int	extend_until_close(char **input)
 
 	if (!input || !*input)
 		return (0);
-	if (check_is_close(input, '(', 0) && check_is_close(input, '{', 0))
+	if ((check_is_close(*input, '(', 0) && check_is_close(*input, '{', 0))
+		&& (check_is_close_quote(*input, '\'') && check_is_close_quote(*input,
+				'\"')))
 		return (1);
 	ptr = *input;
-	while (!check_is_close(&ptr, '(', ')') || !check_is_close(&ptr, '{', '}')
-		|| check_is_close(&ptr, '\'', '\'') || check_is_close(&ptr, '\"', '\"'))
+	while (!check_is_close(ptr, '(', ')') || !check_is_close(ptr, '{', '}')
+		|| !check_is_close_quote(ptr, '\'') || !check_is_close_quote(ptr, '\"'))
 	{
 		ft_printf("> ");
 		add = get_next_line(0);
@@ -68,8 +34,33 @@ int	extend_until_close(char **input)
 		add[ft_strlen(add) - 1] = '\0';
 		ptr = ft_strjoin_free(&ptr, &add);
 		if (!ptr)
-			return (0); // Si hubo un error al concatenar, retornamos error
-		*input = ptr;   // Actualizamos el input con el nuevo contenido
+			return (0);
+		*input = ptr; // Actualizamos el input con el nuevo contenido
+	}
+	return (1); // Paréntesis balanceados
+}
+
+int	validate_list(t_mt *list)
+{
+	t_mt	*current;
+
+	if (!list)
+		return (0); // Lista vacía
+	current = list;
+	while (current)
+	{
+		if (current->values.state == REDIRECTION)
+			return (check_redirections_mt(current)); // checkeo Redirecciones
+		if (current->values.state == OPERATOR)
+			return (check_operators_mt(current)); // checkeo Operadores
+		if (current->values.state == PARENTESIS)
+		{ // Paréntesis
+			if (!current->children)
+				ft_printf("syntax error near unexpected token `)'\n");
+			if (!validate_list(current->children))
+				return (0); // Paréntesis no balanceados
+		}
+		current = current->right;
 	}
 	return (1); // Paréntesis balanceados
 }
@@ -84,7 +75,17 @@ t_mt	*parse_input(const char *input)
 	input_new = ft_strdup(input);
 	if (!extend_until_close((char **)&input_new))
 		return (NULL);
-	tokens = tokenize(input_new, &i);
+	tokens = tokenize(input_new, &i); // Tokenizamos el input en nodos
+	if (!tokens)
+	{
+		free(input_new);
+		return (NULL);
+	}
+	if (!validate_list(tokens)) // Validamos la lista de tokens
+	{
+		ft_mtclear(&tokens);
+		tokens = NULL;
+	}
 	free(input_new);
 	return (tokens);
 }

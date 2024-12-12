@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   state.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:28:51 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/11 14:42:22 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/12 12:14:24 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,14 @@ e_state	handle_quote(char c)
 {
 	if (c == '\'' || c == '\"')
 		return (START); // Cierra las comillas
+	if (is_whitespace(c))
+		return (START);
+	if (is_operator(c))
+		return (OPERATOR);
+	if (is_redirection(c))
+		return (REDIRECTION);
+	if (is_parentesis(c))
+		return (PARENTESIS);
 	return (QUOTE);
 }
 

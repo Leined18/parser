@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   helpers-2.c                                        :+:      :+:    :+:   */
+/*   helpers_extract_1.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 11:57:04 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/11 11:16:43 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/12 12:14:23 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ char	*extract_quoted_token(char *str, int *i)
 
 	if (!str || !i)
 		return (NULL);
-	quote = str[(*i)++];
-	start = *i;
+	quote = str[(*i)++]; // Guardar el tipo de comilla
+	start = *i;          // Guardar el inicio del token
 	while (str[*i] && str[*i] != quote)
 		(*i)++;
-	if (str[*i] == quote)
+	if (str[*i] == quote) //"_" " "
 		(*i)++;
 	// Saltar el cierre de la comilla
 	return (ft_substr(str, start, *i - start - 1)); // Excluye las comillas

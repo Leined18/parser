@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   helpers-1.c                                        :+:      :+:    :+:   */
+/*   helpers_is.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 11:47:38 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/11 10:55:09 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/12 10:13:28 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,25 +63,4 @@ int	has_higher_precedence(char *op1, char *op2)
 	if (is_operator(op1[0]) && is_operator(op2[0]))
 		return (TRUE);
 	return (FALSE);
-}
-
-/**
- * is_whitespace - Verifica si el caracter es un espacio en blanco
- * @c: El caracter a verificar
- *
- * Return: 1 si es espacio en blanco, 0 si no lo es.
- */
-int	is_whitespace(char c)
-{
-	return (c == ' ' || c == '\t' || c == '\n');
-}
-
-int	is_asignation(char c)
-{
-	return (c == '=');
-}
-
-int	is_parentesis(char c)
-{
-	return (c == '(' || c == ')');
 }
