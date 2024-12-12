@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:52:53 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/12 12:27:01 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/12 12:41:30 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,11 @@ int	process_quote(char *input, int *i, t_mt **tree, e_state state)
 			free(token);
 			return (1);
 		}
-		ft_mtadd_back(tree, create_node(token, WORD));
+		else if (state == QUOTE)
+		{
+			ft_mtadd_back(tree, create_node(token, WORD));
+			process_argument(input, i, tree);
+		}
 		free(token);
 	}
 	return (1);
