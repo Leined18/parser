@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:19:37 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/12 16:52:30 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/17 17:03:14 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,13 @@ int	validate_list(t_mt *list)
 		if (current->values.state == PARENTESIS)
 		{ // Paréntesis
 			if (!current->children)
-				ft_printf("syntax error near unexpected token `)'\n");
+				return (ft_printf("syntax error near unexpected token `)'\n"),
+					0);
 			res = validate_list(current->children);
 		}
 		current = current->right;
 	}
-	return (res != 0);
+	return (res == 0);
 }
 
 t_mt	*parse_input(const char *input)
@@ -78,15 +79,9 @@ t_mt	*parse_input(const char *input)
 		return (NULL);
 	tokens = tokenize(input_new, &i); // Tokenizamos el input en nodos
 	if (!tokens)
-	{
-		free(input_new);
-		return (NULL);
-	}
-	if (!validate_list(tokens)) // Validamos la lista de tokens
-	{
-		ft_mtclear(&tokens);
-		tokens = NULL;
-	}
+		return (free(input_new), NULL);
+	if (!validate_list(tokens))
+		(ft_mtclear(&tokens), tokens = NULL);
 	free(input_new);
 	return (tokens);
 }

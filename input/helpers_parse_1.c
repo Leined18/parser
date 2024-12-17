@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 10:11:34 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/12 16:52:13 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/17 17:08:37 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,15 +75,15 @@ int	check_operators_mt(t_mt *op)
 	t_mt	*current;
 
 	if (!op)
-		return (0);
+		return (1);
 	current = op;
 	if (!current->left || !current->right)
 	{
 		ft_printf("syntax error near unexpected token `%s'\n",
 			(char *)current->data);
-		return (0);
+		return (1);
 	}
-	return (1);
+	return (0);
 }
 
 int	check_redirections_mt(t_mt *op)
@@ -91,7 +91,7 @@ int	check_redirections_mt(t_mt *op)
 	t_mt	*current;
 
 	if (!op)
-		return (0);
+		return (1);
 	current = op;
 	if (!current->right || !current->left)
 	{
@@ -104,8 +104,8 @@ int	check_redirections_mt(t_mt *op)
 		else if (!current->right)
 			ft_printf("syntax error near unexpected token `newline'\n");
 		else
-			return (1);
-		return (0);
+			return (0);
+		return (1);
 	}
-	return (1);
+	return (0);
 }

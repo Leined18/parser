@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/12 15:57:39 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/17 17:08:10 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,14 @@
  * @input: The input string
  * Returns: A hash table with the parsed data
  */
+
+void	print_state(t_mt *list, void *a)
+{
+	(void)a;
+	printf("key: %s\n", (char *)list->key);
+	printf("Data: %s\n", (char *)list->data);
+	printf("State: %d\n", list->values.state);
+}
 
 int	main(void)
 {
@@ -31,22 +39,19 @@ int	main(void)
 	if (!list)
 	{
 		free(input);
-		ft_printf("Error: Invalid input\n");
+		ft_error("Error\n", 1);
 		return (1);
 	}
+	//list = tree_by_priority(&list);  falta implementar
 	ptable = ft_mthash_new_table(3, "parser");
 	if (!ptable)
 		return (1);
 	ptable->methods.add_child(ptable, "tree", list);
-	while (list)
-	{
-		printf("Data: %s ", (char *)list->data);
-		printf("State: %d\n", list->values.state);
-		list = list->right;
-	}
+	ft_mtiter(list, NULL, print_state);
 	ptable->methods.print(ptable);
 	ptable->methods.free_table(ptable);
 	free(input);
+	ft_successful("Success\n", 1);
 	return (0);
 }
 

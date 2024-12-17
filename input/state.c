@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   state.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:28:51 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/12 12:14:24 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/17 17:08:37 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ e_state	handle_quote(char c)
 		return (START); // Cierra las comillas
 	if (is_whitespace(c))
 		return (START);
+	if (ft_isalnum(c))
+		return (WORD);
 	if (is_operator(c))
 		return (OPERATOR);
 	if (is_redirection(c))
