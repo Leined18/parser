@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:52:53 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/12 12:41:30 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/20 11:46:20 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ int	process_word(char *input, int *i, t_mt **tree, e_state state)
 	if (token)
 	{
 		if (state == ARGUMENT)
-			ft_mtadd_child(ft_mtlast(*tree), create_node(token, ARGUMENT));
+			ft_mtadd_aux(ft_mtlast(*tree), create_node(token, ARGUMENT));
 		else if (state == WORD)
 		{
-			ft_mtadd_back(tree, create_node(token, WORD));
+			ft_mtadd_right(tree, create_node(token, WORD));
 			process_argument(input, i, tree);
 		}
 		free(token);
@@ -51,13 +51,13 @@ int	process_quote(char *input, int *i, t_mt **tree, e_state state)
 	{
 		if (state == ARGUMENT)
 		{
-			ft_mtadd_child(ft_mtlast(*tree), create_node(token, ARGUMENT));
+			ft_mtadd_aux(ft_mtlast(*tree), create_node(token, ARGUMENT));
 			free(token);
 			return (1);
 		}
 		else if (state == QUOTE)
 		{
-			ft_mtadd_back(tree, create_node(token, WORD));
+			ft_mtadd_right(tree, create_node(token, WORD));
 			process_argument(input, i, tree);
 		}
 		free(token);
@@ -80,7 +80,7 @@ int	process_operator(char *input, int *i, t_mt **tree)
 	token = extract_operator_token(input, i);
 	if (token)
 	{
-		ft_mtadd_back(tree, create_node(token, OPERATOR));
+		ft_mtadd_right(tree, create_node(token, OPERATOR));
 		free(token);
 	}
 	return (1);
@@ -95,7 +95,7 @@ int	process_redirection(char *input, int *i, t_mt **tree)
 	token = extract_operator_token(input, i);
 	if (token)
 	{
-		ft_mtadd_back(tree, create_node(token, REDIRECTION));
+		ft_mtadd_right(tree, create_node(token, REDIRECTION));
 		free(token);
 	}
 	return (1);
@@ -125,6 +125,6 @@ int	process_parentheses(char *input, int *i, t_mt **tree)
 	new_node = create_parentheses_node(subtree);
 	if (!new_node)
 		return (0);
-	ft_mtadd_back(tree, new_node);
+	ft_mtadd_right(tree, new_node);
 	return (1);
 }

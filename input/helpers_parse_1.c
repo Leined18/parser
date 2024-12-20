@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers_parse_1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 10:11:34 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/17 17:08:37 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/20 09:08:14 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	check_operators_mt(t_mt *op)
 	if (!op)
 		return (1);
 	current = op;
-	if (!current->left || !current->right)
+	if (!current->vect.left || !current->vect.right)
 	{
 		ft_printf("syntax error near unexpected token `%s'\n",
 			(char *)current->data);
@@ -93,15 +93,15 @@ int	check_redirections_mt(t_mt *op)
 	if (!op)
 		return (1);
 	current = op;
-	if (!current->right || !current->left)
+	if (!current->vect.right || !current->vect.left)
 	{
-		if (current->right && current->right->values.state != WORD)
+		if (current->vect.right && current->vect.right->values.state != WORD)
 			ft_printf("syntax error near unexpected token `%s'\n",
-				(char *)current->right->data);
-		else if (current->left && current->left->values.state != WORD)
+				(char *)current->vect.right->data);
+		else if (current->vect.left && current->vect.left->values.state != WORD)
 			ft_printf("syntax error near unexpected token `%s'\n",
-				(char *)current->left->data);
-		else if (!current->right)
+				(char *)current->vect.left->data);
+		else if (!current->vect.right)
 			ft_printf("syntax error near unexpected token `newline'\n");
 		else
 			return (0);

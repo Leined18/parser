@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 11:45:03 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/12 15:18:48 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/20 11:08:09 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,42 +21,38 @@
 
 // Función para organizar los tokens en un árbol binario por prioridad
 
-t_mt	*ft_mtfirst(t_mt *list)
+t_mt	*add_node(t_mt *root, t_mt *node)
 {
-	if (!list)
-		return (NULL);
-	while (list->left)
-		list = list->left;
-	return (list);
-}
-
-t_mt *ft_mtfirst_parent(t_mt *list)
-{
-	if (!list)
-		return (NULL);
-	while (list->parent)
-		list = list->parent;
-	return (list);
-}
-
-t_mt	*tree_by_priority(t_mt **tokens)
-{
-	t_mt	*highest_priority_node;
-	t_mt	*new_tree;
-
-	highest_priority_node = NULL;
-	new_tree = NULL;
-	if (!*tokens)
-		return (NULL);
-	highest_priority_node = find_highest_priority_node(*tokens);
-	if (highest_priority_node)
+	if (!root)
+		return (node);
+	// Si el nodo actual es operador
+	if (node->values.state == REDIRECTION || node->values.state == OPERATOR)
 	{
-		if (!new_tree)
-			ft_mtpush(&highest_priority_node, &new_tree);
-		ft_mtpush(&highest_priority_node, &new_tree->left);
-		ft_mtpush(&highest_priority_node, &new_tree->right);
-		tree_by_priority(&highest_priority_node);
+		if (get_operator_priority(node) > get_operator_priority(root))
+		{
+			node->vect.left = root;
+			return (node);
+		}
+		else
+		{
+			root->vect.right = add_node(root->vect.right, node);
+		}
 	}
-	*tokens = new_tree;
-	return (new_tree);
+	return (root);
+}
+t_mt	*build_binary_tree(t_mt **tokens)
+{
+	t_mt	*tree;
+	t_mt	*current_node;
+
+	tree = NULL;
+	while (*tokens)
+	{
+		// Extraer nodo con prioridad más alta
+		current_node = find_highest_priority_node(tokens);
+		ft_mtsub(tokens, current_node);
+		// Insertar en el árbol binario
+		tree = add_node(tree, current_node);
+	}
+	return (tree);
 }

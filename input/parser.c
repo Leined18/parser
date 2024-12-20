@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:19:37 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/17 17:03:14 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/20 11:48:58 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,12 @@ int	validate_list(t_mt *list)
 			res = check_operators_mt(current);
 		if (current->values.state == PARENTESIS)
 		{ // Paréntesis
-			if (!current->children)
+			if (!current->aux)
 				return (ft_printf("syntax error near unexpected token `)'\n"),
 					0);
-			res = validate_list(current->children);
+			res = !validate_list(current->aux);
 		}
-		current = current->right;
+		current = current->vect.right;
 	}
 	return (res == 0);
 }

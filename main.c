@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/17 17:08:10 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/20 13:12:40 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,30 @@ void	print_state(t_mt *list, void *a)
 	printf("State: %d\n", list->values.state);
 }
 
+int	ft_execute_tree(t_mt *tree, int (*func)(t_mt *node, t_mt *aux))
+{
+	if (!tree)
+		return (0);
+	if (tree->vect.left)
+		ft_execute_tree(tree->vect.left, func);
+	if (tree->vect.right)
+		ft_execute_tree(tree->vect.right, func);
+	return (func(tree, tree->aux));
+}
+
+int	ft_execute(t_mt *tree, t_mt *aux)
+{
+	if (!tree)
+		return (0);
+	(void)aux;
+	printf("Data: %s\n", (char *)tree->data);
+	return (1);
+}
+
 int	main(void)
 {
-	char			*input;
-	t_mt			*list;
-	t_hash_table	*ptable;
+	char	*input;
+	t_mt	*list;
 
 	input = get_next_line(0);
 	input[ft_strlen(input) - 1] = '\0';
@@ -42,14 +61,9 @@ int	main(void)
 		ft_error("Error\n", 1);
 		return (1);
 	}
-	//list = tree_by_priority(&list);  falta implementar
-	ptable = ft_mthash_new_table(3, "parser");
-	if (!ptable)
-		return (1);
-	ptable->methods.add_child(ptable, "tree", list);
-	ft_mtiter(list, NULL, print_state);
-	ptable->methods.print(ptable);
-	ptable->methods.free_table(ptable);
+	// list = build_binary_tree(&list); // falta implementar
+	// ft_execute_tree(list, ft_execute);
+	ft_mtclear(&list);
 	free(input);
 	ft_successful("Success\n", 1);
 	return (0);
