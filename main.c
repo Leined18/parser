@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/20 13:12:40 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/27 08:49:07 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,65 @@ void	print_state(t_mt *list, void *a)
 	printf("State: %d\n", list->values.state);
 }
 
-int	ft_execute_tree(t_mt *tree, int (*func)(t_mt *node, t_mt *aux))
+int	all_nodes_finished(t_mt *head)
 {
-	if (!tree)
+	t_mt	*current;
+
+	current = head;
+	if (!head)
+		return (1);
+	if (current->values.state != END)
 		return (0);
-	if (tree->vect.left)
-		ft_execute_tree(tree->vect.left, func);
-	if (tree->vect.right)
-		ft_execute_tree(tree->vect.right, func);
-	return (func(tree, tree->aux));
+	current = current->vect.right;
+	while (current != head)
+	{
+		if (current->values.state != END)
+			return (0);
+		current = current->vect.right;
+	}
+	return (1);
 }
 
-int	ft_execute(t_mt *tree, t_mt *aux)
+int	node_is_finished(t_mt *node)
 {
-	if (!tree)
-		return (0);
-	(void)aux;
-	printf("Data: %s\n", (char *)tree->data);
+	if (!node)
+		return (-1);
+	if (node->values.state == END)
+		return (1);
+	return (0);
+}
+
+void	execute_circular_list(t_mt *head, int (*proccess_node)(t_mt *))
+{
+	t_mt	*current;
+
+	current = head;
+	if (!head)
+		return ;
+	while (1)
+	{
+		// Procesar solo nodos que no están en estado END
+		if (current->values.state != END)
+		{
+			if (proccess_node(current))
+				current->values.state = END;
+		}
+		// Avanzar al siguiente nodo
+		current = current->vect.right;
+		// Salir si todos los nodos están en estado END
+		if (all_nodes_finished(head))
+			break ;
+	}
+}
+
+int	f(t_mt *list)
+{
+	if (!list)
+		return (-1);
+	printf("key: %s\n", (char *)list->key);
+	printf("Data: %s\n", (char *)list->data);
+	printf("State: %d\n", list->values.state);
+	list->values.state = END;
 	return (1);
 }
 
@@ -61,8 +103,11 @@ int	main(void)
 		ft_error("Error\n", 1);
 		return (1);
 	}
-	// list = build_binary_tree(&list); // falta implementar
-	// ft_execute_tree(list, ft_execute);
+	list->vect.left = ft_mtlast(list);
+	list->vect.left->vect.right = list;
+	execute_circular_list(list, f);
+	list->vect.left->vect.right = NULL;
+	list->vect.left = NULL;
 	ft_mtclear(&list);
 	free(input);
 	ft_successful("Success\n", 1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers_tree_1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 14:41:22 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/20 11:24:46 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/27 08:15:08 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,39 +49,4 @@ int	get_operator_priority(t_mt *node)
 	if (node->values.state == ASSIGNMENT)
 		return (1);
 	return (0); // Otros operadores o estados
-}
-
-t_mt	*find_highest_priority_node(t_mt **tokens)
-{
-	t_mt	*highest_priority_node;
-	t_mt	*current;
-
-	highest_priority_node = NULL;
-	current = *tokens;
-	if (!tokens || !*tokens)
-		return (NULL);
-	// Recorre la lista de tokens
-	while (current)
-	{
-		// Si encuentra un nodo de mayor prioridad
-		if (!highest_priority_node
-			|| get_operator_priority(current) > get_operator_priority(highest_priority_node))
-			highest_priority_node = current;
-		current = current->vect.right;
-	}
-	// Si el nodo tiene dependencias, asegúrate de asignarlas
-	if (highest_priority_node)
-	{
-		// Asigna el nodo izquierdo como el nodo anterior
-		if (highest_priority_node->vect.back == NULL
-			&& highest_priority_node->vect.left)
-			highest_priority_node->vect.back = ft_mtsub(tokens,
-					highest_priority_node->vect.left);
-		// Asigna el nodo derecho como el siguiente
-		if (highest_priority_node->vect.front == NULL
-			&& highest_priority_node->vect.right)
-			highest_priority_node->vect.front = ft_mtsub(tokens,
-					highest_priority_node->vect.right);
-	}
-	return (highest_priority_node);
 }
