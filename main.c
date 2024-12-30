@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/27 08:49:07 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/30 10:08:07 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,65 +26,37 @@ void	print_state(t_mt *list, void *a)
 	printf("State: %d\n", list->values.state);
 }
 
-int	all_nodes_finished(t_mt *head)
+int	process_0_priority(t_mt *list) // funcion de ejemplo
 {
-	t_mt	*current;
+	t_mt *current;
 
-	current = head;
-	if (!head)
-		return (1);
-	if (current->values.state != END)
-		return (0);
-	current = current->vect.right;
-	while (current != head)
+	if (list->aux)
 	{
-		if (current->values.state != END)
-			return (0);
-		current = current->vect.right;
+		current = list->aux;
+		while (current)
+		{
+			printf("%s ", current->key);
+			current = current->aux;
+		}
+		printf("\n");
 	}
-	return (1);
-}
-
-int	node_is_finished(t_mt *node)
-{
-	if (!node)
-		return (-1);
-	if (node->values.state == END)
-		return (1);
 	return (0);
 }
 
-void	execute_circular_list(t_mt *head, int (*proccess_node)(t_mt *))
-{
-	t_mt	*current;
-
-	current = head;
-	if (!head)
-		return ;
-	while (1)
-	{
-		// Procesar solo nodos que no están en estado END
-		if (current->values.state != END)
-		{
-			if (proccess_node(current))
-				current->values.state = END;
-		}
-		// Avanzar al siguiente nodo
-		current = current->vect.right;
-		// Salir si todos los nodos están en estado END
-		if (all_nodes_finished(head))
-			break ;
-	}
-}
-
-int	f(t_mt *list)
+int	exe(t_mt *list)
 {
 	if (!list)
 		return (-1);
+	if (list->values.priority == 0)
+		// aqui puedes gestionar las prioridades y como lo ejecuraras
+		process_0_priority(list);
+	if (list->values.priority == 1)
+		return (1);
+	if (list->values.priority == 2)
+		return (1);
 	printf("key: %s\n", (char *)list->key);
 	printf("Data: %s\n", (char *)list->data);
 	printf("State: %d\n", list->values.state);
-	list->values.state = END;
 	return (1);
 }
 
@@ -103,11 +75,9 @@ int	main(void)
 		ft_error("Error\n", 1);
 		return (1);
 	}
-	list->vect.left = ft_mtlast(list);
-	list->vect.left->vect.right = list;
-	execute_circular_list(list, f);
-	list->vect.left->vect.right = NULL;
-	list->vect.left = NULL;
+	printf("\n");
+	ft_set_priority(list, get_node_priority);
+	ft_execute_list(list, exe);
 	ft_mtclear(&list);
 	free(input);
 	ft_successful("Success\n", 1);
