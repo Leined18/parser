@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 10:50:11 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/20 11:35:29 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/30 12:16:59 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,34 +16,34 @@
  * process_word - Handles words and non-operator tokens
  * @input: The input string
  * @i: Pointer to the current index
- * @tree: Pointer to the root of the tree
+ * @list: Pointer to the root of the list
  */
 
-void	process_subtree(char *input, int *i, t_mt **subtree)
+void	process_sublist(char *input, int *i, t_mt **sublist)
 {
 	while (input[*i] && input[*i] != ')')
 	{
-		process_token(input, i, subtree, transition(START, input[*i]));
+		process_token(input, i, sublist, transition(START, input[*i]));
 	}
 	if (input[*i] == ')') // Ignora el ')' final
 		(*i)++;
 }
 
-t_mt	*create_parentheses_node(t_mt *subtree)
+t_mt	*create_parentheses_node(t_mt *sublist)
 {
 	t_mt	*new_node;
 
 	new_node = create_node("()", PARENTESIS);
-	if (new_node && subtree)
-		ft_mtadd_aux(new_node, subtree);
+	if (new_node && sublist)
+		ft_mtadd_aux(new_node, sublist);
 	return (new_node);
 }
 
-int	process_argument(char *input, int *i, t_mt **tree)
+int	process_argument(char *input, int *i, t_mt **list)
 {
 	e_state	state;
 
-	if (!input || !i || !tree)
+	if (!input || !i || !list)
 		return (0);
 	state = START;
 	state = transition(state, input[*i]);
@@ -51,9 +51,9 @@ int	process_argument(char *input, int *i, t_mt **tree)
 		&& state != PARENTESIS)
 	{
 		if (state == WORD)
-			process_word(input, i, tree, ARGUMENT);
+			process_word(input, i, list, ARGUMENT);
 		if (state == QUOTE)
-			process_quote(input, i, tree, ARGUMENT);
+			process_quote(input, i, list, ARGUMENT);
 		state = transition(state, input[*i]);
 		if (state == START)
 			(*i)++;

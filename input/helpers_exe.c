@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 09:38:35 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/30 09:39:13 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/30 12:25:42 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,22 +59,23 @@ static void	unmake_circular(t_mt **list) // quita la conexion circular
  * @param proccess_node la funcion para procesar cada nodo
  */
 
-void	ft_execute_list(t_mt *head, int (*proccess_node)(t_mt *))
+int	ft_execute_list(t_mt *head, void *p, int (*proccess_node)(t_mt *, void *))
 {
 	t_mt	*current;
 
 	current = head;
 	if (!head)
-		return ;
+		return (-1);
 	make_circular(&head);
 	while (!all_nodes_finished(head)) // exe until all end
 	{
 		if (current->values.state != END)
 		{
-			if (proccess_node(current))
+			if (proccess_node(current, p))
 				current->values.state = END;
 		}
 		current = current->vect.right;
 	}
 	unmake_circular(&head);
+	return (1);
 }

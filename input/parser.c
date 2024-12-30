@@ -6,13 +6,13 @@
 /*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:19:37 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/20 11:48:58 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/30 10:18:05 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "input.h"
 
-int	extend_until_close(char **input)
+static int	extend_until_close(char **input)
 {
 	char	*add;
 	char	*ptr;
@@ -40,7 +40,7 @@ int	extend_until_close(char **input)
 	return (1); // Paréntesis balanceados
 }
 
-int	validate_list(t_mt *list)
+static int	validate_list(t_mt *list)
 {
 	t_mt	*current;
 	int		res;

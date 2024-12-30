@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 09:41:59 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/30 10:12:30 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/30 12:04:12 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,11 @@
  * @param func devuelve el numero de prioridad
  */
 
-void	ft_set_priority(t_mt *list, int (*func)(t_mt *))
+void	ft_set_priority(t_mt *list, void *param, void (*func)(t_mt *, void *))
 {
-	t_mt	*current;
-
 	if (!list || !func)
 		return ;
-	current = list;
-	while (current)
-	{
-		current->values.priority = func(current);
-		current = current->vect.right;
-	}
+	ft_mtiter(list, param, func);
 }
 
 int	get_priority(char *str)
@@ -54,9 +47,10 @@ int	get_priority(char *str)
 }
 
 // Función para obtener la prioridad de un operador
-int	get_node_priority(t_mt *node)
+void	set_node_priority(t_mt *node, void *param)
 {
 	if (!node || !node->data)
-		return (-1);
-	return (get_priority(node->data)); // Otros operadores o estados
+		return ;
+	(void)param;
+	node->values.priority = get_priority(node->data);
 }
