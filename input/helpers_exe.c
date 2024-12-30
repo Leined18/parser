@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 09:38:35 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/30 12:25:42 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/30 12:56:58 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,14 @@ static void	unmake_circular(t_mt **list) // quita la conexion circular
 int	ft_execute_list(t_mt *head, void *p, int (*proccess_node)(t_mt *, void *))
 {
 	t_mt	*current;
+	int		i;
 
 	current = head;
 	if (!head)
 		return (-1);
+	i = 0;
+	if (!p)
+		return (ft_execute_list(head, &i, proccess_node));
 	make_circular(&head);
 	while (!all_nodes_finished(head)) // exe until all end
 	{

@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/30 12:24:57 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/30 12:33:44 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,53 +24,6 @@ void	print_state(t_mt *list, void *a)
 	printf("key: %s\n", (char *)list->key);
 	printf("Data: %s\n", (char *)list->data);
 	printf("State: %d\n", list->values.state);
-}
-
-int	process_0_priority(t_mt *list, void *i, int (*func)(t_mt *, void *))
-// funcion de ejemplo
-{
-	if (list->aux)
-		func(list->aux, i);
-	return (1);
-}
-
-int	pred(t_mt *lst, void *p)
-{
-	if (!lst)
-		return (-1);
-	if (lst->values.priority == *(int *)p && lst->values.state != END)
-		return (1);
-	return (0);
-}
-
-int	exe(t_mt *list, void *i)
-{
-	int	j;
-
-	if (!list)
-		return (-1);
-	j = 0;
-	if (!ft_mtsearch(list, i, pred))
-		*(int *)i += 1;
-	if (list->values.priority == 0 && *(int *)i == 0) // parentesis
-		return (ft_execute_list(list->aux, &j, exe));
-	else if (list->values.priority == 1 && *(int *)i == 1) // logic op
-		return (1);
-	else if (list->values.priority == 2 && *(int *)i == 2) // redirections
-		return (1);
-	else if (list->values.priority == 3 && *(int *)i == 3) // operators
-		return (1);
-	else if (list->values.priority == 4 && *(int *)i == 4) // words
-	{
-		printf("key: %s\n", (char *)list->key);
-		printf("Data: %s\n", (char *)list->data);
-		printf("State: %d\n", list->values.state);
-		printf("priority: %d\n", list->values.priority);
-		return (1);
-	}
-	else if (list->values.priority == 5 && *(int *)i == 5) // assignaments
-		return (1);
-	return (0);
 }
 
 int	main(void)
@@ -91,8 +44,6 @@ int	main(void)
 	}
 	printf("\n");
 	i = 0;
-	ft_set_priority(list, NULL, set_node_priority);
-	ft_execute_list(list, &i, exe);
 	ft_mtclear(&list);
 	free(input);
 	ft_successful("Success\n", 1);

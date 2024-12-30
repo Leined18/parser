@@ -35,8 +35,6 @@ t_mt	*tokenize(const char *input, int *i);
 // helpers_priority
 void	set_node_priority(t_mt *node, void *param);
 int		get_priority(char *str);
-void	ft_set_priority(t_mt *list, void *param, void (*func)(t_mt *, void *));
-// helpers_node.c
 t_mt	*create_node(char *data, e_state state);
 
 // helpers_parse.c

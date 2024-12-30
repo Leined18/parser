@@ -6,26 +6,11 @@
 /*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 09:41:59 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/30 12:04:12 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/30 12:36:52 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "input.h"
-
-/**
- * @brief  funcion para establecer la
- * prioridad de cada nodo de una lista segun lo que devuelve func
- *
- * @param list lista de nodos
- * @param func devuelve el numero de prioridad
- */
-
-void	ft_set_priority(t_mt *list, void *param, void (*func)(t_mt *, void *))
-{
-	if (!list || !func)
-		return ;
-	ft_mtiter(list, param, func);
-}
 
 int	get_priority(char *str)
 {
