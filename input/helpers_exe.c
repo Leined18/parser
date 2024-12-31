@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers_exe.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 09:38:35 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/30 12:56:58 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/31 17:05:11 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,20 @@ static void	unmake_circular(t_mt **list) // quita la conexion circular
 	(*list)->vect.left = NULL;
 }
 
+static int	is_circular(t_mt *list)
+{
+	t_mt	*current;
+
+	current = list;
+	while (current->vect.right)
+	{
+		if (current->vect.right == list)
+			return (1);
+		current = current->vect.right;
+	}
+	return (0);
+}
+
 /**
  * @brief funcion para uso modular, pasas una funcion,
 	si devuelve 1 es que has terminado y marca estado END
@@ -70,7 +84,8 @@ int	ft_execute_list(t_mt *head, void *p, int (*proccess_node)(t_mt *, void *))
 	i = 0;
 	if (!p)
 		return (ft_execute_list(head, &i, proccess_node));
-	make_circular(&head);
+	if (!is_circular(head))
+		make_circular(&head);
 	while (!all_nodes_finished(head)) // exe until all end
 	{
 		if (current->values.state != END)
