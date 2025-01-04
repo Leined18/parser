@@ -1,9 +1,0 @@
-exe
-inc
-input
-libparse.a
-main.c
-Makefile
-obj
-signals
-sopa=gas

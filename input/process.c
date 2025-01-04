@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:52:53 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/30 10:49:58 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/04 22:16:59 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	process_word(char *input, int *i, t_mt **list, e_state state)
 	if (token)
 	{
 		if (state == ARGUMENT)
-			ft_mtadd_aux(ft_mtlast(*list), create_node(token, ARGUMENT));
+			ft_mtadd_aux(ft_mtlast(*list, RIGHT), create_node(token, ARGUMENT));
 		else if (state == WORD)
 		{
 			if (ft_strchr(token, '='))
@@ -57,7 +57,7 @@ int	process_quote(char *input, int *i, t_mt **list, e_state state)
 	{
 		if (state == ARGUMENT)
 		{
-			ft_mtadd_aux(ft_mtlast(*list), create_node(token, ARGUMENT));
+			ft_mtadd_aux(ft_mtlast(*list, RIGHT), create_node(token, ARGUMENT));
 			free(token);
 			return (1);
 		}

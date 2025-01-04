@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/30 12:33:44 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/04 22:21:35 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	main(void)
 {
 	char	*input;
 	t_mt	*list;
-	int		i;
 
 	input = get_next_line(0);
 	input[ft_strlen(input) - 1] = '\0';
@@ -43,7 +42,6 @@ int	main(void)
 		return (1);
 	}
 	printf("\n");
-	i = 0;
 	ft_mtclear(&list);
 	free(input);
 	ft_successful("Success\n", 1);

@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 09:38:35 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/31 17:05:11 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/04 22:19:39 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,26 +29,26 @@ static int	all_nodes_finished(t_mt *head)
 		return (1);
 	if (current->values.state != END)
 		return (0);
-	current = current->vect.right;
+	current = current->vect[RIGHT];
 	while (current != head)
 	{
 		if (current->values.state != END)
 			return (0);
-		current = current->vect.right;
+		current = current->vect[RIGHT];
 	}
 	return (1);
 }
 
 static void	make_circular(t_mt **list) // pone una conexcion circular
 {
-	(*list)->vect.left = ft_mtlast((*list));
-	(*list)->vect.left->vect.right = (*list);
+	(*list)->vect[LEFT] = ft_mtlast((*list), RIGHT);
+	(*list)->vect[LEFT]->vect[RIGHT] = (*list);
 }
 
 static void	unmake_circular(t_mt **list) // quita la conexion circular
 {
-	(*list)->vect.left->vect.right = NULL;
-	(*list)->vect.left = NULL;
+	(*list)->vect[LEFT]->vect[RIGHT] = NULL;
+	(*list)->vect[LEFT] = NULL;
 }
 
 static int	is_circular(t_mt *list)
@@ -56,11 +56,11 @@ static int	is_circular(t_mt *list)
 	t_mt	*current;
 
 	current = list;
-	while (current->vect.right)
+	while (current->vect[RIGHT])
 	{
-		if (current->vect.right == list)
+		if (current->vect[RIGHT] == list)
 			return (1);
-		current = current->vect.right;
+		current = current->vect[RIGHT];
 	}
 	return (0);
 }
@@ -93,7 +93,7 @@ int	ft_execute_list(t_mt *head, void *p, int (*proccess_node)(t_mt *, void *))
 			if (proccess_node(current, p))
 				current->values.state = END;
 		}
-		current = current->vect.right;
+		current = current->vect[RIGHT];
 	}
 	unmake_circular(&head);
 	return (1);

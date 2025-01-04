@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers_priority.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 09:41:59 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/30 12:36:52 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/04 22:21:02 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ int	get_priority(char *str)
 {
 	if (!str)
 		return (-1);
-	if (!ft_strcmp(str, "()"))
+	if (!ft_strncmp(str, "()", 2) || !ft_strncmp(str, "{}", 2))
 		return (0);
-	else if (!ft_strcmp(str, "&&") || !ft_strcmp(str, "||"))
+	else if (!ft_strncmp(str, "&&", 2) || !ft_strncmp(str, "||", 2))
 		return (1);
 	else if (!ft_strncmp(str, ">", 1) || !ft_strncmp(str, "<", 1))
 		return (2);
-	else if (!ft_strcmp(str, "|") || !ft_strcmp(str, "&"))
+	else if (!ft_strncmp(str, "|", 2) || !ft_strncmp(str, "&", 2))
 		return (3);
 	else if (str && !ft_strchr(str, '=')) // word or quote
 		return (4);

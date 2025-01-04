@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers_parse_1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 10:11:34 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/20 09:08:14 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/04 22:19:01 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	check_operators_mt(t_mt *op)
 	if (!op)
 		return (1);
 	current = op;
-	if (!current->vect.left || !current->vect.right)
+	if (!current->vect[LEFT] || !current->vect[RIGHT])
 	{
 		ft_printf("syntax error near unexpected token `%s'\n",
 			(char *)current->data);
@@ -93,15 +93,15 @@ int	check_redirections_mt(t_mt *op)
 	if (!op)
 		return (1);
 	current = op;
-	if (!current->vect.right || !current->vect.left)
+	if (!current->vect[RIGHT] || !current->vect[LEFT])
 	{
-		if (current->vect.right && current->vect.right->values.state != WORD)
+		if (current->vect[RIGHT] && current->vect[RIGHT]->values.state != WORD)
 			ft_printf("syntax error near unexpected token `%s'\n",
-				(char *)current->vect.right->data);
-		else if (current->vect.left && current->vect.left->values.state != WORD)
+				(char *)current->vect[RIGHT]->data);
+		else if (current->vect[LEFT] && current->vect[LEFT]->values.state != WORD)
 			ft_printf("syntax error near unexpected token `%s'\n",
-				(char *)current->vect.left->data);
-		else if (!current->vect.right)
+				(char *)current->vect[LEFT]->data);
+		else if (!current->vect[RIGHT])
 			ft_printf("syntax error near unexpected token `newline'\n");
 		else
 			return (0);
