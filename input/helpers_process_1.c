@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers_process_1.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 10:50:11 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/30 12:16:59 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/07 11:12:06 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_mt	*create_parentheses_node(t_mt *sublist)
 
 	new_node = create_node("()", PARENTESIS);
 	if (new_node && sublist)
-		ft_mtadd_aux(new_node, sublist);
+		ft_mtaddlast_aux(new_node, sublist);
 	return (new_node);
 }
 

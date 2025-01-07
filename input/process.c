@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:52:53 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/04 22:16:59 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/07 11:11:07 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,16 @@ int	process_word(char *input, int *i, t_mt **list, e_state state)
 	if (token)
 	{
 		if (state == ARGUMENT)
-			ft_mtadd_aux(ft_mtlast(*list, RIGHT), create_node(token, ARGUMENT));
+			ft_mtaddlast_aux(ft_mtlast(*list, RIGHT), create_node(token, ARGUMENT));
 		else if (state == WORD)
 		{
 			if (ft_strchr(token, '='))
 			{
-				ft_mtadd_right(list, create_node(token, ASSIGNMENT));
+				ft_mtaddlast_right(list, create_node(token, ASSIGNMENT));
 				return (free(token), 1);
 			}
 			else
-				ft_mtadd_right(list, create_node(token, WORD));
+				ft_mtaddlast_right(list, create_node(token, WORD));
 			process_argument(input, i, list);
 		}
 		free(token);
@@ -57,13 +57,13 @@ int	process_quote(char *input, int *i, t_mt **list, e_state state)
 	{
 		if (state == ARGUMENT)
 		{
-			ft_mtadd_aux(ft_mtlast(*list, RIGHT), create_node(token, ARGUMENT));
+			ft_mtaddlast_aux(ft_mtlast(*list, RIGHT), create_node(token, ARGUMENT));
 			free(token);
 			return (1);
 		}
 		else if (state == QUOTE)
 		{
-			ft_mtadd_right(list, create_node(token, WORD));
+			ft_mtaddlast_right(list, create_node(token, WORD));
 			process_argument(input, i, list);
 		}
 		free(token);
@@ -86,7 +86,7 @@ int	process_operator(char *input, int *i, t_mt **list)
 	token = extract_operator_token(input, i);
 	if (token)
 	{
-		ft_mtadd_right(list, create_node(token, OPERATOR));
+		ft_mtaddlast_right(list, create_node(token, OPERATOR));
 		free(token);
 	}
 	return (1);
@@ -101,7 +101,7 @@ int	process_redirection(char *input, int *i, t_mt **list)
 	token = extract_operator_token(input, i);
 	if (token)
 	{
-		ft_mtadd_right(list, create_node(token, REDIRECTION));
+		ft_mtaddlast_right(list, create_node(token, REDIRECTION));
 		free(token);
 	}
 	return (1);
@@ -131,6 +131,6 @@ int	process_parentheses(char *input, int *i, t_mt **list)
 	new_node = create_parentheses_node(sublist);
 	if (!new_node)
 		return (0);
-	ft_mtadd_right(list, new_node);
+	ft_mtaddlast_right(list, new_node);
 	return (1);
 }
