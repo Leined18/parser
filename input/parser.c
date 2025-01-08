@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:19:37 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/04 22:17:39 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/08 11:05:04 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static int	validate_list(t_mt *list)
 	return (res == 0);
 }
 
-t_mt	*parse_input(const char *input)
+t_mt	*ft_parse_input(const char *input)
 {
 	t_mt	*tokens;
 	int		i;
