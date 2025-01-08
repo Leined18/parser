@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/04 22:21:35 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/08 10:18:33 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@
 void	print_state(t_mt *list, void *a)
 {
 	(void)a;
+	if (!list)
+		return ;
+	printf("\n");
 	printf("key: %s\n", (char *)list->key);
 	printf("Data: %s\n", (char *)list->data);
 	printf("State: %d\n", list->values.state);
@@ -41,6 +44,7 @@ int	main(void)
 		ft_error("Error\n", 1);
 		return (1);
 	}
+	ft_mtiter(list, NULL, print_state);
 	printf("\n");
 	ft_mtclear(&list);
 	free(input);
