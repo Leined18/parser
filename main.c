@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/08 10:18:33 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/08 17:51:09 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,22 @@ void	print_state(t_mt *list, void *a)
 	printf("State: %d\n", list->values.state);
 }
 
+void	print_elements(t_mt *node, int depth)
+{
+	while (node)
+	{
+		for (int i = 1; i < depth; i++)
+			ft_printf("      ");
+		if (depth > 0)
+			ft_printf("  |____[%s]\n", (char *)(node->data));
+		else
+			ft_printf("[%s]\n", (char *)(node->data));
+		if (node->aux)
+			print_elements(node->aux, depth + 1);
+		node = node->vect[RIGHT];
+	}
+}
+
 int	main(void)
 {
 	char	*input;
@@ -37,7 +53,7 @@ int	main(void)
 	input = get_next_line(0);
 	input[ft_strlen(input) - 1] = '\0';
 	list = NULL;
-	list = parse_input(input);
+	list = ft_parse_input(input);
 	if (!list)
 	{
 		free(input);
@@ -45,6 +61,8 @@ int	main(void)
 		return (1);
 	}
 	ft_mtiter(list, NULL, print_state);
+	printf("\n");
+	print_elements(list, 0);
 	printf("\n");
 	ft_mtclear(&list);
 	free(input);
