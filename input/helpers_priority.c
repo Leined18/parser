@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 09:41:59 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/04 22:21:02 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/09 12:19:50 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	get_priority(char *str)
 		return (1);
 	else if (!ft_strncmp(str, ">", 1) || !ft_strncmp(str, "<", 1))
 		return (2);
-	else if (!ft_strncmp(str, "|", 2) || !ft_strncmp(str, "&", 2))
+	else if (!ft_strncmp(str, "|", 1) || !ft_strncmp(str, "&", 1))
 		return (3);
 	else if (str && !ft_strchr(str, '=')) // word or quote
 		return (4);
