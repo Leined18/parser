@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   helpers_exe.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 09:38:35 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/04 22:19:39 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/10 17:10:54 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "input.h"
+#include "exe.h"
 
 /**
  * @brief checkea si todos los nodos tienen el estado END
@@ -73,7 +74,7 @@ static int	is_circular(t_mt *list)
  * @param proccess_node la funcion para procesar cada nodo
  */
 
-int	ft_execute_list(t_mt *head, void *p, int (*proccess_node)(t_mt *, void *))
+int	ft_execute_list(t_mt *head, void *p, t_env *env, int (*proccess_node)(t_mt *, void *, t_env *))
 {
 	t_mt	*current;
 	int		i;
@@ -83,14 +84,14 @@ int	ft_execute_list(t_mt *head, void *p, int (*proccess_node)(t_mt *, void *))
 		return (-1);
 	i = 0;
 	if (!p)
-		return (ft_execute_list(head, &i, proccess_node));
+		return (ft_execute_list(head, &i, env, proccess_node));
 	if (!is_circular(head))
 		make_circular(&head);
 	while (!all_nodes_finished(head)) // exe until all end
 	{
 		if (current->values.state != END)
 		{
-			if (proccess_node(current, p))
+			if (proccess_node(current, p, env))
 				current->values.state = END;
 		}
 		current = current->vect[RIGHT];
