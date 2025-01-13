@@ -6,6 +6,7 @@
 
 typedef enum e_state
 {
+	END,         // Estado final
 	START,       // Estado inicial
 	PARENTESIS,  // Procesando paréntesis
 	QUOTE,       // Procesando contenido entre comillas
@@ -15,8 +16,8 @@ typedef enum e_state
 	ASSIGNMENT,  // Procesando una asignación (VAR=value)
 	WORD,        // Procesando una palabra (comando o argumento)
 	ARGUMENT,    // Procesando un argumento
-	COMMENT,     // Ignorar contenido después de un #
-	END          // Estado final
+	COMMENT      // Ignorar contenido después de un #
+
 }		e_state;
 
 // state.c

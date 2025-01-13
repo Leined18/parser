@@ -6,7 +6,7 @@
 #    By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 14:34:27 by danpalac          #+#    #+#              #
-#    Updated: 2024/12/30 10:25:10 by danpalac         ###   ########.fr        #
+#    Updated: 2025/01/13 09:03:27 by danpalac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,15 +83,15 @@ CFLAGS		:= -Wall -Wextra -Werror -g3 -fsanitize=address
 RM			:= rm -rf
 AR			:= ar rcs
 MKDIR 		:= mkdir -p
-LIB 		:= -L$(LIB_DIR) -lmt -lft
+LIB 		:= -L$(LIB_DIR) -lexe -lmt -lft
 IFLAGS		:= -I$(LIB_DIR) -I$(INC)
-LFLAGS		:= -L$(LIB_DIR) -lmt -lft -fsanitize=address
+LFLAGS		:= $(LIB) -fsanitize=address
 
 #==========SOURCES============================================================#
 
 INPUT_FILES	:= process_token process parser state tokenizer \
 			helpers_is_1 helpers_is_2 helpers_parse_1 helpers_extract_1 \
-			helpers_process_1 helpers_node_1 helpers_exe helpers_priority \
+			helpers_process_1 helpers_node_1 helpers_priority \
 			helpers_state
 
 #==========FILES==============================================================#
