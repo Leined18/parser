@@ -6,7 +6,7 @@
 #    By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 14:34:27 by danpalac          #+#    #+#              #
-#    Updated: 2025/01/13 09:03:27 by danpalac         ###   ########.fr        #
+#    Updated: 2025/01/13 11:23:25 by danpalac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -134,13 +134,16 @@ $(MEMTRACK):
 clean:
 	@make clean -sC $(LIBFT_DIR)	
 	@make clean -sC $(MEMTRACK_DIR)
-	@$(RM) $(OBJ_DIR) $(LIB_DIR)
+	@if [ -d "$(OBJ_DIR)" ]; then \
+		$(RM) $(OBJ_DIR) $(LIB_DIR); \
+		echo "$(CYAN)[$(NAME)]:\tobject files $(GREEN) => Cleaned!$(DEF_COLOR)"; \
+	fi
+	
 
 fclean: clean
 	@make fclean -sC $(LIBFT_DIR)
 	@make fclean -sC $(MEMTRACK_DIR)
 	@$(RM) $(NAME) $(EXE)
-	@echo "$(CYAN)[$(NAME)]:\tfiles $(GREEN) => Cleaned!$(DEF_COLOR)"
 
 re: fclean all
 
