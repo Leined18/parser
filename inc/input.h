@@ -6,17 +6,18 @@
 
 typedef enum e_state
 {
-	END,         // Estado final
-	START,       // Estado inicial
-	PARENTESIS,  // Procesando paréntesis
-	QUOTE,       // Procesando contenido entre comillas
-	REDIRECTION, // Procesando redirecciones: >, >>, << (heredoc incluido)
-	OPERATOR,    // Operadores como |, &&, ||
-	EXPANSION,   // Procesando expansiones como $, ${}
-	ASSIGNMENT,  // Procesando una asignación (VAR=value)
-	WORD,        // Procesando una palabra (comando o argumento)
-	ARGUMENT,    // Procesando un argumento
-	COMMENT      // Ignorar contenido después de un #
+	END,          // Estado final
+	START,        // Estado inicial
+	PARENTESIS,   // Procesando paréntesis
+	SINGLE_QUOTE, // Procesando contenido entre comillas
+	DOUBLE_QUOTE, // Procesando contenido entre comillas dobles
+	REDIRECTION,  // Procesando redirecciones: >, >>, << (heredoc incluido)
+	OPERATOR,     // Operadores como |, &&, ||
+	EXPANSION,    // Procesando expansiones como $, ${}
+	ASSIGNMENT,   // Procesando una asignación (VAR=value)
+	WORD,         // Procesando una palabra (comando o argumento)
+	ARGUMENT,     // Procesando un argumento
+	COMMENT       // Ignorar contenido después de un #
 
 }		e_state;
 
@@ -28,7 +29,8 @@ e_state	transition(e_state current, char c);
 e_state	handle_start(char c);
 e_state	handle_word(char c);
 e_state	handle_redirection(char c);
-e_state	handle_quote(char c);
+e_state	handle_single_quote(char c);
+e_state	handle_double_quote(char c);
 e_state	handle_operator(char c);
 e_state	handle_parentesis(char c);
 // tokenizer.c
@@ -51,7 +53,8 @@ t_mt	*create_parentheses_node(t_mt *sublist);
 int		process_argument(char *input, int *i, t_mt **list);
 
 // helpers_is_1.c
-int		is_quoted(char c);
+int		is_double_quoted(char c);
+int		is_single_quoted(char c);
 int		is_operator(char c);
 int		is_redirection(char c);
 int		has_higher_precedence(char *op1, char *op2);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers_process_1.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 10:50:11 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/07 11:12:06 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/15 19:01:11 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	process_argument(char *input, int *i, t_mt **list)
 	{
 		if (state == WORD)
 			process_word(input, i, list, ARGUMENT);
-		if (state == QUOTE)
+		if (state == SINGLE_QUOTE || state == DOUBLE_QUOTE)
 			process_quote(input, i, list, ARGUMENT);
 		state = transition(state, input[*i]);
 		if (state == START)

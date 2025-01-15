@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 11:57:04 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/12 12:14:23 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/15 19:08:11 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,6 @@ char	*extract_quoted_token(char *str, int *i)
 	return (ft_substr(str, start, *i - start - 1)); // Excluye las comillas
 }
 
-/**
- * extract_operator_token - Extrae un operador (|, >, <, >>, <<).
- */
 char	*extract_operator_token(char *str, int *i)
 {
 	int	start;
@@ -48,9 +45,6 @@ char	*extract_operator_token(char *str, int *i)
 	return (ft_substr(str, start, *i - start));
 }
 
-/**
- * extract_word_token - Extrae un token de palabra (sin comillas ni operadores).
- */
 char	*extract_word_token(char *str, int *i)
 {
 	int	start;
@@ -59,8 +53,8 @@ char	*extract_word_token(char *str, int *i)
 		return (NULL);
 	start = *i;
 	while (!is_whitespace(str[*i]) && !is_operator(str[*i])
-		&& !is_quoted(str[*i]) && str[*i] && !is_redirection(str[*i])
-		&& !is_parentesis(str[*i]))
+		&& !is_single_quoted(str[*i]) && !is_double_quoted(str[*i]) && str[*i]
+		&& !is_redirection(str[*i]) && !is_parentesis(str[*i]))
 		(*i)++;
 	return (ft_substr(str, start, *i - start));
 }

@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   helpers_state.c                                    :+:      :+:    :+:   */
+/*   helpers_state_1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/30 10:20:51 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/15 19:16:31 by danpalac         ###   ########.fr       */
+/*   Created: 2025/01/15 19:16:18 by danpalac          #+#    #+#             */
+/*   Updated: 2025/01/15 19:16:43 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "input.h"
 
-e_state	handle_word(char c)
+e_state	handle_single_quote(char c)
 {
+	if (c == '\'' || c == '\"')
+		return (START); // Cierra las comillas
 	if (is_whitespace(c))
 		return (START);
+	if (ft_isalnum(c))
+		return (WORD);
 	if (is_operator(c))
 		return (OPERATOR);
 	if (is_redirection(c))
@@ -24,26 +28,24 @@ e_state	handle_word(char c)
 		return (PARENTESIS);
 	if (c == '$')
 		return (EXPANSION);
-	if (is_asignation(c))
-		return (ASSIGNMENT);
-	return (WORD);
+	return (SINGLE_QUOTE);
 }
 
-e_state	handle_operator(char c)
+e_state	handle_double_quote(char c)
 {
-	(void)c;
-	return (START);
-}
-
-e_state	handle_parentesis(char c)
-{
-	if (c == '(')
+	if (c == '\'' || c == '\"')
+		return (START); // Cierra las comillas
+	if (is_whitespace(c))
+		return (START);
+	if (ft_isalnum(c))
+		return (WORD);
+	if (is_operator(c))
+		return (OPERATOR);
+	if (is_redirection(c))
+		return (REDIRECTION);
+	if (is_parentesis(c))
 		return (PARENTESIS);
-	return (START);
-}
-
-e_state	handle_redirection(char c)
-{
-	(void)c;
-	return (START);
+	if (c == '$')
+		return (EXPANSION);
+	return (DOUBLE_QUOTE);
 }

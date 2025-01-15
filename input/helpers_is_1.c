@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   helpers_is.c                                       :+:      :+:    :+:   */
+/*   helpers_is_1.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 11:47:38 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/12 10:13:28 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/15 19:07:10 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,14 @@
  *
  * Return: 1 si es comilla, 0 si no lo es.
  */
-int	is_quoted(char c)
+int	is_double_quoted(char c)
 {
 	return (c == '\'' || c == '"');
+}
+
+int	is_single_quoted(char c)
+{
+	return (c == '\'');
 }
 
 /**

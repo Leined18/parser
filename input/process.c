@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:52:53 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/07 11:11:07 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/15 19:02:59 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ int	process_quote(char *input, int *i, t_mt **list, e_state state)
 			free(token);
 			return (1);
 		}
-		else if (state == QUOTE)
+		else if (state == SINGLE_QUOTE || state == DOUBLE_QUOTE)
 		{
-			ft_mtaddlast_right(list, create_node(token, WORD));
+			ft_mtaddlast_right(list, create_node(token, state));
 			process_argument(input, i, list);
 		}
 		free(token);

@@ -10,7 +10,7 @@
         "arg1 arg2 cat > | cat <"
       ],
       "stopAtEntry": false,
-      "cwd": "${workspaceFolder}",
+      "cwd": "${workspaceFolder}/",
       "environment": [],
       "externalConsole": false,
       "MIMode": "gdb",
