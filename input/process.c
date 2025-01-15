@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:52:53 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/15 19:35:42 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/15 19:58:32 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,15 @@ int	process_word(char *input, int *i, t_mt **list, e_state state)
 	token = extract_word_token(input, i);
 	if (!token)
 		return (0);
-	if (state == ARGUMENT)
-		ft_mtaddlast_aux(ft_mtlast(*list, RIGHT), create_node(token, ARGUMENT));
 	else if (state == WORD)
 	{
-		if (ft_strchr(token, '='))
-		{
-			ft_mtaddlast_right(list, create_node(token, ASSIGNMENT));
-			return (free(token), 1);
-		}
-		else
-			ft_mtaddlast_right(list, create_node(token, WORD));
-		process_argument(input, i, list);
+		ft_mtaddlast_right(list, create_node(token, WORD));
+		process_argument(input, i, &(*list)->aux);
+	}
+	else if (ft_strchr(token, '='))
+	{
+		ft_mtaddlast_right(list, create_node(token, ASSIGNMENT));
+		return (free(token), 1);
 	}
 	else
 		ft_mtaddlast_right(list, create_node(token, state));
@@ -54,22 +51,20 @@ int	process_quote(char *input, int *i, t_mt **list, e_state state)
 	if (!input || !i || !list)
 		return (0);
 	token = extract_quoted_token(input, i);
-	if (token)
+	if (!token)
+		return (0);
+	if (state == ARGUMENT)
 	{
-		if (state == ARGUMENT)
-		{
-			ft_mtaddlast_aux(ft_mtlast(*list, RIGHT), create_node(token,
-					ARGUMENT));
-			free(token);
-			return (1);
-		}
-		else if (state == SINGLE_QUOTE || state == DOUBLE_QUOTE)
-		{
-			ft_mtaddlast_right(list, create_node(token, state));
-			process_argument(input, i, list);
-		}
+		ft_mtaddlast_aux(ft_mtlast(*list, RIGHT), create_node(token, ARGUMENT));
 		free(token);
+		return (1);
 	}
+	else if (state == SINGLE_QUOTE || state == DOUBLE_QUOTE)
+	{
+		ft_mtaddlast_right(list, create_node(token, state));
+		process_argument(input, i, list);
+	}
+	free(token);
 	return (1);
 }
 
