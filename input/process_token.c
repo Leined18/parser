@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 10:54:30 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/15 19:28:22 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/15 19:32:39 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	process_token(char *input, int *i, t_mt **list, e_state state)
 		process_operator(input, i, list);
 	else if (state == REDIRECTION)
 		process_redirection(input, i, list);
+	else if (state == EXPANSION)
+		process_word(input, i, list, state);
 	else
 		(*i)++;
 	return (1);

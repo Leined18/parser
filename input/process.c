@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:52:53 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/15 19:02:59 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/15 19:35:42 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,24 @@ int	process_word(char *input, int *i, t_mt **list, e_state state)
 	if (!input || !i || !list)
 		return (0);
 	token = extract_word_token(input, i);
-	if (token)
+	if (!token)
+		return (0);
+	if (state == ARGUMENT)
+		ft_mtaddlast_aux(ft_mtlast(*list, RIGHT), create_node(token, ARGUMENT));
+	else if (state == WORD)
 	{
-		if (state == ARGUMENT)
-			ft_mtaddlast_aux(ft_mtlast(*list, RIGHT), create_node(token, ARGUMENT));
-		else if (state == WORD)
+		if (ft_strchr(token, '='))
 		{
-			if (ft_strchr(token, '='))
-			{
-				ft_mtaddlast_right(list, create_node(token, ASSIGNMENT));
-				return (free(token), 1);
-			}
-			else
-				ft_mtaddlast_right(list, create_node(token, WORD));
-			process_argument(input, i, list);
+			ft_mtaddlast_right(list, create_node(token, ASSIGNMENT));
+			return (free(token), 1);
 		}
-		free(token);
+		else
+			ft_mtaddlast_right(list, create_node(token, WORD));
+		process_argument(input, i, list);
 	}
+	else
+		ft_mtaddlast_right(list, create_node(token, state));
+	free(token);
 	return (1);
 }
 
@@ -57,7 +58,8 @@ int	process_quote(char *input, int *i, t_mt **list, e_state state)
 	{
 		if (state == ARGUMENT)
 		{
-			ft_mtaddlast_aux(ft_mtlast(*list, RIGHT), create_node(token, ARGUMENT));
+			ft_mtaddlast_aux(ft_mtlast(*list, RIGHT), create_node(token,
+					ARGUMENT));
 			free(token);
 			return (1);
 		}
