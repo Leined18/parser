@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:52:53 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/15 19:58:32 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/17 16:01:34 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 int	process_word(char *input, int *i, t_mt **list, e_state state)
 {
 	char	*token;
+	t_mt	*last;
 
 	if (!input || !i || !list)
 		return (0);
@@ -31,7 +32,8 @@ int	process_word(char *input, int *i, t_mt **list, e_state state)
 	else if (state == WORD)
 	{
 		ft_mtaddlast_right(list, create_node(token, WORD));
-		process_argument(input, i, &(*list)->aux);
+		last = ft_mtlast(*list, RIGHT);
+		process_argument(input, i, &last->aux);
 	}
 	else if (ft_strchr(token, '='))
 	{
