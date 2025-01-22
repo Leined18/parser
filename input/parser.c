@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:19:37 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/08 11:05:04 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/22 14:33:17 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static int	extend_until_close(char **input)
 		add = get_next_line(0);
 		if (!add)
 			return (0);
-		add[ft_strlen(add) - 1] = '\0';
 		ptr = ft_strjoin_free(&ptr, &add);
 		if (!ptr)
 			return (0);
