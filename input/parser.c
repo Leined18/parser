@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:19:37 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/22 14:33:17 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/23 14:52:23 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,67 @@ static int	validate_list(t_mt *list)
 	return (res == 0);
 }
 
+
+static void	ft_set_priority(t_mt *list, void *param, void (*func)(t_mt *, void *))
+{
+	if (!list || !func)
+		return ;
+	ft_mtiter(list, param, func);
+}
+
+static int	pred(t_mt *lst, void *p)
+{
+	if (!lst)
+		return (-1);
+	if (lst->values.priority == *(int *)p)
+		return (1);
+	return (0);
+}
+
+t_mt	**ft_token_add_avalible(t_mt *token, t_mt *new)
+{
+	if (!token || !new)
+		return NULL;
+	if (!token->vect[LEFT])
+		ft_token_add_left(token, new);
+	else
+		ft_token_add_right(token, new);
+	return &new;
+}
+
+
+t_mt *ft_tree_builder(t_mt *tokens, t_mt **tree, int *i)
+{
+    t_mt    *current;
+    t_mt    *aux[2];
+    t_mt    *sub;
+
+    if (!tokens) // Condición base para detener la recursión
+        return NULL;
+    current = tokens;
+	i = 0;
+	if (!*tree)
+    	(*tree) = ft_mtnew("ROOT",NULL, NONE);
+    aux[0] = ft_mtsearch(current, &i, pred);
+	if (!aux[0])
+		return (ft_tree_builder(current, tree, &i + 1));
+	sub = ft_mtsub(current, aux[0]);
+	if (sub->values.state == PARENTESIS)
+	{
+		aux[1] = ft_tree_builder(sub->aux, NULL, &i);
+		ft_mtdelete(&sub);
+		ft_token_add_avalible(tree, aux[1]);
+	}
+	else
+		return (ft_tree_builder(current, ft_token_add_avalible(tree, sub), &i));
+    return tree;
+}
+
+
 t_mt	*ft_parse_input(const char *input)
 {
 	t_mt	*tokens;
+	t_mt	*tree;
 	int		i;
 	char	*input_new;
 
@@ -81,6 +139,8 @@ t_mt	*ft_parse_input(const char *input)
 		return (free(input_new), NULL);
 	if (!validate_list(tokens))
 		(ft_mtclear(&tokens), tokens = NULL);
+	ft_set_priority(tokens, (void *)&(int){0}, set_node_priority);
+	tree = ft_tree_builder(tokens, NULL, &i);
 	free(input_new);
-	return (tokens);
+	return (tree);
 }

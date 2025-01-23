@@ -39,6 +39,8 @@ t_mt	*tokenize(const char *input, int *i);
 void	set_node_priority(t_mt *node, void *param);
 int		get_priority(char *str);
 t_mt	*create_node(char *data, e_state state);
+void	ft_token_add_left(t_mt **list, t_mt *new);
+void	ft_token_add_right(t_mt **list, t_mt *new);
 
 // helpers_parse.c
 int		check_operators_mt(t_mt *op);
