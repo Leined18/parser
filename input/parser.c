@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:19:37 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/23 15:59:33 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/23 18:19:04 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,60 +79,57 @@ static int	pred(t_mt *lst, void *p)
 	if (!lst)
 		return (-1);
 	if (lst->values.priority == *(int *)p)
+	{
+		lst->ptr_aux = "FOUND";
 		return (1);
+	}
 	return (0);
 }
 
-t_mt	*ft_token_add_avalible(t_mt **token, t_mt *new)
+t_mt	*ft_token_add_avalible(t_mt **tree, t_mt *new)
 {
-	if (!(*token) || !new)
+	if (!(*tree) || !new)
 		return (NULL);
-	if (!(*token)->vect[LEFT])
-		ft_token_add_left(token, new);
+	if ((*tree)->values.priority <= new->values.priority && new->values.state != WORD)
+	{
+		if ((*tree)->vect[LEFT])
+			return (ft_token_add_avalible(&(*tree)->vect[LEFT], new));
+		return (ft_token_add_left(tree, new), NULL);
+	}
 	else
-		ft_token_add_right(token, new);
-	return (new);
-}
-
-t_mt	*ft_token_get_avalible(t_mt *token)
-{
-	if (token->vect[LEFT])
-		return (token->vect[LEFT]);
-	if (token->vect[RIGHT])
-		return (token->vect[RIGHT]);
+	{
+		if ((*tree)->vect[RIGHT])
+			return (ft_token_add_avalible(&(*tree)->vect[RIGHT], new));
+		return (ft_token_add_right(tree, new), NULL);
+	}
 	return (NULL);
 }
 
-	t_mt *ft_tree_builder(t_mt *tokens, t_mt **tree, int i)
+t_mt	*ft_tree_builder(t_mt *tokens, t_mt **tree, int i)
 {
-	t_mt	*current;
-	t_mt	*aux[2];
-	t_mt	*sub;
-	t_mt	*root;
+	t_mt	*aux[4];
+	t_mt	*sub[2];
 
 	if (!tokens) // Condición base para detener la recursión
 		return (NULL);
-	current = tokens;
+	aux[0] = ft_mtsearch(tokens, &i, pred);
+	if (!aux[0])
+		return (ft_tree_builder(tokens, tree, i + 1));
 	if (!tree)
 	{
-		root = ft_mtnew("ROOT", NULL, NONE);
-		tree = &root;
+		sub[1] = ft_mtnew("ROOT", NULL, NONE);
+		tree = &sub[1];
 	}
-	aux[0] = ft_mtsearch(current, &i, pred);
-	if (!aux[0])
-		return (ft_tree_builder(current, tree, i + 1));
-	sub = ft_mtsub(&current, aux[0]);
-	if (sub->values.state == PARENTESIS)
+	sub[0] = ft_mtsub(&tokens, aux[0]);
+	aux[1] = ft_token_add_avalible(tree, sub[0]);
+	if (sub[0]->values.state == PARENTESIS)
 	{
-		aux[1] = ft_tree_builder(sub->aux, NULL, 0);
-		ft_mtdelete(&sub);
-		ft_token_add_avalible(tree, aux[1]);
+		aux[2] = ft_tree_builder(sub[0]->aux, NULL, 0);
+		if (aux[2])
+			ft_token_add_avalible(tree, aux[2]);
 	}
-	else
-	{
-		aux[0] = ft_token_add_avalible(tree, sub);
-		return (ft_tree_builder(&current, &aux[0], i));
-	}
+	if (!ft_tree_builder(tokens, tree, i))
+		return (*tree);
 	return (*tree);
 }
 
