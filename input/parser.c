@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:19:37 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/23 18:19:04 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/24 18:20:19 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,7 @@ static int	pred(t_mt *lst, void *p)
 	if (!lst)
 		return (-1);
 	if (lst->values.priority == *(int *)p)
-	{
-		lst->ptr_aux = "FOUND";
 		return (1);
-	}
 	return (0);
 }
 
@@ -90,7 +87,8 @@ t_mt	*ft_token_add_avalible(t_mt **tree, t_mt *new)
 {
 	if (!(*tree) || !new)
 		return (NULL);
-	if ((*tree)->values.priority <= new->values.priority && new->values.state != WORD)
+	if ((*tree)->values.priority <= new->values.priority
+		|| (new->values.state == WORD) || new->values.state == REDIRECTION)
 	{
 		if ((*tree)->vect[LEFT])
 			return (ft_token_add_avalible(&(*tree)->vect[LEFT], new));
@@ -110,11 +108,11 @@ t_mt	*ft_tree_builder(t_mt *tokens, t_mt **tree, int i)
 	t_mt	*aux[4];
 	t_mt	*sub[2];
 
-	if (!tokens) // Condición base para detener la recursión
+	if (!tokens || i < 0) // Condición base para detener la recursión
 		return (NULL);
 	aux[0] = ft_mtsearch(tokens, &i, pred);
 	if (!aux[0])
-		return (ft_tree_builder(tokens, tree, i + 1));
+		return (ft_tree_builder(tokens, tree, i - 1));
 	if (!tree)
 	{
 		sub[1] = ft_mtnew("ROOT", NULL, NONE);
@@ -124,7 +122,7 @@ t_mt	*ft_tree_builder(t_mt *tokens, t_mt **tree, int i)
 	aux[1] = ft_token_add_avalible(tree, sub[0]);
 	if (sub[0]->values.state == PARENTESIS)
 	{
-		aux[2] = ft_tree_builder(sub[0]->aux, NULL, 0);
+		aux[2] = ft_tree_builder(sub[0]->aux, tree, 7);
 		if (aux[2])
 			ft_token_add_avalible(tree, aux[2]);
 	}
@@ -144,13 +142,14 @@ t_mt	*ft_parse_input(const char *input)
 	input_new = ft_strdup(input);
 	if (!extend_until_close((char **)&input_new))
 		return (NULL);
+
 	tokens = tokenize(input_new, &i); // Tokenizamos el input en nodos
 	if (!tokens)
 		return (free(input_new), NULL);
 	if (!validate_list(tokens))
 		(ft_mtclear(&tokens), tokens = NULL);
 	ft_set_priority(tokens, (void *)&(int){0}, set_node_priority);
-	tree = ft_tree_builder(tokens, NULL, 0);
+	tree = ft_tree_builder(tokens, NULL, 7);
 	free(input_new);
 	return (tree);
 }

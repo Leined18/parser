@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 09:41:59 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/09 12:19:50 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/24 16:36:15 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,23 @@ int	get_priority(char *str)
 {
 	if (!str)
 		return (-1);
-	if (!ft_strncmp(str, "()", 2) || !ft_strncmp(str, "{}", 2))
-		return (0);
-	else if (!ft_strncmp(str, "&&", 2) || !ft_strncmp(str, "||", 2))
-		return (1);
-	else if (!ft_strncmp(str, ">", 1) || !ft_strncmp(str, "<", 1))
-		return (2);
-	else if (!ft_strncmp(str, "|", 1) || !ft_strncmp(str, "&", 1))
-		return (3);
-	else if (str && !ft_strchr(str, '=')) // word or quote
-		return (4);
-	else if (ft_strchr(str, '='))
+	if (!ft_strncmp(str, "()", 2))
+		return (7);
+	if (!ft_strncmp(str, "|", 1))
+		return (6);
+	if (!ft_strncmp(str, ">", 1) || !ft_strncmp(str, ">>", 2)
+		|| !ft_strncmp(str, "<", 1) || !ft_strncmp(str, "<<", 2)
+		|| !ft_strncmp(str, "&>", 2) || !ft_strncmp(str, "2>", 2))
 		return (5);
-	return (6);
+	if (!ft_strncmp(str, "&&", 2) || !ft_strncmp(str, "||", 2))
+		return (4);
+	if (!ft_strncmp(str, ";", 1) || !ft_strncmp(str, "&", 1))
+		return (3);
+	if (!ft_strchr(str, '='))
+		return (2);
+	if (ft_strchr(str, '='))
+		return (1);
+	return (0); // Valor por defecto para casos no reconocidos
 }
 
 // Función para obtener la prioridad de un operador
