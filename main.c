@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/08 17:51:09 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/24 13:17:35 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,30 @@ void	print_state(t_mt *list, void *a)
 	printf("State: %d\n", list->values.state);
 }
 
-void	print_elements(t_mt *node, int depth)
+// Función auxiliar para imprimir los espacios
+void print_spaces(int level)
 {
-	while (node)
-	{
-		for (int i = 1; i < depth; i++)
-			ft_printf("      ");
-		if (depth > 0)
-			ft_printf("  |____[%s]\n", (char *)(node->data));
-		else
-			ft_printf("[%s]\n", (char *)(node->data));
-		if (node->aux)
-			print_elements(node->aux, depth + 1);
-		node = node->vect[RIGHT];
-	}
+    for (int i = 0; i < level; i++)
+        printf("   ");
+}
+
+// Función principal para imprimir el árbol binario
+void print_tree(t_mt *root, int level)
+{
+    if (root == NULL)
+    {
+        print_spaces(level);
+        ft_printf("NULL\n");
+        return;
+    }
+
+    // Imprimir el nodo actual
+    print_spaces(level);
+    ft_printf("%d\n", root->key);
+
+    // Llamar recursivamente a los hijos izquierdo y derecho
+    print_tree(root->vect[LEFT], level + 1);
+    print_tree(root->vect[RIGHT], level + 1);
 }
 
 int	main(void)
@@ -61,9 +71,7 @@ int	main(void)
 		return (1);
 	}
 	ft_mtiter(list, NULL, print_state);
-	printf("\n");
-	print_elements(list, 0);
-	printf("\n");
+	print_tree(list, 0);
 	ft_mtclear(&list);
 	free(input);
 	ft_successful("Success\n", 1);

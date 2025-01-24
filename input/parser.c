@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:19:37 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/23 18:19:04 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/24 15:59:31 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,31 +105,87 @@ t_mt	*ft_token_add_avalible(t_mt **tree, t_mt *new)
 	return (NULL);
 }
 
+void	print_elements(t_mt *node, int depth)
+{
+	while (node)
+	{
+		for (int i = 1; i < depth; i++)
+			ft_printf("      ");
+		if (depth > 0)
+			ft_printf("  |____[%s(%d)]\n", (char *)(node->data), node->values.priority);
+		else
+			ft_printf("[%s(%d)]\n", (char *)(node->data), node->values.priority);
+		if (node->aux)
+			print_elements(node->aux, depth + 1);
+		node = node->vect[RIGHT];
+	}
+}
+
+// t_mt	*ft_tree_builder(t_mt *tokens, t_mt **tree, int i)
+// {
+// 	t_mt	*aux[4];
+// 	t_mt	*sub[2];
+
+// 	if (!tokens) // Condición base para detener la recursión
+// 		return (NULL);
+// 	aux[0] = ft_mtsearch(tokens, &i, pred);
+// 	if (!aux[0])
+// 		return (ft_tree_builder(tokens, tree, i + 1));
+// 	if (!tree)
+// 	{
+// 		sub[1] = ft_mtnew("ROOT", NULL, NONE);
+// 		tree = &sub[1];
+// 	}
+// 	sub[0] = ft_mtsub(&tokens, aux[0]);
+// 	aux[1] = ft_token_add_avalible(tree, sub[0]);
+// 	if (sub[0]->values.state == PARENTESIS)
+// 	{
+// 		aux[2] = ft_tree_builder(sub[0]->aux, NULL, 0);
+// 		if (aux[2])
+// 			ft_token_add_avalible(tree, aux[2]);
+// 	}
+// 	if (!ft_tree_builder(tokens, tree, i))
+// 		return (*tree);
+// 	return (*tree);
+// }
+
+
 t_mt	*ft_tree_builder(t_mt *tokens, t_mt **tree, int i)
 {
 	t_mt	*aux[4];
 	t_mt	*sub[2];
 
-	if (!tokens) // Condición base para detener la recursión
+	if (!tokens) // Lista vacía, no hay árbol que construir
 		return (NULL);
-	aux[0] = ft_mtsearch(tokens, &i, pred);
-	if (!aux[0])
-		return (ft_tree_builder(tokens, tree, i + 1));
-	if (!tree)
+	print_elements(tokens, 0);
+	while (tokens)
 	{
-		sub[1] = ft_mtnew("ROOT", NULL, NONE);
-		tree = &sub[1];
+		aux[0] = ft_mtsearch(tokens, &i, pred);// Buscar el nodo con la prioridad actual
+		if (!aux[0])
+		{
+			ft_printf("BORRAR - nodo no encontrado, prioridad %d\n", i);
+			i++; // Avanzar a la siguiente prioridad si no se encontró el nodo
+			continue;
+		}
+		ft_printf("BORRAR - nodo encontrado = %s\n", aux[0]->data);
+		if (!tree) // Crear la raíz del árbol si no existe
+		{
+			sub[1] = ft_mtnew("ROOT", NULL, NONE);
+			tree = &sub[1];
+			ft_printf("nodo tree creado = %s, prioridad %d\n", (*tree)->key, (*tree)->values.priority);
+		}
+		// Extraer el nodo actual y añadirlo al árbol
+		sub[0] = ft_mtsub(&tokens, aux[0]); //SUSTRAER NO JUNTA BIEN LOS VECINOS (revisar)
+		ft_printf("nodo extraido = %s, prioridad %d\n", sub[0]->data, i);
+		print_elements(tokens, 0);
+		aux[1] = ft_token_add_avalible(tree, sub[0]);
+		if (sub[0]->values.state == PARENTESIS) // Si el nodo actual tiene paréntesis, construir su subárbol
+		{
+			aux[2] = ft_tree_builder(sub[0]->aux, NULL, 0);
+			if (aux[2])
+				ft_token_add_avalible(tree, aux[2]);
+		}
 	}
-	sub[0] = ft_mtsub(&tokens, aux[0]);
-	aux[1] = ft_token_add_avalible(tree, sub[0]);
-	if (sub[0]->values.state == PARENTESIS)
-	{
-		aux[2] = ft_tree_builder(sub[0]->aux, NULL, 0);
-		if (aux[2])
-			ft_token_add_avalible(tree, aux[2]);
-	}
-	if (!ft_tree_builder(tokens, tree, i))
-		return (*tree);
 	return (*tree);
 }
 
