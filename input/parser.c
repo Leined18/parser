@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:19:37 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/24 18:20:19 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/24 23:33:50 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,20 @@ static int	pred(t_mt *lst, void *p)
 	return (0);
 }
 
+static int	check_state(t_mt *node, e_state state)
+{
+	if (!node)
+		return (0);
+	return (node->values.state == (int)state);
+}
+
 t_mt	*ft_token_add_avalible(t_mt **tree, t_mt *new)
 {
 	if (!(*tree) || !new)
 		return (NULL);
-	if ((*tree)->values.priority <= new->values.priority
-		|| (new->values.state == WORD) || new->values.state == REDIRECTION)
+	if ((*tree)->values.priority <= new->values.priority || (check_state(new,
+				WORD) && !check_state((*tree)->vect[LEFT], WORD))
+		|| new->values.state == REDIRECTION)
 	{
 		if ((*tree)->vect[LEFT])
 			return (ft_token_add_avalible(&(*tree)->vect[LEFT], new));
@@ -101,6 +109,70 @@ t_mt	*ft_token_add_avalible(t_mt **tree, t_mt *new)
 		return (ft_token_add_right(tree, new), NULL);
 	}
 	return (NULL);
+}
+
+// 1. Determinar el tipo de nodo
+e_state	get_node_state(t_mt *node)
+{
+	if (!node)
+		return (END);
+	if (check_state(node, PARENTESIS))
+		return (PARENTESIS);
+	if (check_state(node, REDIRECTION))
+		return (REDIRECTION);
+	if (check_state(node, OPERATOR))
+		return (OPERATOR);
+	if (check_state(node, WORD))
+		return (WORD);
+	return (END);
+}
+
+// 2. Extraer un subnodo basado en el estado
+t_mt	*ft_extract_subnode(t_mt **tokens, t_mt *node)
+{
+	if (!tokens || !node)
+		return (NULL);
+	// Caso: Paréntesis
+	if (get_node_state(node) == PARENTESIS)
+		return (ft_mtsub(tokens, node));
+	// Caso: Redirección (">")
+	if (get_node_state(node) == REDIRECTION && check_state(node->vect[RIGHT],
+			WORD))
+		return (ft_mtsub(tokens, node->vect[RIGHT]));
+	// Caso: Operador ("|")
+	if (get_node_state(node) == OPERATOR && check_state(node->vect[RIGHT],
+			WORD))
+		return (ft_mtsub(tokens, node->vect[RIGHT]));
+	return (NULL);
+}
+
+t_mt	*ft_sub_token(t_mt **tokens, t_mt *aux)
+{
+	t_mt	*sub;
+	t_mt	*tmp[2];
+
+	if (!tokens || !aux)
+		return (NULL);
+	if (check_state(aux, PARENTESIS))
+		return (ft_mtsub(tokens, aux));
+	if (check_state(aux, REDIRECTION) && check_state(aux->vect[RIGHT], WORD))
+	{
+		tmp[0] = ft_mtsub(tokens, aux->vect[LEFT]);
+		tmp[1] = ft_mtsub(tokens, aux->vect[RIGHT]);
+		sub = ft_mtsub(tokens, aux);
+		ft_token_add_right(&sub, tmp[1]);
+		ft_token_add_left(&sub, tmp[0]);
+		return (sub);
+	}
+	if (check_state(aux, OPERATOR) && check_state(aux->vect[RIGHT], WORD))
+	{
+		tmp[1] = ft_mtsub(tokens, aux->vect[RIGHT]);
+		sub = ft_mtsub(tokens, aux);
+		ft_token_add_right(&sub, tmp[1]);
+		return (sub);
+	}
+	sub = ft_mtsub(tokens, aux);
+	return (sub);
 }
 
 t_mt	*ft_tree_builder(t_mt *tokens, t_mt **tree, int i)
@@ -118,13 +190,12 @@ t_mt	*ft_tree_builder(t_mt *tokens, t_mt **tree, int i)
 		sub[1] = ft_mtnew("ROOT", NULL, NONE);
 		tree = &sub[1];
 	}
-	sub[0] = ft_mtsub(&tokens, aux[0]);
-	aux[1] = ft_token_add_avalible(tree, sub[0]);
-	if (sub[0]->values.state == PARENTESIS)
+	ft_token_add_avalible(tree, ft_sub_token(&tokens, aux[0]));
+	if (check_state(aux[0], PARENTESIS))
 	{
-		aux[2] = ft_tree_builder(sub[0]->aux, tree, 7);
-		if (aux[2])
-			ft_token_add_avalible(tree, aux[2]);
+		aux[1] = ft_tree_builder(aux[0]->aux, tree, 7);
+		if (aux[1])
+			ft_token_add_avalible(tree, aux[1]);
 	}
 	if (!ft_tree_builder(tokens, tree, i))
 		return (*tree);
@@ -142,7 +213,6 @@ t_mt	*ft_parse_input(const char *input)
 	input_new = ft_strdup(input);
 	if (!extend_until_close((char **)&input_new))
 		return (NULL);
-
 	tokens = tokenize(input_new, &i); // Tokenizamos el input en nodos
 	if (!tokens)
 		return (free(input_new), NULL);
