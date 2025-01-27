@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:19:37 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/24 15:59:31 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/27 18:23:00 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,37 +74,6 @@ static void	ft_set_priority(t_mt *list, void *param, void (*func)(t_mt *,
 	ft_mtiter(list, param, func);
 }
 
-static int	pred(t_mt *lst, void *p)
-{
-	if (!lst)
-		return (-1);
-	if (lst->values.priority == *(int *)p)
-	{
-		lst->ptr_aux = "FOUND";
-		return (1);
-	}
-	return (0);
-}
-
-t_mt	*ft_token_add_avalible(t_mt **tree, t_mt *new)
-{
-	if (!(*tree) || !new)
-		return (NULL);
-	if ((*tree)->values.priority <= new->values.priority && new->values.state != WORD)
-	{
-		if ((*tree)->vect[LEFT])
-			return (ft_token_add_avalible(&(*tree)->vect[LEFT], new));
-		return (ft_token_add_left(tree, new), NULL);
-	}
-	else
-	{
-		if ((*tree)->vect[RIGHT])
-			return (ft_token_add_avalible(&(*tree)->vect[RIGHT], new));
-		return (ft_token_add_right(tree, new), NULL);
-	}
-	return (NULL);
-}
-
 void	print_elements(t_mt *node, int depth)
 {
 	while (node)
@@ -112,81 +81,80 @@ void	print_elements(t_mt *node, int depth)
 		for (int i = 1; i < depth; i++)
 			ft_printf("      ");
 		if (depth > 0)
-			ft_printf("  |____[%s(%d)]\n", (char *)(node->data), node->values.priority);
+			ft_printf("  |____[%s(%d)(e:%d)]\n", (char *)(node->data), node->values.priority, node->values.state);
 		else
-			ft_printf("[%s(%d)]\n", (char *)(node->data), node->values.priority);
+			ft_printf("[%s(%d)(e:%d)]\n", (char *)(node->data), node->values.priority, node->values.state);
 		if (node->aux)
 			print_elements(node->aux, depth + 1);
 		node = node->vect[RIGHT];
 	}
 }
-
-// t_mt	*ft_tree_builder(t_mt *tokens, t_mt **tree, int i)
-// {
-// 	t_mt	*aux[4];
-// 	t_mt	*sub[2];
-
-// 	if (!tokens) // Condición base para detener la recursión
-// 		return (NULL);
-// 	aux[0] = ft_mtsearch(tokens, &i, pred);
-// 	if (!aux[0])
-// 		return (ft_tree_builder(tokens, tree, i + 1));
-// 	if (!tree)
-// 	{
-// 		sub[1] = ft_mtnew("ROOT", NULL, NONE);
-// 		tree = &sub[1];
-// 	}
-// 	sub[0] = ft_mtsub(&tokens, aux[0]);
-// 	aux[1] = ft_token_add_avalible(tree, sub[0]);
-// 	if (sub[0]->values.state == PARENTESIS)
-// 	{
-// 		aux[2] = ft_tree_builder(sub[0]->aux, NULL, 0);
-// 		if (aux[2])
-// 			ft_token_add_avalible(tree, aux[2]);
-// 	}
-// 	if (!ft_tree_builder(tokens, tree, i))
-// 		return (*tree);
-// 	return (*tree);
-// }
-
-
-t_mt	*ft_tree_builder(t_mt *tokens, t_mt **tree, int i)
+//Comprueba si el nodo es 5 o 6
+int	is_ope_or_red(t_mt *node)
 {
-	t_mt	*aux[4];
-	t_mt	*sub[2];
+	if (node->values.state == 5 || node->values.state == 6)
+		return (1);
+	return (0);
+}
+//Busca el operador (5 o 6) con mayor prioridad (valodr de prioridad mas alto)
+t_mt	*find_prior_operator(t_mt *list)
+{
+	t_mt	*current;
+	t_mt	*ope;
 
-	if (!tokens) // Lista vacía, no hay árbol que construir
-		return (NULL);
-	print_elements(tokens, 0);
-	while (tokens)
+	current = list;
+	ope = NULL;
+	while (current)
 	{
-		aux[0] = ft_mtsearch(tokens, &i, pred);// Buscar el nodo con la prioridad actual
-		if (!aux[0])
+		if (is_ope_or_red(current))
 		{
-			ft_printf("BORRAR - nodo no encontrado, prioridad %d\n", i);
-			i++; // Avanzar a la siguiente prioridad si no se encontró el nodo
-			continue;
+			if (!ope || current->values.priority < ope->values.priority)
+				ope = current;
 		}
-		ft_printf("BORRAR - nodo encontrado = %s\n", aux[0]->data);
-		if (!tree) // Crear la raíz del árbol si no existe
-		{
-			sub[1] = ft_mtnew("ROOT", NULL, NONE);
-			tree = &sub[1];
-			ft_printf("nodo tree creado = %s, prioridad %d\n", (*tree)->key, (*tree)->values.priority);
-		}
-		// Extraer el nodo actual y añadirlo al árbol
-		sub[0] = ft_mtsub(&tokens, aux[0]); //SUSTRAER NO JUNTA BIEN LOS VECINOS (revisar)
-		ft_printf("nodo extraido = %s, prioridad %d\n", sub[0]->data, i);
-		print_elements(tokens, 0);
-		aux[1] = ft_token_add_avalible(tree, sub[0]);
-		if (sub[0]->values.state == PARENTESIS) // Si el nodo actual tiene paréntesis, construir su subárbol
-		{
-			aux[2] = ft_tree_builder(sub[0]->aux, NULL, 0);
-			if (aux[2])
-				ft_token_add_avalible(tree, aux[2]);
-		}
+		current = current->vect[RIGHT];
 	}
-	return (*tree);
+	return (ope);
+}
+void	disconnect_operator(t_mt *op)
+{
+	if (op && op->vect[LEFT])// Romper la conexión con la parte izquierda
+	{
+		(op->vect[LEFT])->vect[RIGHT] = NULL;
+		op->vect[LEFT] = NULL;
+	}
+	if (op && op->vect[RIGHT]) // Romper la conexión con la parte derecha
+	{
+		(op->vect[RIGHT])->vect[LEFT] = NULL;
+		op->vect[RIGHT] = NULL;
+	}
+}
+
+t_mt *ft_tree_builder(t_mt *list)
+{
+	t_mt	*operator;
+	t_mt	*root;
+	t_mt	*left;
+	t_mt	*right;
+
+	if (!list)
+		return NULL;
+	root = NULL;
+	// Se busca el operador o redirección de menor prioridad en la lista
+	operator = find_prior_operator(list);
+	// Si no se encontra operador, se devuelve la lista tal cual (caso base)
+	if (!operator)
+		return list;
+	root = operator; // El primer operador encontrado será la raíz del árbol
+	// Divido la lista en izquierda y derecha
+	left = list;
+	right = operator->vect[RIGHT];
+	if (left == operator) // Si no hay nodos a la izquierda
+		left = NULL;
+	disconnect_operator(operator);
+	// Construimos recursivamente los subárboles izquierdo y derecho
+	root->vect[LEFT] = ft_tree_builder(left);
+	root->vect[RIGHT] = ft_tree_builder(right);
+	return root;
 }
 
 t_mt	*ft_parse_input(const char *input)
@@ -206,7 +174,7 @@ t_mt	*ft_parse_input(const char *input)
 	if (!validate_list(tokens))
 		(ft_mtclear(&tokens), tokens = NULL);
 	ft_set_priority(tokens, (void *)&(int){0}, set_node_priority);
-	tree = ft_tree_builder(tokens, NULL, 0);
+	tree = ft_tree_builder(tokens);
 	free(input_new);
 	return (tree);
 }
