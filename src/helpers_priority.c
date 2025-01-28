@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   helpers_priority.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 09:41:59 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/24 16:36:15 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/27 17:07:22 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "input.h"
 
-int	get_priority(char *str)
+int	ft_get_priority(char *str)
 {
 	if (!str)
 		return (-1);
@@ -41,5 +41,5 @@ void	set_node_priority(t_mt *node, void *param)
 	if (!node || !node->data)
 		return ;
 	(void)param;
-	node->values.priority = get_priority(node->data);
+	node->values.priority = ft_get_priority(node->data);
 }

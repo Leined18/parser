@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   helpers_parse_1.c                                  :+:      :+:    :+:   */
+/*   helpers_check_1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 10:11:34 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/04 22:19:01 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/27 15:11:06 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*ft_strjoin_free(char **s1, char **s2)
 	return (result);
 }
 
-int	check_is_close(char *input, char open, char close)
+int	ft_check_is_close(char *input, char open, char close)
 {
 	int	open_count;
 	int	close_count;
@@ -45,7 +45,7 @@ int	check_is_close(char *input, char open, char close)
 	}
 	return (open_count == close_count);
 }
-int	check_is_close_quote(char *input, char quote)
+int	ft_check_is_close_quote(char *input, char quote)
 {
 	int	is_open;
 	int	in_single_quotes;
@@ -70,42 +70,35 @@ int	check_is_close_quote(char *input, char quote)
 	return (is_open == 0);
 }
 
-int	check_operators_mt(t_mt *op)
+int	ft_check_operators_mt(t_mt *op, int *error)
 {
 	t_mt	*current;
 
 	if (!op)
 		return (1);
 	current = op;
-	if (!current->vect[LEFT] || !current->vect[RIGHT])
+	if (!current->vect[LEFT])
 	{
-		ft_printf("syntax error near unexpected token `%s'\n",
-			(char *)current->data);
-		return (1);
+		ft_printf(SYNTAX_ERROR, (char *)current->data);
+		return (*error = 1, 1);
 	}
 	return (0);
 }
 
-int	check_redirections_mt(t_mt *op)
+int	ft_check_redirections_mt(t_mt *op, int *error)
 {
-	t_mt	*current;
+	char	*s;
 
 	if (!op)
 		return (1);
-	current = op;
-	if (!current->vect[RIGHT] || !current->vect[LEFT])
+	s = NULL;
+	if (!op->vect[RIGHT])
+		return (*error = 1, ft_printf(SYNTAX_ERROR, "newline"), 1);
+	if (!ft_mtcheck_state(op->vect[RIGHT], WORD))
 	{
-		if (current->vect[RIGHT] && current->vect[RIGHT]->values.state != WORD)
-			ft_printf("syntax error near unexpected token `%s'\n",
-				(char *)current->vect[RIGHT]->data);
-		else if (current->vect[LEFT] && current->vect[LEFT]->values.state != WORD)
-			ft_printf("syntax error near unexpected token `%s'\n",
-				(char *)current->vect[LEFT]->data);
-		else if (!current->vect[RIGHT])
-			ft_printf("syntax error near unexpected token `newline'\n");
-		else
-			return (0);
-		return (1);
+		if (op->vect[RIGHT])
+			s = ((char *)op->vect[RIGHT]->data);
+		return (*error = 1, ft_printf(SYNTAX_ERROR, s, 1));
 	}
 	return (0);
 }

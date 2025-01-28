@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/08 17:51:09 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/27 12:05:58 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	print_state(t_mt *list, void *a)
 		return ;
 	printf("\n");
 	printf("key: %s\n", (char *)list->key);
-	printf("Data: %s\n", (char *)list->data);
+	printf("Data: %p\n", (list->data));
 	printf("State: %d\n", list->values.state);
 }
 
@@ -36,9 +36,9 @@ void	print_elements(t_mt *node, int depth)
 		for (int i = 1; i < depth; i++)
 			ft_printf("      ");
 		if (depth > 0)
-			ft_printf("  |____[%s]\n", (char *)(node->data));
+			ft_printf("  |____[%p]\n", (node->key));
 		else
-			ft_printf("[%s]\n", (char *)(node->data));
+			ft_printf("[%p]\n", (node->key));
 		if (node->aux)
 			print_elements(node->aux, depth + 1);
 		node = node->vect[RIGHT];

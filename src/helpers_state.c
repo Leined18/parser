@@ -3,46 +3,71 @@
 /*                                                        :::      ::::::::   */
 /*   helpers_state.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 10:20:51 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/15 19:16:31 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/27 15:51:21 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "input.h"
 
-e_state	handle_word(char c)
+e_pstate	handle_word(char c)
 {
-	if (is_whitespace(c))
+	if (ft_strchr(" \t\n", c))
 		return (START);
-	if (is_operator(c))
+	if (ft_strchr("|", c))
 		return (OPERATOR);
-	if (is_redirection(c))
+	if (ft_strchr("><", c))
 		return (REDIRECTION);
-	if (is_parentesis(c))
+	if (ft_strchr("()", c))
 		return (PARENTESIS);
-	if (c == '$')
+	if (ft_strchr("$", c))
 		return (EXPANSION);
-	if (is_asignation(c))
+	if (ft_strchr("=", c))
 		return (ASSIGNMENT);
 	return (WORD);
 }
 
-e_state	handle_operator(char c)
+e_pstate	handle_quote(char c)
 {
-	(void)c;
+	if (c == '\'' || c == '\"')
+		return (SINGLE_QUOTE); // Cierra las comillas
+	if (ft_strchr(" \t\n", c))
+		return (START);
+	if (ft_isalnum(c))
+		return (WORD);
+	if (ft_strchr("|", c))
+		return (OPERATOR);
+	if (ft_strchr("><", c))
+		return (REDIRECTION);
+	if (ft_strchr("()", c))
+		return (PARENTESIS);
 	return (START);
 }
 
-e_state	handle_parentesis(char c)
+e_pstate	handle_operator(char c)
+{
+	(void)c;
+	if (ft_isalnum(c) || ft_strchr("=", c))
+		return (WORD);
+	if (ft_strchr("|", c))
+		return (OPERATOR);
+	if (ft_strchr("><", c))
+		return (REDIRECTION);
+	if (ft_strchr("()", c))
+		return (PARENTESIS);
+	return (START);
+}
+
+e_pstate	handle_parentesis(char c)
 {
 	if (c == '(')
 		return (PARENTESIS);
 	return (START);
 }
 
-e_state	handle_redirection(char c)
+e_pstate	handle_redirection(char c)
 {
 	(void)c;
 	return (START);

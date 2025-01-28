@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   helpers_node_1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 14:41:22 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/23 15:40:40 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/27 17:07:27 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "input.h"
 
-t_mt	*create_node(char *data, e_state state)
+t_mt	*ft_newnode(char *data, e_pstate state)
 {
 	t_mt	*node;
 

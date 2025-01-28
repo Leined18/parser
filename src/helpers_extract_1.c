@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   helpers_extract_1.c                                :+:      :+:    :+:   */
+/*   helpers_ft_extract_1.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 11:57:04 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/15 19:08:11 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/27 09:42:38 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "input.h"
 
 /**
- * extract_quoted_token - Extrae un token delimitado por comillas.
+ * ft_extract_quoted_token - Extrae un token delimitado por comillas.
  */
-char	*extract_quoted_token(char *str, int *i)
+char	*ft_extract_quoted_token(char *str, int *i)
 {
 	char	quote;
 	int		start;
@@ -32,7 +32,10 @@ char	*extract_quoted_token(char *str, int *i)
 	return (ft_substr(str, start, *i - start - 1)); // Excluye las comillas
 }
 
-char	*extract_operator_token(char *str, int *i)
+/**
+ * ft_extract_operator_token - Extrae un operador (|, >, <, >>, <<).
+ */
+char	*ft_extract_operator_token(char *str, int *i)
 {
 	int	start;
 
@@ -45,16 +48,17 @@ char	*extract_operator_token(char *str, int *i)
 	return (ft_substr(str, start, *i - start));
 }
 
-char	*extract_word_token(char *str, int *i)
+/**
+ * ft_extract_word_token - Extrae un token de palabra (sin comillas ni operadores).
+ */
+char	*ft_extract_word_token(char *str, int *i)
 {
 	int	start;
 
 	if (!i || !str)
 		return (NULL);
 	start = *i;
-	while (!is_whitespace(str[*i]) && !is_operator(str[*i])
-		&& !is_single_quoted(str[*i]) && !is_double_quoted(str[*i]) && str[*i]
-		&& !is_redirection(str[*i]) && !is_parentesis(str[*i]))
+	while (!ft_strchr("()<>\"\'| \t\n", str[*i]))
 		(*i)++;
 	return (ft_substr(str, start, *i - start));
 }

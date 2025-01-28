@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+         #
+#    By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 14:34:27 by danpalac          #+#    #+#              #
-#    Updated: 2025/01/15 19:20:46 by danpalac         ###   ########.fr        #
+#    Updated: 2025/01/28 08:50:17 by danpalac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,8 +72,7 @@ MEMTRACK_DIR 	:= ../memtrack/
 
 MEMTRACK	:= $(MEMTRACK_DIR)$(MEMTRACK_LIB)
 LIBFT		:= $(LIBFT_DIR)$(LIBFT_LIB)
-INPUT_DIR		:= input/
-INTERPRETER_DIR	:= interpreter/
+SRC_DIR		:= src/
 INCLUDES		:= $(INC)*.h
 
 #==========COMMANDS============================================================#
@@ -84,20 +83,20 @@ RM			:= rm -rf
 AR			:= ar rcs
 MKDIR 		:= mkdir -p
 LIB 		:= -L$(LIB_DIR) -lmt -lft
+LIB 		:= -L$(LIB_DIR) -lmt -lft
 IFLAGS		:= -I$(LIB_DIR) -I$(INC)
 LFLAGS		:= $(LIB) -fsanitize=address
 
 #==========SOURCES============================================================#
 
-INPUT_FILES	:= process_token process parser state tokenizer \
-			helpers_is_1 helpers_is_2 helpers_parse_1 helpers_extract_1 \
+SRC_SOURCE	:= ft_validate ft_extend ft_process_token ft_process_utils ft_parser state_utils ft_tokenizer \
+			helpers_check_1 helpers_extract_1 \
 			helpers_process_1 helpers_node_1 helpers_priority \
-			helpers_state helpers_state_1
+			helpers_state
 
 #==========FILES==============================================================#
 
-SRC_FILES +=$(addprefix $(INPUT_DIR), $(INPUT_FILES))
-SRC_FILES +=$(addprefix $(INTERPRETER_DIR), $(INTERPRETER_FILES))
+SRC_FILES +=$(addprefix $(SRC_DIR), $(SRC_SOURCE))
 
 SRCS := $(addsuffix .c, $(SRC_FILES))
 OBJS := $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   state.c                                            :+:      :+:    :+:   */
+/*   state_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:28:51 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/15 19:17:18 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/27 16:00:19 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "input.h"
 
-e_state	transition(e_state current, char c)
+e_pstate	transition(e_pstate current, char c)
 {
 	if (current == END || c == '\0')
 		return (END);
@@ -23,39 +23,42 @@ e_state	transition(e_state current, char c)
 		return (handle_word(c));
 	if (current == REDIRECTION)
 		return (handle_redirection(c));
-	if (current == SINGLE_QUOTE)
-		return (handle_single_quote(c));
-	if (current == DOUBLE_QUOTE)
-		return (handle_double_quote(c));
+	if (current == SINGLE_QUOTE || current == DOUBLE_QUOTE)
+		return (handle_quote(c));
 	if (current == OPERATOR)
 		return (handle_operator(c));
 	if (current == PARENTESIS)
 		return (handle_parentesis(c));
 	if (current == EXPANSION)
 		return (START);
-	if (current == ASSIGNMENT)
-		return (START);
 	return (END);
 }
 
 // Implementación de funciones específicas para cada estado
-e_state	handle_start(char c)
+e_pstate	handle_start(char c)
 {
-	if (is_whitespace(c))
+	if (ft_strchr("\n \t", c))
 		return (START);
-	if (is_parentesis(c))
+	if (ft_strchr("()", c))
 		return (PARENTESIS);
-	if (is_single_quoted(c))
+	if (ft_strchr("\'", c))
 		return (SINGLE_QUOTE);
-	if (is_double_quoted(c))
+	if (ft_strchr("\"", c))
 		return (DOUBLE_QUOTE);
-	if (is_operator(c))
+	if (ft_strchr("|", c))
 		return (OPERATOR);
-	if (is_redirection(c))
+	if (ft_strchr("<>", c))
 		return (REDIRECTION);
-	if (is_asignation(c))
-		return (ASSIGNMENT);
-	if (c == '$')
+	if (ft_strchr("$", c))
 		return (EXPANSION);
 	return (WORD); // Asumimos que cualquier otro carácter inicia una palabra
+}
+
+int	ft_mtcheck_state(t_mt *mt, int state)
+{
+	if (!mt)
+		return (0);
+	if (mt->values.state == state)
+		return (1);
+	return (0);
 }
