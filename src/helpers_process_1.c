@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/01/28 09:57:06 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/28 12:40:24 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	ft_process_argument(t_mt **list)
 			command->values.state = COMMAND;
 			arg = current->vect[RIGHT];
 			while (is_argument(arg))
-				ft_mtpush_last(&command->aux, &arg, LEFT);
+				ft_mtpush_last(&command->aux, &arg, RIGHT);
 			current = arg;
 		}
 		if (ft_mtcheck_state(current, PARENTESIS))

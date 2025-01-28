@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:19:37 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/28 11:59:58 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/28 12:40:25 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 // Comprueba si el nodo es 5 o 6
 int	is_ope_or_red(t_mt *node)
 {
-	if (ft_mtcheck_state(node, REDIRECTION)  // probamo
+	if (ft_mtcheck_state(node, REDIRECTION) // probamo
 		|| ft_mtcheck_state(node, OPERATOR))
-			// estamos checkeando estados y no prioridades
+		// estamos checkeando estados y no prioridades
 		return (1);
 	return (0);
 }
@@ -72,8 +72,8 @@ t_mt	*ft_tree_builder(t_mt *list)
 	// Si no se encontra operador, se devuelve la lista tal cual (caso base)
 	if (!operator)
 		return (list);
-	root = operator;                                    
-		// El primer operador encontrado será la raíz del árbol
+	root = operator;
+	// El primer operador encontrado será la raíz del árbol
 	disconnect_operator(operator, & left, &right, list); // op redireccion
 	// Construimos recursivamente los subárboles izquierdo y derecho
 	/* if (ft_mtcheck_state(operator, PARENTESIS))
@@ -97,7 +97,7 @@ t_mt	*ft_parse_input(const char *input)
 		return (free(input_new), NULL);
 	tokens = ft_tokenize(input_new, &i); // Tokenizamos el input en nodos
 	if (!tokens)
-		return (free(input_new), NULL);
+		return (free(input_new), NULL); // echo "$PATH"
 	if (!ft_validate_list(tokens))
 		return (ft_mtclear(&tokens), free(input_new), NULL);
 	if (!ft_process_argument(&tokens))

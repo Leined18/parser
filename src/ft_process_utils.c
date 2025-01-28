@@ -31,7 +31,7 @@ int	ft_process_word(char *input, int *i, t_mt **list, e_pstate state)
 	token = ft_extract_word_token(input, i);
 	if (!token)
 		return (0);
-	if (ft_strchr(token, '='))
+	if (ft_strchr(token, '=')) // guarda el token como ASSIGNMENT si tiene '='
 	{
 		ft_mtaddlast_right(list, ft_newnode(token, ASSIGNMENT));
 		return (free(token), 1);

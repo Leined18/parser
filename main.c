@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/28 11:59:21 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/28 12:40:58 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ int	main(void)
 		ft_error("Error\n", 1);
 		return (1);
 	}
-	// ft_mtiter(list, NULL, print_state);
-	print_tree(list, 0);
+	ft_mtiter(list, NULL, print_state);
+	//print_tree(list, 0);
 	ft_mtclear(&list);
 	free(input);
 	ft_successful("Success\n", 1);

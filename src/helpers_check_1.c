@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 10:11:34 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/27 15:11:06 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/28 12:43:46 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,9 @@ int	ft_check_redirections_mt(t_mt *op, int *error)
 		return (*error = 1, ft_printf(SYNTAX_ERROR, "newline"), 1);
 	if (!ft_mtcheck_state(op->vect[RIGHT], WORD))
 	{
+		if (ft_mtcheck_state(op->vect[RIGHT], PARENTESIS))
+			return (0);
+		else
 		if (op->vect[RIGHT])
 			s = ((char *)op->vect[RIGHT]->data);
 		return (*error = 1, ft_printf(SYNTAX_ERROR, s, 1));

@@ -47,6 +47,6 @@ int	ft_validate_list(t_mt *list)
 	int	error;
 
 	error = 0;
-	res = ft_mtfold(list, &error, ft_check);
+	res = ft_mtfold(list, &error, ft_check); // fold es como un map pero con un acumulador
 	return (res == 0);
 }
