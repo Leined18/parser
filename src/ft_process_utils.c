@@ -25,46 +25,20 @@
 int	ft_process_word(char *input, int *i, t_mt **list, e_pstate state)
 {
 	char	*token;
-	t_mt	*last;
 
 	if (!input || !i || !list)
 		return (0);
-	token = extract_word_token(input, i);
+	token = ft_extract_word_token(input, i);
 	if (!token)
 		return (0);
-	else if (state == WORD)
+	if (ft_strchr(token, '='))
 	{
-		ft_mtaddlast_right(list, create_node(token, WORD));
-		last = ft_mtlast(*list, RIGHT);
-		process_argument(input, i, &last->aux);
-	}
-	else if (ft_strchr(token, '='))
-	{
-		ft_mtaddlast_right(list, create_node(token, ASSIGNMENT));
+		ft_mtaddlast_right(list, ft_newnode(token, ASSIGNMENT));
 		return (free(token), 1);
 	}
 	else
-		ft_mtaddlast_right(list, create_node(token, state));
+		ft_mtaddlast_right(list, ft_newnode(token, state));
 	free(token);
-	token = ft_extract_word_token(input, i);
-	if (token)
-	{
-		if (state == ARGUMENT)
-			ft_mtaddlast_aux(ft_mtlast(*list, RIGHT), ft_newnode(token,
-					ARGUMENT));
-		else if (state == WORD)
-		{
-			if (ft_strchr(token, '='))
-			{
-				ft_mtaddlast_right(list, ft_newnode(token, ASSIGNMENT));
-				return (free(token), 1);
-			}
-			else
-				ft_mtaddlast_right(list, ft_newnode(token, WORD));
-			ft_process_argument(input, i, list);
-		}
-		free(token);
-	}
 	return (1);
 }
 
@@ -77,18 +51,7 @@ int	ft_process_quote(char *input, int *i, t_mt **list, e_pstate state)
 	token = ft_extract_quoted_token(input, i);
 	if (token)
 	{
-		if (state == ARGUMENT)
-		{
-			ft_mtaddlast_aux(ft_mtlast(*list, RIGHT), ft_newnode(token,
-					ARGUMENT));
-			free(token);
-			return (1);
-		}
-		else if (state == QUOTE)
-		{
-			ft_mtaddlast_right(list, ft_newnode(token, WORD));
-			ft_process_argument(input, i, list);
-		}
+		ft_mtaddlast_right(list, ft_newnode(token, state));
 		free(token);
 	}
 	return (1);
