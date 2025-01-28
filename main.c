@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/27 12:05:58 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/28 11:52:18 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,36 @@ void	print_state(t_mt *list, void *a)
 	printf("State: %d\n", list->values.state);
 }
 
-void	print_elements(t_mt *node, int depth)
+// Función auxiliar para imprimir los espacios
+void print_spaces(int level)
 {
-	while (node)
-	{
-		for (int i = 1; i < depth; i++)
-			ft_printf("      ");
-		if (depth > 0)
-			ft_printf("  |____[%p]\n", (node->key));
-		else
-			ft_printf("[%p]\n", (node->key));
-		if (node->aux)
-			print_elements(node->aux, depth + 1);
-		node = node->vect[RIGHT];
-	}
+	for (int i = 0; i < level; i++)
+		ft_printf("   ");
 }
+
+// Función principal para imprimir el árbol binario
+void print_tree(t_mt *root, int level)
+{
+	if (root == NULL)
+	{
+		print_spaces(level);
+		ft_printf("NULL\n");
+		return;
+	}
+	// Imprimir el nodo actual
+	print_spaces(level);
+	ft_printf("Node: %s (Priority: %d)\n", root->key, root->values.priority);
+
+	// Imprimir hijos izquierdo y derecho
+	print_spaces(level);
+	ft_printf("Left:\n");
+	print_tree(root->vect[LEFT], level + 1);
+
+	print_spaces(level);
+	ft_printf("Right:\n");
+	print_tree(root->vect[RIGHT], level + 1);
+}
+
 
 int	main(void)
 {
@@ -60,10 +75,8 @@ int	main(void)
 		ft_error("Error\n", 1);
 		return (1);
 	}
-	ft_mtiter(list, NULL, print_state);
-	printf("\n");
-	print_elements(list, 0);
-	printf("\n");
+	// ft_mtiter(list, NULL, print_state);
+	print_tree(list, 0);
 	ft_mtclear(&list);
 	free(input);
 	ft_successful("Success\n", 1);
