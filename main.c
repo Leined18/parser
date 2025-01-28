@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/28 11:52:18 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/28 11:59:21 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,20 @@ void print_spaces(int level)
 }
 
 // Función principal para imprimir el árbol binario
-void print_tree(t_mt *root, int level)
+int	print_tree(t_mt *root, int level)
 {
 	if (root == NULL)
 	{
 		print_spaces(level);
 		ft_printf("NULL\n");
-		return;
+		return 0;
 	}
 	// Imprimir el nodo actual
 	print_spaces(level);
 	ft_printf("Node: %s (Priority: %d)\n", root->key, root->values.priority);
-
+	/* if (ft_mtcheck_state(root, PARENTESIS))
+		if (!print_tree(root->aux, level))
+			return (0); */
 	// Imprimir hijos izquierdo y derecho
 	print_spaces(level);
 	ft_printf("Left:\n");
@@ -57,6 +59,7 @@ void print_tree(t_mt *root, int level)
 	print_spaces(level);
 	ft_printf("Right:\n");
 	print_tree(root->vect[RIGHT], level + 1);
+	return (1);
 }
 
 
