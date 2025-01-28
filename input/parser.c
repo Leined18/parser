@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:19:37 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/27 18:23:00 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/28 11:51:08 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,15 +92,18 @@ void	print_elements(t_mt *node, int depth)
 //Comprueba si el nodo es 5 o 6
 int	is_ope_or_red(t_mt *node)
 {
-	if (node->values.state == 5 || node->values.state == 6)
+	if (ft_mtcheck_state(node, REDIRECTION) // probamo
+	|| ft_mtcheck_state(node, OPERATOR)) // estamos checkeando estados y no prioridades
 		return (1);
 	return (0);
 }
+
 //Busca el operador (5 o 6) con mayor prioridad (valodr de prioridad mas alto)
 t_mt	*find_prior_operator(t_mt *list)
 {
 	t_mt	*current;
 	t_mt	*ope;
+	int		p;
 
 	current = list;
 	ope = NULL;
@@ -108,28 +111,28 @@ t_mt	*find_prior_operator(t_mt *list)
 	{
 		if (is_ope_or_red(current))
 		{
-			if (!ope || current->values.priority < ope->values.priority)
+			if (ope)
+				p = ope->values.priority;
+			if (!ope || ft_mtcheck_priority(current, p) < 0) // solo si es igual, pero si quieres lo comparo
 				ope = current;
 		}
 		current = current->vect[RIGHT];
 	}
 	return (ope);
 }
-void	disconnect_operator(t_mt *op)
+void	disconnect_operator(t_mt *op, t_mt **left, t_mt **right, t_mt *list)
 {
+	*right = op->vect[RIGHT];
+	*left = list;
+	if (*left == op)
+		*left = NULL;
 	if (op && op->vect[LEFT])// Romper la conexión con la parte izquierda
-	{
-		(op->vect[LEFT])->vect[RIGHT] = NULL;
-		op->vect[LEFT] = NULL;
-	}
+		ft_mtdisconnect(op, LEFT);
 	if (op && op->vect[RIGHT]) // Romper la conexión con la parte derecha
-	{
-		(op->vect[RIGHT])->vect[LEFT] = NULL;
-		op->vect[RIGHT] = NULL;
-	}
+		ft_mtdisconnect(op, RIGHT);
 }
 
-t_mt *ft_tree_builder(t_mt *list)
+t_mt *ft_tree_builder(t_mt *list) 
 {
 	t_mt	*operator;
 	t_mt	*root;
@@ -145,13 +148,10 @@ t_mt *ft_tree_builder(t_mt *list)
 	if (!operator)
 		return list;
 	root = operator; // El primer operador encontrado será la raíz del árbol
-	// Divido la lista en izquierda y derecha
-	left = list;
-	right = operator->vect[RIGHT];
-	if (left == operator) // Si no hay nodos a la izquierda
-		left = NULL;
-	disconnect_operator(operator);
+	disconnect_operator(operator, &left, &right, list); // op redireccion
 	// Construimos recursivamente los subárboles izquierdo y derecho
+	/* if (ft_mtcheck_state(operator, PARENTESIS))
+		operator->aux = ft_tree_builder(operator->aux); */
 	root->vect[LEFT] = ft_tree_builder(left);
 	root->vect[RIGHT] = ft_tree_builder(right);
 	return root;
