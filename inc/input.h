@@ -18,8 +18,9 @@ typedef enum e_pstate
 	EXPANSION,    // Procesando expansiones como $, ${}
 	ASSIGNMENT,   // Procesando una asignación (VAR=value)
 	WORD,         // Procesando una palabra (comando o argumento)
-	ARGUMENT,     // Procesando un argumento
-	COMMENT       // Ignorar contenido después de un #
+	COMMAND,
+	ARGUMENT, // Procesando un argumento
+	COMMENT   // Ignorar contenido después de un #
 
 }			e_pstate;
 
@@ -66,19 +67,7 @@ char		*ft_strjoin_free(char **s1, char **s2);
 
 void		ft_process_sublist(char *input, int *i, t_mt **sublist);
 t_mt		*ft_create_parentheses_node(t_mt *sublist);
-int			process_argument(char *input, int *i, t_mt **list);
-
-// helpers_is_1.c
-int			is_double_quoted(char c);
-int			is_single_quoted(char c);
-int			is_operator(char c);
-int			is_redirection(char c);
-int			has_higher_precedence(char *op1, char *op2);
-
-// helpers_is_2.c
-int			is_whitespace(char c);
-int			is_asignation(char c);
-int			is_parentesis(char c);
+int			ft_process_argument(t_mt **list);
 
 // helpers_extract.c
 char		*ft_extract_quoted_token(char *str, int *i);

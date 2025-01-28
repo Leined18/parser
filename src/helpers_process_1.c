@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/01/28 08:48:31 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/28 09:57:06 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,41 @@ t_mt	*ft_create_parentheses_node(t_mt *sublist)
 	return (new_node);
 }
 
+static int	is_argument(t_mt *node)
+{
+	if (!node)
+		return (0);
+	if (!ft_mtcheck_state(node, OPERATOR) && !ft_mtcheck_state(node,
+			REDIRECTION) && !ft_mtcheck_state(node, PARENTESIS)
+		&& !ft_mtcheck_state(node, COMMAND))
+		return (1);
+	return (0);
+}
+
 int	ft_process_argument(t_mt **list)
 {
-	if (!list)
+	t_mt	*arg;
+	t_mt	*current;
+	t_mt	*command;
+
+	if (!list || !(*list))
 		return (0);
+	current = *list;
+	while (current)
+	{
+		if (is_argument(current))
+		{
+			command = current;
+			command->values.state = COMMAND;
+			arg = current->vect[RIGHT];
+			while (is_argument(arg))
+				ft_mtpush_last(&command->aux, &arg, LEFT);
+			current = arg;
+		}
+		if (ft_mtcheck_state(current, PARENTESIS))
+			ft_process_argument(&current->aux);
+		if (current)
+			current = current->vect[RIGHT];
+	}
 	return (1);
 }
