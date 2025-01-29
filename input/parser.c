@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:19:37 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/29 12:28:03 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/29 17:16:44 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,11 @@ t_mt	*take_word_parentesis(t_mt *list)
 	return (list);
 }
 
-//Comprueba si el nodo es 5 o 6
+//Comprueba si el nodo es OPERATOR o REDIRECTION
 int	is_ope_or_red(t_mt *node)
 {
-	if (ft_mtcheck_state(node, REDIRECTION) == 0 // probamo
-	|| ft_mtcheck_state(node, OPERATOR) == 0) // estamos checkeando estados y no prioridades
+	if (ft_mtcheck_state(node, REDIRECTION) == 0
+	|| ft_mtcheck_state(node, OPERATOR) == 0)
 		return (1);
 	return (0);
 }
@@ -182,7 +182,7 @@ t_mt	*ft_parse_input(const char *input)
 	if (!validate_list(tokens))
 		(ft_mtclear(&tokens), tokens = NULL);
 	ft_set_priority(tokens, (void *)&(int){0}, set_node_priority);
-	print_elements(tokens, 0);
+	//print_elements(tokens, 0);
 	tree = ft_tree_builder(tokens);
 	free(input_new);
 	return (tree);
