@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:19:37 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/28 17:30:00 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/29 12:28:03 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,19 +90,12 @@ void	print_elements(t_mt *node, int depth)
 	}
 }
 
-t_mt	*find_parentesis_tree(t_mt *list)
+t_mt	*take_word_parentesis(t_mt *list)
 {
-	t_mt	*current;
-
 	if (!list)
 		return (NULL);
-	current = list;
-	while (current)
-	{
-		if (ft_mtcheck_state(current, PARENTESIS) == 0)
-			current->aux = ft_tree_builder(current->aux);
-		current = current->vect[RIGHT];
-	}
+	if (ft_mtcheck_state(list, PARENTESIS) == 0)
+		list->aux = ft_tree_builder(list->aux);
 	return (list);
 }
 
@@ -163,7 +156,7 @@ t_mt *ft_tree_builder(t_mt *list)
 	operator = find_prior_operator(list);
 	// Si no se encontra operador, se devuelve la lista tal cual (caso base)
 	if (!operator)
-		return (find_parentesis_tree(list));
+		operator = take_word_parentesis(list);
 	root = operator; // El primer operador encontrado será la raíz del árbol
 	disconnect_operator(operator, &left, &right, list); // op redireccion
 	// Construimos recursivamente los subárboles izquierdo y derecho
