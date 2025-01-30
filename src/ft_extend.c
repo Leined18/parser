@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_extend.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:34:20 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/28 12:40:25 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/30 10:56:15 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int	ft_is_open(char *p)
 	return (1);
 }
 
-int	ft_extend_until_close(char **input)
+int	ft_extend(char **input)
 {
 	char	*add;
 	char	*ptr;

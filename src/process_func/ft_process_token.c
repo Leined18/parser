@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_process_token.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 10:54:30 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/27 16:52:27 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/30 11:49:45 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	ft_process_token(char *input, int *i, t_mt **list, e_pstate state)
 {
 	if (!i || !input || !list)
 		return (0);
-	if (input[*i] == '(')
-		ft_process_parentheses(input, i, list);
+	if (state == PARENTESIS)
+		ft_process_parentheses(input, i, list, "()");
 	else if (state == WORD)
 		ft_process_word(input, i, list, state);
 	else if (state == SINGLE_QUOTE || state == DOUBLE_QUOTE)
@@ -33,7 +33,7 @@ int	ft_process_token(char *input, int *i, t_mt **list, e_pstate state)
 	else if (state == REDIRECTION)
 		ft_process_redirection(input, i, list);
 	else if (state == EXPANSION)
-		ft_process_word(input, i, list, state);
+		ft_process_expantion(input, i, list);
 	else
 		(*i)++;
 	return (1);

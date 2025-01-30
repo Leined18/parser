@@ -45,7 +45,7 @@ t_mt		*ft_newnode(char *data, e_pstate state);
 
 // extend
 
-int			ft_extend_until_close(char **input);
+int			ft_extend(char **input);
 
 // validate
 
@@ -65,14 +65,15 @@ int			ft_check_is_close_quote(char *input, char quote);
 char		*ft_strjoin_free(char **s1, char **s2);
 // helpers_process_1.c
 
-void		ft_process_sublist(char *input, int *i, t_mt **sublist);
-t_mt		*ft_create_parentheses_node(t_mt *sublist);
+t_mt		*ft_create_parentheses_node(char *key, t_mt *sublist);
 int			ft_process_argument(t_mt **list);
 
 // helpers_extract.c
 char		*ft_extract_quoted_token(char *str, int *i);
 char		*ft_extract_operator_token(char *str, int *i);
 char		*ft_extract_word_token(char *str, int *i);
+char		*ft_extract_parentheses_token(char *str, int *i);
+char		*ft_extract_expantion_token(char *str, int *i);
 
 // ft_process_token.c
 int			ft_process_token(char *input, int *i, t_mt **list, e_pstate state);
@@ -80,8 +81,8 @@ int			ft_process_token(char *input, int *i, t_mt **list, e_pstate state);
 // ft_process.c
 int			ft_process_word(char *input, int *i, t_mt **list, e_pstate state);
 int			ft_process_operator(char *input, int *i, t_mt **list);
-int			ft_process_parentheses(char *input, int *i, t_mt **list);
+int			ft_process_parentheses(char *input, int *i, t_mt **list, char *key);
 int			ft_process_redirection(char *input, int *i, t_mt **list);
 int			ft_process_quote(char *input, int *i, t_mt **list, e_pstate state);
-
+int			ft_process_expantion(char *input, int *i, t_mt **list);
 #endif // INPUT_H

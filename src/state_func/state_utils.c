@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   state_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:28:51 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/27 16:00:19 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/30 11:37:31 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ e_pstate	handle_start(char c)
 		return (DOUBLE_QUOTE);
 	if (ft_strchr("|", c))
 		return (OPERATOR);
-	if (ft_strchr("<>", c))
+	if (ft_strchr("><", c))
 		return (REDIRECTION);
 	if (ft_strchr("$", c))
 		return (EXPANSION);

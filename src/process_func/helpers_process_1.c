@@ -3,37 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   helpers_process_1.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/01/28 12:40:24 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/30 11:34:01 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "input.h"
 
-/**
- * ft_process_word - Handles words and non-operator tokens
- * @input: The input string
- * @i: Pointer to the current index
- * @list: Pointer to the root of the list
- */
-
-void	ft_process_sublist(char *input, int *i, t_mt **sublist)
-{
-	while (input[*i] && input[*i] != ')')
-	{
-		ft_process_token(input, i, sublist, transition(START, input[*i]));
-	}
-	if (input[*i] == ')') // Ignora el ')' final
-		(*i)++;
-}
-
-t_mt	*ft_create_parentheses_node(t_mt *sublist)
+t_mt	*ft_create_parentheses_node(char *key, t_mt *sublist)
 {
 	t_mt	*new_node;
 
-	new_node = ft_newnode("()", PARENTESIS);
+	new_node = ft_newnode(key, PARENTESIS);
 	if (new_node && sublist)
 		ft_mtaddlast_aux(new_node, sublist);
 	return (new_node);

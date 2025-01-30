@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+         #
+#    By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 14:34:27 by danpalac          #+#    #+#              #
-#    Updated: 2025/01/28 08:50:17 by danpalac         ###   ########.fr        #
+#    Updated: 2025/01/30 11:45:40 by danpalac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,6 +65,16 @@ LIBFT_LIB	:= libft.a
 
 INC 			:= inc/
 SRC_DIR 		:= src/
+
+##
+
+CHECK_FUNC_DIR  := check_func/
+EXTRACT_FUNC_DIR:= extract_func/
+NODE_FUNC_DIR	:= node_func/
+PROCESS_FUNC_DIR:= process_func/
+STATE_FUNC_DIR	:= state_func/
+
+##
 OBJ_DIR 		:= obj/
 LIBFT_DIR		:= ../libft/
 LIB_DIR			:= ../lib/
@@ -83,21 +93,30 @@ RM			:= rm -rf
 AR			:= ar rcs
 MKDIR 		:= mkdir -p
 LIB 		:= -L$(LIB_DIR) -lmt -lft
-LIB 		:= -L$(LIB_DIR) -lmt -lft
 IFLAGS		:= -I$(LIB_DIR) -I$(INC)
 LFLAGS		:= $(LIB) -fsanitize=address
 
 #==========SOURCES============================================================#
 
-SRC_SOURCE	:= ft_validate ft_extend ft_process_token ft_process_utils ft_parser state_utils ft_tokenizer \
-			helpers_check_1 helpers_extract_1 \
-			helpers_process_1 helpers_node_1 helpers_priority \
-			helpers_state
+SRC_SOURCE	:= ft_validate ft_extend ft_parser ft_tokenizer \
+
+CHECK_FUNC_FILES := helpers_check_1
+EXTRACT_FUNC_FILES := ft_extract_operator_token ft_extract_parentheses_token ft_extract_quoted_token \
+					ft_extract_word_token ft_extract_expantion_token
+NODE_FUNC_FILES := helpers_node_1 helpers_priority
+PROCESS_FUNC_FILES := ft_process_token ft_process_operator ft_process_expantion ft_process_parentheses ft_process_quote ft_process_redirection \
+					ft_process_word helpers_process_1
+STATE_FUNC_FILES := state_utils helpers_state
+
 
 #==========FILES==============================================================#
 
 SRC_FILES +=$(addprefix $(SRC_DIR), $(SRC_SOURCE))
-
+SRC_FILES +=$(addprefix $(SRC_DIR), $(addprefix $(CHECK_FUNC_DIR), $(CHECK_FUNC_FILES)))
+SRC_FILES +=$(addprefix $(SRC_DIR), $(addprefix $(EXTRACT_FUNC_DIR), $(EXTRACT_FUNC_FILES)))
+SRC_FILES +=$(addprefix $(SRC_DIR), $(addprefix $(NODE_FUNC_DIR), $(NODE_FUNC_FILES)))
+SRC_FILES +=$(addprefix $(SRC_DIR), $(addprefix $(PROCESS_FUNC_DIR), $(PROCESS_FUNC_FILES)))
+SRC_FILES +=$(addprefix $(SRC_DIR), $(addprefix $(STATE_FUNC_DIR), $(STATE_FUNC_FILES)))
 SRCS := $(addsuffix .c, $(SRC_FILES))
 OBJS := $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))
 DEPS := $(addprefix $(OBJ_DIR), $(addsuffix .d, $(SRC_FILES)))
