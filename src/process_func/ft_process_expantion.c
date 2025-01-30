@@ -30,7 +30,8 @@ int	ft_process_expantion(char *input, int *i, t_mt **list)
 	{
 		*i += 1;
 		par = NULL;
-		ft_process_parentheses(input, i, &par, "$()");
+		if (!ft_process_parentheses(input, i, &par, "$()"))
+			return (0);
 		return (ft_mtaddlast_right(list, par), 1);
 	}
 	token = ft_extract_expantion_token(input, i);
