@@ -34,7 +34,7 @@ int	ft_process_parentheses(char *input, int *i, t_mt **list, char *key)
 	if (!token)
 		return (0);
 	j = 0;
-	sublist = ft_tokenize(token, &j);
+	sublist = ft_tokenize(token, &j); // tokeniza el interior del parentesis
 	// Crea y agrega el nodo del paréntesis al árbol principal
 	new_node = ft_create_parentheses_node(key, sublist);
 	if (!new_node)
