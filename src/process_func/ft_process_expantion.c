@@ -35,6 +35,9 @@ int	ft_process_expantion(char *input, int *i, t_mt **list)
 	}
 	token = ft_extract_expantion_token(input, i);
 	if (token)
+	{
 		ft_mtaddlast_right(list, ft_newnode(token, EXPANSION));
-	return (free(token), 1);
+		free(token);
+	}
+	return (1);
 }
