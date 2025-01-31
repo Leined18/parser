@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/31 17:15:32 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/31 20:26:35 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	print_tree(t_mt *root, int level)
 	// Imprimir el nodo actual
 	print_spaces(level);
 	ft_printf("Node: %s (Priority: %d) (state: %d)\n", root->key, root->values.priority, root->values.state);
-	if (ft_mtcheck_state(root, PARENTESIS) == 0)
+	if (ft_mtcheck_state(root, PARENTESIS))
 		if (!print_tree(root->aux, level))
 			return (0);
 	// Imprimir hijos izquierdo y derecho
@@ -77,8 +77,8 @@ int	main(void)
 		ft_error("Error\n", 1);
 		return (1);
 	}
-	ft_mtiter(list, NULL, print_state);
-	//print_tree(list, 0);
+	//ft_mtiter(list, NULL, print_state);
+	print_tree(list, 0);
 	ft_mtclear(&list);
 	free(input);
 	ft_successful("Success\n", 1);

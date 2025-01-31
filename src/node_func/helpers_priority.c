@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers_priority.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 09:41:59 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/27 17:07:22 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/31 20:18:09 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ int	ft_get_priority(char *str)
 		return (-1);
 	if (!ft_strncmp(str, "()", 2))
 		return (7);
-	if (!ft_strncmp(str, "|", 1))
-		return (6);
 	if (!ft_strncmp(str, ">", 1) || !ft_strncmp(str, ">>", 2)
 		|| !ft_strncmp(str, "<", 1) || !ft_strncmp(str, "<<", 2)
 		|| !ft_strncmp(str, "&>", 2) || !ft_strncmp(str, "2>", 2))
+		return (6);
+	if (!ft_strncmp(str, "|", 1))
 		return (5);
 	if (!ft_strncmp(str, "&&", 2) || !ft_strncmp(str, "||", 2))
 		return (4);
