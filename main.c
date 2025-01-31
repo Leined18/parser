@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/31 13:20:06 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/31 17:15:32 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,14 @@ int	print_tree(t_mt *root, int level)
 	}
 	// Imprimir el nodo actual
 	print_spaces(level);
-	ft_printf("Node: %s (Priority: %d)\n", root->key, root->values.priority);
-	/* if (ft_mtcheck_state(root, PARENTESIS))
+	ft_printf("Node: %s (Priority: %d) (state: %d)\n", root->key, root->values.priority, root->values.state);
+	if (ft_mtcheck_state(root, PARENTESIS) == 0)
 		if (!print_tree(root->aux, level))
-			return (0); */
+			return (0);
 	// Imprimir hijos izquierdo y derecho
 	print_spaces(level);
 	ft_printf("Left:\n");
 	print_tree(root->vect[LEFT], level + 1);
-
 	print_spaces(level);
 	ft_printf("Right:\n");
 	print_tree(root->vect[RIGHT], level + 1);
