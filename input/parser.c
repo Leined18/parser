@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:19:37 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/29 17:16:44 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/31 12:13:24 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void	print_elements(t_mt *node, int depth)
 			print_elements(node->aux, depth + 1);
 		node = node->vect[RIGHT];
 	}
+	ft_printf("\n");
 }
 
 t_mt	*take_word_parentesis(t_mt *list)
@@ -182,7 +183,7 @@ t_mt	*ft_parse_input(const char *input)
 	if (!validate_list(tokens))
 		(ft_mtclear(&tokens), tokens = NULL);
 	ft_set_priority(tokens, (void *)&(int){0}, set_node_priority);
-	//print_elements(tokens, 0);
+	print_elements(tokens, 0);
 	tree = ft_tree_builder(tokens);
 	free(input_new);
 	return (tree);

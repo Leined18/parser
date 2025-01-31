@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/28 17:50:06 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/30 12:54:25 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	print_tree(t_mt *root, int level)
 	}
 	// Imprimir el nodo actual
 	print_spaces(level);
-	ft_printf("Node: %s (Priority: %d)\n", root->key, root->values.priority);
+	ft_printf("Node: %s (Priority: %d) (state: %d)\n", root->key, root->values.priority, root->values.state);
 	if (ft_mtcheck_state(root, PARENTESIS) == 0)
 		if (!print_tree(root->aux, level))
 			return (0);
@@ -55,7 +55,6 @@ int	print_tree(t_mt *root, int level)
 	print_spaces(level);
 	ft_printf("Left:\n");
 	print_tree(root->vect[LEFT], level + 1);
-
 	print_spaces(level);
 	ft_printf("Right:\n");
 	print_tree(root->vect[RIGHT], level + 1);
