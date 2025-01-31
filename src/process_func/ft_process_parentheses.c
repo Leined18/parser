@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 11:31:09 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/30 11:31:18 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/31 12:55:08 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,16 @@
  * @i: Pointer to the current index
  * @list: Pointer to the root of the list
  */
+
+static t_mt	*ft_create_parentheses_node(char *key, t_mt *sublist)
+{
+	t_mt	*new_node;
+
+	new_node = ft_newnode(key, PARENTESIS);
+	if (new_node && sublist)
+		ft_mtaddlast_aux(new_node, sublist);
+	return (new_node);
+}
 
 int	ft_process_parentheses(char *input, int *i, t_mt **list, char *key)
 {

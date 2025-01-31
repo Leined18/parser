@@ -65,7 +65,6 @@ int			ft_check_is_close_quote(char *input, char quote);
 char		*ft_strjoin_free(char **s1, char **s2);
 // helpers_process_1.c
 
-t_mt		*ft_create_parentheses_node(char *key, t_mt *sublist);
 int			ft_process_argument(t_mt **list);
 
 // helpers_extract.c
