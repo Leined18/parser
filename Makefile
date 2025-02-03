@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+         #
+#    By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 14:34:27 by danpalac          #+#    #+#              #
-#    Updated: 2025/01/30 11:45:40 by danpalac         ###   ########.fr        #
+#    Updated: 2025/02/03 10:49:08 by mvidal-h         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,8 +71,10 @@ SRC_DIR 		:= src/
 CHECK_FUNC_DIR  := check_func/
 EXTRACT_FUNC_DIR:= extract_func/
 NODE_FUNC_DIR	:= node_func/
+PRINT_FUNC_DIR	:= print_func/
 PROCESS_FUNC_DIR:= process_func/
 STATE_FUNC_DIR	:= state_func/
+TREE_FUNC_DIR	:= tree_func/
 
 ##
 OBJ_DIR 		:= obj/
@@ -104,9 +106,11 @@ CHECK_FUNC_FILES := helpers_check_1
 EXTRACT_FUNC_FILES := ft_extract_operator_token ft_extract_parentheses_token ft_extract_quoted_token \
 					ft_extract_word_token ft_extract_expantion_token
 NODE_FUNC_FILES := helpers_node_1 helpers_priority
+PRINT_FUNC_FILES := print_tokens print_tree
 PROCESS_FUNC_FILES := ft_process_token ft_process_operator ft_process_expantion ft_process_parentheses ft_process_quote ft_process_redirection \
 					ft_process_word helpers_process_1
 STATE_FUNC_FILES := state_utils helpers_state
+TREE_FUNC_FILES := create_binary_tree
 
 
 #==========FILES==============================================================#
@@ -115,8 +119,10 @@ SRC_FILES +=$(addprefix $(SRC_DIR), $(SRC_SOURCE))
 SRC_FILES +=$(addprefix $(SRC_DIR), $(addprefix $(CHECK_FUNC_DIR), $(CHECK_FUNC_FILES)))
 SRC_FILES +=$(addprefix $(SRC_DIR), $(addprefix $(EXTRACT_FUNC_DIR), $(EXTRACT_FUNC_FILES)))
 SRC_FILES +=$(addprefix $(SRC_DIR), $(addprefix $(NODE_FUNC_DIR), $(NODE_FUNC_FILES)))
+SRC_FILES +=$(addprefix $(SRC_DIR), $(addprefix $(PRINT_FUNC_DIR), $(PRINT_FUNC_FILES)))
 SRC_FILES +=$(addprefix $(SRC_DIR), $(addprefix $(PROCESS_FUNC_DIR), $(PROCESS_FUNC_FILES)))
 SRC_FILES +=$(addprefix $(SRC_DIR), $(addprefix $(STATE_FUNC_DIR), $(STATE_FUNC_FILES)))
+SRC_FILES +=$(addprefix $(SRC_DIR), $(addprefix $(TREE_FUNC_DIR), $(TREE_FUNC_FILES)))
 SRCS := $(addsuffix .c, $(SRC_FILES))
 OBJS := $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))
 DEPS := $(addprefix $(OBJ_DIR), $(addsuffix .d, $(SRC_FILES)))

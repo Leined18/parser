@@ -84,9 +84,15 @@ int			ft_process_parentheses(char *input, int *i, t_mt **list, char *key);
 int			ft_process_redirection(char *input, int *i, t_mt **list);
 int			ft_process_quote(char *input, int *i, t_mt **list, e_pstate state);
 int			ft_process_expantion(char *input, int *i, t_mt **list);
-// parser.c
+
+// print_tree.c.c
+int		print_tree(t_mt *root, int level);
+
+//print_tokens
+void	print_tokens(t_mt *node, int depth);
+
+//create_binary_tree.c
 t_mt	*ft_tree_builder(t_mt *list);
 int		is_ope_or_red(t_mt *node);
-void	print_elements(t_mt *node, int depth);
 
 #endif // INPUT_H
