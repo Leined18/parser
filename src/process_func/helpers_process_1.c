@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/01/31 14:44:55 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/02/03 17:16:56 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,33 +24,39 @@ static int	is_argument(t_mt *node)
 	return (0);
 }
 
-static int	set_arguments(t_mt **command)
+static t_mt	*set_arguments(t_mt **command)
 {
 	t_mt	*arg;
 
 	if (!(*command))
-		return (0);
+		return (NULL);
 	arg = (*command)->vect[RIGHT];
 	if (is_argument((*command)))
 	{
 		(*command)->values.state = COMMAND;
 		while (is_argument(arg))
-			ft_mtpush_last(&(*command)->aux, &arg, RIGHT);
+			(ft_mtpush_last(&(*command)->aux, &arg, RIGHT));
+		return ((*command));
 	}
-	return (1);
+	return (NULL);
 }
 
 int	ft_process_argument(t_mt **list)
 {
 	t_mt	*current;
+	t_mt	*command;
 
 	if (!list || !(*list))
 		return (0);
 	current = *list;
 	while (current)
 	{
-		if (!set_arguments(&current))
-			return (1);
+		command = set_arguments(&current);
+		if (ft_mtcheck_state(current, REDIRECTION) && !command)
+		{
+			command = set_arguments(&current->vect[RIGHT]);
+			ft_mtpush_last(&current->aux, &command, RIGHT);
+		}
 		if (ft_mtcheck_state(current, PARENTESIS))
 			ft_process_argument(&current->aux);
 		if (current)
