@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_process_parentheses.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 11:31:09 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/31 12:55:08 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/02/03 15:37:18 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	ft_process_parentheses(char *input, int *i, t_mt **list, char *key)
 		return (0);
 	j = 0;
 	sublist = ft_tokenize(token, &j); // tokeniza el interior del parentesis
+	free(token);
 	// Crea y agrega el nodo del paréntesis al árbol principal
 	new_node = ft_create_parentheses_node(key, sublist);
 	if (!new_node)
