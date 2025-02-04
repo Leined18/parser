@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/01/31 14:44:55 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/02/04 12:34:22 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	is_argument(t_mt *node)
 	if (!ft_mtcheck_state(node, OPERATOR) && !ft_mtcheck_state(node,
 			REDIRECTION) && !ft_mtcheck_state(node, PARENTESIS)
 		&& !ft_mtcheck_state(node, COMMAND) && !ft_mtcheck_state(node,
-			EXPANSION) && !ft_mtcheck_state(node, ASSIGNMENT))
+			EXPANSION))
 		return (1);
 	return (0);
 }
@@ -49,8 +49,13 @@ int	ft_process_argument(t_mt **list)
 	current = *list;
 	while (current)
 	{
-		if (!set_arguments(&current))
-			return (1);
+		command = set_arguments(&current);
+		if (ft_mtcheck_state(current, REDIRECTION) && !command)
+		{
+			if (ft_mtcheck_state(current->vect[RIGHT], WORD))
+				command = ft_mtsub(&current, current->vect[RIGHT]);
+			ft_mtpush_last(&current->aux, &command, RIGHT);
+		}
 		if (ft_mtcheck_state(current, PARENTESIS))
 			ft_process_argument(&current->aux);
 		if (current)

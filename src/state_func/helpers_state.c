@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers_state.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 10:20:51 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/27 17:02:56 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/02/04 12:30:47 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ e_pstate	handle_operator(char c)
 	(void)c;
 	if (ft_isalnum(c) || ft_strchr("=*!", c))
 		return (WORD);
-	if (ft_strchr("|", c))
+	if (ft_strchr("|&", c))
 		return (OPERATOR);
 	if (ft_strchr("><", c))
 		return (REDIRECTION);

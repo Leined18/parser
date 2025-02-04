@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers_priority.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 09:41:59 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/31 20:18:09 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/04 11:38:43 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,13 @@ int	ft_get_priority(char *str)
 	if (!str)
 		return (-1);
 	if (!ft_strncmp(str, "()", 2))
-		return (7);
-	if (!ft_strncmp(str, ">", 1) || !ft_strncmp(str, ">>", 2)
-		|| !ft_strncmp(str, "<", 1) || !ft_strncmp(str, "<<", 2)
-		|| !ft_strncmp(str, "&>", 2) || !ft_strncmp(str, "2>", 2))
 		return (6);
-	if (!ft_strncmp(str, "|", 1))
+	if (!ft_strncmp(str, ">", 1) || !ft_strncmp(str, ">>", 2)
+		|| !ft_strncmp(str, "<", 1) || !ft_strncmp(str, "<<", 2))
 		return (5);
-	if (!ft_strncmp(str, "&&", 2) || !ft_strncmp(str, "||", 2))
+	if (!ft_strncmp(str, "|", 1))
 		return (4);
-	if (!ft_strncmp(str, ";", 1) || !ft_strncmp(str, "&", 1))
+	if (!ft_strncmp(str, "&&", 2) || !ft_strncmp(str, "||", 2))
 		return (3);
 	if (!ft_strchr(str, '='))
 		return (2);
