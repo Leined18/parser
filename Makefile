@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+         #
+#    By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 14:34:27 by danpalac          #+#    #+#              #
-#    Updated: 2025/02/03 10:49:08 by mvidal-h         ###   ########.fr        #
+#    Updated: 2025/02/05 12:38:48 by danpalac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -108,7 +108,7 @@ EXTRACT_FUNC_FILES := ft_extract_operator_token ft_extract_parentheses_token ft_
 NODE_FUNC_FILES := helpers_node_1 helpers_priority
 PRINT_FUNC_FILES := print_tokens print_tree
 PROCESS_FUNC_FILES := ft_process_token ft_process_operator ft_process_expantion ft_process_parentheses ft_process_quote ft_process_redirection \
-					ft_process_word helpers_process_1
+					ft_process_word ft_process_argument
 STATE_FUNC_FILES := state_utils helpers_state
 TREE_FUNC_FILES := create_binary_tree
 

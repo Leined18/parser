@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   helpers_process_1.c                                :+:      :+:    :+:   */
+/*   ft_process_argument.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/02/04 12:34:22 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/02/05 12:42:21 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,25 +24,27 @@ static int	is_argument(t_mt *node)
 	return (0);
 }
 
-static int	set_arguments(t_mt **command)
+static t_mt	*set_arguments(t_mt **command)
 {
 	t_mt	*arg;
 
 	if (!(*command))
-		return (0);
+		return (NULL);
 	arg = (*command)->vect[RIGHT];
 	if (is_argument((*command)))
 	{
 		(*command)->values.state = COMMAND;
 		while (is_argument(arg))
 			ft_mtpush_last(&(*command)->aux, &arg, RIGHT);
+		return (*command);
 	}
-	return (1);
+	return (NULL);
 }
 
 int	ft_process_argument(t_mt **list)
 {
 	t_mt	*current;
+	t_mt	*command;
 
 	if (!list || !(*list))
 		return (0);
