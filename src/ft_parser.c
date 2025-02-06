@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:19:37 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/04 12:27:47 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/02/06 17:50:48 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,17 @@ static void	ft_set_priority(t_mt *list, void *param, void (*func)(t_mt *,
 	if (!list || !func)
 		return ;
 	ft_mtiter(list, param, func);
+}
+
+int	need_redirection_swap(t_mt	*tokens)
+{
+	if (!ft_mtcheck_key(tokens->vect[RIGHT], "<"))
+		return (1);
+	if(!ft_mtcheck_key(tokens->vect[RIGHT], ">"))
+		return (1);
+	if(!ft_mtcheck_key(tokens->vect[RIGHT], ">>"))
+		return (1);
+	return (0);
 }
 
 t_mt	*ft_parse_input(const char *input)
@@ -35,16 +46,15 @@ t_mt	*ft_parse_input(const char *input)
 		return (free(input_new), NULL);
 	tokens = ft_tokenize(input_new, &i); // Tokenizamos el input en nodos
 	if (!tokens)
-		return (free(input_new), NULL); // echo "$PATH"
+		return (free(input_new), NULL);
 	if (!ft_validate_list(tokens))
 		return (ft_mtclear(&tokens), free(input_new), NULL);
 	if (!ft_process_argument(&tokens))
 		return (ft_mtclear(&tokens), free(input_new), NULL);
 	ft_set_priority(tokens, (void *)&(int){0}, set_node_priority);
-	if (ft_mtcheck_state(tokens, COMMAND) && !ft_mtcheck_key(tokens->vect[RIGHT],
-			"<"))
+	if (ft_mtcheck_state(tokens, COMMAND) && need_redirection_swap(tokens)) //REVISAR CASOS ESPECIALES PARA EL SWAP
 		ft_mtswap(&tokens, RIGHT);
-	print_tokens(tokens, 0);
+	//print_tokens(tokens, 0);
 	tree = ft_tree_builder(tokens);
 	return (free(input_new), tree);
 }
