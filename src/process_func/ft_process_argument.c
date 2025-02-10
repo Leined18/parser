@@ -1,12 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   helpers_process_1.c                                :+:      :+:    :+:   */
+/*   ft_process_argument.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
+<<<<<<< HEAD:src/process_func/helpers_process_1.c
 /*   Updated: 2025/02/03 17:16:56 by danpalac         ###   ########.fr       */
+=======
+/*   Updated: 2025/02/10 12:26:38 by danpalac         ###   ########.fr       */
+>>>>>>> main:src/process_func/ft_process_argument.c
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +23,7 @@ static int	is_argument(t_mt *node)
 	if (!ft_mtcheck_state(node, OPERATOR) && !ft_mtcheck_state(node,
 			REDIRECTION) && !ft_mtcheck_state(node, PARENTESIS)
 		&& !ft_mtcheck_state(node, COMMAND) && !ft_mtcheck_state(node,
-			EXPANSION) && !ft_mtcheck_state(node, ASSIGNMENT))
+			EXPANSION))
 		return (1);
 	return (0);
 }
@@ -34,9 +38,9 @@ static t_mt	*set_arguments(t_mt **command)
 	if (is_argument((*command)))
 	{
 		(*command)->values.state = COMMAND;
-		while (is_argument(arg))
-			(ft_mtpush_last(&(*command)->aux, &arg, RIGHT));
-		return ((*command));
+		while (is_argument(arg) || ft_mtcheck_state(arg, EXPANSION))
+			ft_mtpush_last(&(*command)->aux, &arg, RIGHT);
+		return (*command);
 	}
 	return (NULL);
 }
@@ -54,7 +58,12 @@ int	ft_process_argument(t_mt **list)
 		command = set_arguments(&current);
 		if (ft_mtcheck_state(current, REDIRECTION) && !command)
 		{
+<<<<<<< HEAD:src/process_func/helpers_process_1.c
 			command = set_arguments(&current->vect[RIGHT]);
+=======
+			if (ft_mtcheck_state(current->vect[RIGHT], WORD))
+				command = ft_mtsub(&current, current->vect[RIGHT]);
+>>>>>>> main:src/process_func/ft_process_argument.c
 			ft_mtpush_last(&current->aux, &command, RIGHT);
 		}
 		if (ft_mtcheck_state(current, PARENTESIS))

@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 12:53:52 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/29 13:39:08 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/02/10 12:13:48 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	ft_process_expansion(char *input, int *i, t_mt **list, e_pstate state)
 	if (ft_strchr("$", input[*i]))
 		(*i)++;
 	if (ft_strchr("()", token))
-		return (ft_process_parentheses(input, i, list));
+		return (ft_process_parentheses(input, i, list, "$()"));
 	else
 		ft_mtaddlast_right(list, ft_newnode(token, state));
 	free(token);
