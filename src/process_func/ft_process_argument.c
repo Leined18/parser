@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_process_argument.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-<<<<<<< HEAD:src/process_func/helpers_process_1.c
-/*   Updated: 2025/02/03 17:16:56 by danpalac         ###   ########.fr       */
-=======
-/*   Updated: 2025/02/10 12:26:38 by danpalac         ###   ########.fr       */
->>>>>>> main:src/process_func/ft_process_argument.c
+/*   Updated: 2025/02/10 19:54:42 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +54,8 @@ int	ft_process_argument(t_mt **list)
 		command = set_arguments(&current);
 		if (ft_mtcheck_state(current, REDIRECTION) && !command)
 		{
-<<<<<<< HEAD:src/process_func/helpers_process_1.c
-			command = set_arguments(&current->vect[RIGHT]);
-=======
 			if (ft_mtcheck_state(current->vect[RIGHT], WORD))
 				command = ft_mtsub(&current, current->vect[RIGHT]);
->>>>>>> main:src/process_func/ft_process_argument.c
 			ft_mtpush_last(&current->aux, &command, RIGHT);
 		}
 		if (ft_mtcheck_state(current, PARENTESIS))
