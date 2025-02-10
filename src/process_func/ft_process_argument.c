@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/02/05 12:42:21 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/02/10 12:26:38 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static t_mt	*set_arguments(t_mt **command)
 	if (is_argument((*command)))
 	{
 		(*command)->values.state = COMMAND;
-		while (is_argument(arg))
+		while (is_argument(arg) || ft_mtcheck_state(arg, EXPANSION))
 			ft_mtpush_last(&(*command)->aux, &arg, RIGHT);
 		return (*command);
 	}
