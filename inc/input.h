@@ -92,6 +92,7 @@ int		print_tree(t_mt *root, int level);
 void	print_tokens(t_mt *node, int depth);
 
 //create_binary_tree.c
+int		endizide_nodes(t_mt *node);
 t_mt	*ft_tree_builder(t_mt *list);
 int		is_ope_or_red(t_mt *node);
 
