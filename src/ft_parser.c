@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:19:37 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/13 11:29:04 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/13 18:28:46 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	need_redirection_swap(t_mt *tokens)
 	if (!ft_mtcheck_key(tokens->vect[RIGHT], ">"))
 		return (1);
 	if (!ft_mtcheck_key(tokens->vect[RIGHT], ">>"))
+		return (1);
+	if (!ft_mtcheck_key(tokens->vect[RIGHT], "<<"))
 		return (1);
 	return (0);
 }
@@ -82,7 +84,7 @@ void	check_swaps(t_mt **tokens)
 	while (cur)
 	{
 		//ft_printf("while curr es %s\n", cur->key);
-		if (!ft_mtcheck_key(cur, "<"))
+		if (!ft_mtcheck_key(cur, "<") || !ft_mtcheck_key(cur, "<<"))
 		{
 			//ft_printf("encontrado <\n");
 			if (cur->vect[LEFT] && ft_mtcheck_state(cur->vect[LEFT], COMMAND))
@@ -120,7 +122,7 @@ t_mt	*ft_parse_input(const char *input)
 	if (!ft_process_argument(&tokens))
 		return (ft_mtclear(&tokens), free(input_new), NULL);
 	ft_set_priority(tokens, (void *)&(int){0}, set_node_priority);
-	//check_swaps(&tokens);
+	check_swaps(&tokens);
 	//print_tokens(tokens, 0);
 	tree = ft_tree_builder(tokens);
 	//ft_printf("\n\n\n");
