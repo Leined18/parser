@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:28:51 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/30 11:37:31 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/02/13 09:17:35 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ e_pstate	transition(e_pstate current, char c)
 	if (current == PARENTESIS)
 		return (handle_parentesis(c));
 	if (current == EXPANSION)
-		return (START);
+		return (handle_expantion(c));
 	return (END);
 }
 
