@@ -36,6 +36,7 @@ e_pstate	handle_redirection(char c);
 e_pstate	handle_quote(char c);
 e_pstate	handle_operator(char c);
 e_pstate	handle_parentesis(char c);
+e_pstate	handle_expantion(char c);
 // tokenizer.c
 t_mt		*ft_tokenize(const char *input, int *i);
 // helpers_priority
@@ -70,10 +71,11 @@ int			ft_process_argument(t_mt **list);
 // helpers_extract.c
 char		*ft_extract_quoted_token(char *str, int *i);
 char		*ft_extract_operator_token(char *str, int *i);
-char		*ft_extract_word_token(char *str, int *i);
+char		*ft_extract_word_token(char *str, int *i, char *disallow);
 char		*ft_extract_parentheses_token(char *str, int *i);
 char		*ft_extract_expantion_token(char *str, int *i);
-
+char		*ft_extract_token(char *str, int *i, char *allow,
+				int (*funtion)(int));
 // ft_process_token.c
 int			ft_process_token(char *input, int *i, t_mt **list, e_pstate state);
 
@@ -86,10 +88,10 @@ int			ft_process_quote(char *input, int *i, t_mt **list, e_pstate state);
 int			ft_process_expantion(char *input, int *i, t_mt **list);
 
 // print_tree.c.c
-int		print_tree(t_mt *root, int level);
+int			print_tree(t_mt *root, int level);
 
-//print_tokens
-void	print_tokens(t_mt *node, int depth);
+// print_tokens
+void		print_tokens(t_mt *node, int depth);
 
 //create_binary_tree.c
 int		endizide_nodes(t_mt *node);

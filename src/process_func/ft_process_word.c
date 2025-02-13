@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 11:32:14 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/30 11:32:31 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/02/13 09:32:47 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@
 
 int	ft_process_word(char *input, int *i, t_mt **list, e_pstate state)
 {
-	char *token;
+	char	*token;
 
 	if (!input || !i || !list)
 		return (0);
-	token = ft_extract_word_token(input, i);
+	token = ft_extract_word_token(input, i, " \t\n|&;<>=\"'`$");
 	if (!token)
 		return (0);
 	if (ft_strchr(token, '=')) // guarda el token como ASSIGNMENT si tiene '='
