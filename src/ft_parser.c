@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:19:37 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/10 19:25:25 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/13 10:06:33 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,10 +120,10 @@ t_mt	*ft_parse_input(const char *input)
 	if (!ft_process_argument(&tokens))
 		return (ft_mtclear(&tokens), free(input_new), NULL);
 	ft_set_priority(tokens, (void *)&(int){0}, set_node_priority);
-	check_swaps(&tokens);
-	print_tokens(tokens, 0);
+	//check_swaps(&tokens);
+	//print_tokens(tokens, 0);
 	tree = ft_tree_builder(tokens);
-	ft_printf("\n\n\n");
-	print_tree(tree, 0);
+	//ft_printf("\n\n\n");
+	//print_tree(tree, 0);
 	return (free(input_new), tree);
 }
