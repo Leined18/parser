@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:19:37 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/13 18:28:46 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/17 20:30:41 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	ft_set_priority(t_mt *list, void *param, void (*func)(t_mt *,
 	ft_mtiter(list, param, func);
 }
 
-int	need_redirection_swap(t_mt *tokens)
+int	need_redirect_swap(t_mt *tokens)
 {
 	if (!ft_mtcheck_key(tokens->vect[RIGHT], "<"))
 		return (1);
@@ -67,37 +67,56 @@ int	ft_mtexchange(t_mt **lst, t_mt *curr, t_direction direction)
 	return (0);
 }
 
+void	check_follow_command(t_mt **token)
+{
+	t_mt	*cur;
+	t_mt	*substracted;
+	// t_mt	*substracted_2;
 
-void	check_swaps(t_mt **tokens)
+	if (!token || !*token)
+		return ;
+	cur = *token;
+	while (cur)
+	{
+		if (ft_mtcheck_state(cur, COMMAND) && cur->vect[RIGHT]
+			&& ft_mtcheck_state(cur->vect[RIGHT], COMMAND))
+		{
+			substracted = ft_mtsub(&cur, cur->vect[RIGHT]);
+			// ft_printf("substracted1: %s\n", substracted->key);
+			ft_mtpush_last(&cur->aux, &substracted, RIGHT);
+			// while (substracted && substracted->aux) //PROBLEMA CON ECHO cat < in.txt sort grep la vs echo < in.txt sort grep la
+			// {
+			// 	substracted_2 = ft_mtsub(&substracted, substracted->aux);
+			// 	ft_printf("substracted_2: %s\n", substracted_2->key);
+			// 	ft_mtpush_last(&cur->aux, &substracted_2, RIGHT);
+			// }
+		}
+		else
+			cur = cur->vect[RIGHT];
+	}
+}
+
+
+void	check_swaps(t_mt **token)
 {
 	t_mt	*cur;
 
-	if (!tokens || !*tokens)
+	if (!token || !*token)
 		return ;
-	if (ft_mtcheck_state(*tokens, COMMAND) && need_redirection_swap(*tokens))
-	{
-		ft_mtswap(tokens, RIGHT);
-		//ft_printf("Cambio swap primeros. Ahora tokens es %s\n", (*tokens)->key);
-		//print_tokens(*tokens, 0);
-	}
-	cur = *tokens;
+	if ((ft_mtcheck_state(*token, COMMAND) 
+		|| ft_mtcheck_state(*token, PARENTESIS)) && need_redirect_swap(*token))
+		ft_mtswap(token, RIGHT);
+	cur = *token;
 	while (cur)
 	{
-		//ft_printf("while curr es %s\n", cur->key);
 		if (!ft_mtcheck_key(cur, "<") || !ft_mtcheck_key(cur, "<<"))
 		{
-			//ft_printf("encontrado <\n");
 			if (cur->vect[LEFT] && ft_mtcheck_state(cur->vect[LEFT], COMMAND))
-			{
-			//	ft_printf("left es command asi que entro en exchange\n");
-				ft_mtexchange(tokens, cur, LEFT);
-			//	print_tokens(*tokens, 0);
-			}
-			//else
-			//	ft_printf("left NO es command asi que avanzo\n");
+				ft_mtexchange(token, cur, LEFT);
 		}
 		cur = cur->vect[RIGHT];
 	}
+	check_follow_command(token);
 }
 
 
@@ -123,9 +142,9 @@ t_mt	*ft_parse_input(const char *input)
 		return (ft_mtclear(&tokens), free(input_new), NULL);
 	ft_set_priority(tokens, (void *)&(int){0}, set_node_priority);
 	check_swaps(&tokens);
-	//print_tokens(tokens, 0);
+	print_tokens(tokens, 0);
 	tree = ft_tree_builder(tokens);
-	//ft_printf("\n\n\n");
-	//print_tree(tree, 0);
+	ft_printf("\n\n\n");
+	print_tree(tree, 0);
 	return (free(input_new), tree);
 }
