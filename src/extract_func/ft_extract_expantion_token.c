@@ -27,7 +27,13 @@ char	*ft_extract_expantion_token(char *str, int *i)
 		dup = ft_strdup("$");
 		return (ft_strjoin_free(&dup, &token));
 	}
-	token = ft_extract_token(str, i, "_", ft_isalnum);
+	if (ft_strchr("?", str[*i]))
+	{
+		token = ft_strdup("?");
+		(*i)++;
+	}
+	else 
+		token = ft_extract_token(str, i, "_", ft_isalnum);
 	dup = ft_strdup("$");
 	return (ft_strjoin_free(&dup, &token));
 }
