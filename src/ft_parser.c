@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:19:37 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/17 20:30:41 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/18 19:09:27 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,13 @@ int	ft_mtexchange(t_mt **lst, t_mt *curr, t_direction direction)
 	return (0);
 }
 
-void	check_follow_command(t_mt **token)
+
+void	check_follow_commands(t_mt **token)
 {
 	t_mt	*cur;
 	t_mt	*substracted;
-	// t_mt	*substracted_2;
+	t_mt	*aux_substracted;
+	t_mt	*next;
 
 	if (!token || !*token)
 		return ;
@@ -82,20 +84,21 @@ void	check_follow_command(t_mt **token)
 			&& ft_mtcheck_state(cur->vect[RIGHT], COMMAND))
 		{
 			substracted = ft_mtsub(&cur, cur->vect[RIGHT]);
-			// ft_printf("substracted1: %s\n", substracted->key);
+			if (substracted->aux)
+			{
+				aux_substracted = substracted->aux;
+				substracted->aux = NULL;
+			}
 			ft_mtpush_last(&cur->aux, &substracted, RIGHT);
-			// while (substracted && substracted->aux) //PROBLEMA CON ECHO cat < in.txt sort grep la vs echo < in.txt sort grep la
-			// {
-			// 	substracted_2 = ft_mtsub(&substracted, substracted->aux);
-			// 	ft_printf("substracted_2: %s\n", substracted_2->key);
-			// 	ft_mtpush_last(&cur->aux, &substracted_2, RIGHT);
-			// }
+			next = cur->aux;
+			while (next->vect[RIGHT])
+				next = next->vect[RIGHT];
+			next->vect[RIGHT] = aux_substracted;
 		}
 		else
 			cur = cur->vect[RIGHT];
 	}
 }
-
 
 void	check_swaps(t_mt **token)
 {
@@ -116,7 +119,7 @@ void	check_swaps(t_mt **token)
 		}
 		cur = cur->vect[RIGHT];
 	}
-	check_follow_command(token);
+	check_follow_commands(token);
 }
 
 
@@ -142,9 +145,9 @@ t_mt	*ft_parse_input(const char *input)
 		return (ft_mtclear(&tokens), free(input_new), NULL);
 	ft_set_priority(tokens, (void *)&(int){0}, set_node_priority);
 	check_swaps(&tokens);
-	print_tokens(tokens, 0);
+	print_tokens(&tokens);
 	tree = ft_tree_builder(tokens);
-	ft_printf("\n\n\n");
+	ft_printf("\n\n");
 	print_tree(tree, 0);
 	return (free(input_new), tree);
 }

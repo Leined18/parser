@@ -91,7 +91,7 @@ int			ft_process_expantion(char *input, int *i, t_mt **list);
 int			print_tree(t_mt *root, int level);
 
 // print_tokens
-void		print_tokens(t_mt *node, int depth);
+void		print_tokens(t_mt **tokens);
 
 //create_binary_tree.c
 int		endizide_nodes(t_mt *node);
