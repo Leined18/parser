@@ -93,6 +93,13 @@ int			print_tree(t_mt *root, int level);
 // print_tokens
 void		print_tokens(t_mt **tokens);
 
+//ft_parser_utils.c
+int			need_redirect_swap(t_mt *tokens);
+t_mt		*ft_disconnect_aux(t_mt **node);
+void		ft_mtlink_last_aux(t_mt **cur, t_mt *aux_substracted);
+void		check_follow_commands(t_mt **token);
+void		check_swaps(t_mt **token);
+
 //create_binary_tree.c
 int		endizide_nodes(t_mt *node);
 t_mt	*ft_tree_builder(t_mt *list);
