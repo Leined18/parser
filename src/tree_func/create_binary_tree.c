@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 10:25:11 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/12 19:32:52 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/21 18:52:38 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,18 @@ int	endizide_nodes(t_mt *node)
 	return (0);
 }
 
-int	endizide_redin_pipes(t_mt *node)
-{
-	if (!node || node->values.state == END)
-		return (0);
-	if (ft_mtsearch_key(node, "<") && ft_mtsearch_key(node->vect[LEFT], "|"))
-		endizide_nodes(node->vect[LEFT]);
-	if (node->vect[LEFT])
-		endizide_redin_pipes(node->vect[LEFT]);
-	if (node->vect[RIGHT])
-		endizide_redin_pipes(node->vect[RIGHT]);
-	return (0);
-}
+// int	endizide_redin_pipes(t_mt *node) //Porque bash obvia todo lo que haya mas allá del ultimo comando de una serie de tuberias antes de una redirección de entrada.
+// {
+// 	if (!node || node->values.state == END)
+// 		return (0);
+// 	if (ft_mtsearch_key(node, "<") && ft_mtsearch_key(node->vect[LEFT], "|"))
+// 		endizide_nodes(node->vect[LEFT]);
+// 	if (node->vect[LEFT])
+// 		endizide_redin_pipes(node->vect[LEFT]);
+// 	if (node->vect[RIGHT])
+// 		endizide_redin_pipes(node->vect[RIGHT]);
+// 	return (0);
+// }
 
 t_mt	*take_word_parentesis(t_mt *list)
 {
@@ -109,6 +109,6 @@ t_mt *ft_tree_builder(t_mt *list)
 	// Construimos recursivamente los subárboles izquierdo y derecho
 	root->vect[LEFT] = ft_tree_builder(left);
 	root->vect[RIGHT] = ft_tree_builder(right);
-	endizide_redin_pipes(root);
+	// endizide_redin_pipes(root); CREO QUE AL FINAL NO LO NECESITO
 	return root;
 }
