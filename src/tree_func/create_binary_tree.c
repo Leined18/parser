@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 10:25:11 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/21 18:52:38 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/24 12:49:11 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,13 @@ t_mt	*take_word_parentesis(t_mt *list)
 	return (list);
 }
 
-//Comprueba si el nodo es OPERATOR o REDIRECTION
 int	is_ope_or_red(t_mt *node)
 {
-	if (ft_mtcheck_state(node, REDIRECTION)
-	|| ft_mtcheck_state(node, OPERATOR))
+	if (ft_mtcheck_state(node, REDIRECTION) || ft_mtcheck_state(node, OPERATOR))
 		return (1);
 	return (0);
 }
 
-//Busca el operador (5 o 6) con mayor prioridad (valodr de prioridad mas alto)
 t_mt	*find_prior_operator(t_mt *list)
 {
 	t_mt	*current;
@@ -70,7 +67,7 @@ t_mt	*find_prior_operator(t_mt *list)
 		{
 			if (ope)
 				p = ope->values.priority;
-			if (!ope || ft_mtcheck_priority(current, p) > 0) // solo si es igual, pero si quieres lo comparo
+			if (!ope || ft_mtcheck_priority(current, p) > 0)
 				ope = current;
 		}
 		current = current->vect[RIGHT];
@@ -83,13 +80,13 @@ void	disconnect_operator(t_mt *op, t_mt **left, t_mt **right, t_mt *list)
 	*left = list;
 	if (*left == op)
 		*left = NULL;
-	if (op && op->vect[LEFT])// Romper la conexión con la parte izquierda
+	if (op && op->vect[LEFT])
 		ft_mtdisconnect(op, LEFT);
-	if (op && op->vect[RIGHT]) // Romper la conexión con la parte derecha
+	if (op && op->vect[RIGHT])
 		ft_mtdisconnect(op, RIGHT);
 }
 
-t_mt *ft_tree_builder(t_mt *list)
+t_mt	*ft_tree_builder(t_mt *list)
 {
 	t_mt	*operator;
 	t_mt	*root;
@@ -97,18 +94,14 @@ t_mt *ft_tree_builder(t_mt *list)
 	t_mt	*right;
 
 	if (!list)
-		return NULL;
+		return (NULL);
 	root = NULL;
-	// Se busca el operador o redirección de menor prioridad en la lista
-	operator = find_prior_operator(list);
-	// Si no se encontra operador, se devuelve la lista tal cual (caso base)
+	operator= find_prior_operator(list);
 	if (!operator)
-		operator = take_word_parentesis(list);
-	root = operator; // El primer operador encontrado será la raíz del árbol
-	disconnect_operator(operator, &left, &right, list); // op redireccion
-	// Construimos recursivamente los subárboles izquierdo y derecho
+		operator= take_word_parentesis(list);
+	root = operator;
+	disconnect_operator(operator, & left, &right, list);
 	root->vect[LEFT] = ft_tree_builder(left);
 	root->vect[RIGHT] = ft_tree_builder(right);
-	// endizide_redin_pipes(root); CREO QUE AL FINAL NO LO NECESITO
-	return root;
+	return (root);
 }
