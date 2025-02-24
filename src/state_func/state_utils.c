@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:28:51 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/24 10:45:12 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/02/24 12:06:30 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ e_pstate	handle_start(char c)
 		return (REDIRECTION);
 	if (ft_strchr("$", c))
 		return (EXPANSION);
+	if (ft_strchr("*", c))
+		return (WILDCARD);
 	return (WORD); // Asumimos que cualquier otro carácter inicia una palabra
 }
 

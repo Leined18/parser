@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_process_argument.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/02/10 19:54:42 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/24 12:11:51 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,23 @@ static int	is_argument(t_mt *node)
 {
 	if (!node)
 		return (0);
-	if (!ft_mtcheck_state(node, OPERATOR) && !ft_mtcheck_state(node,
-			REDIRECTION) && !ft_mtcheck_state(node, PARENTESIS)
-		&& !ft_mtcheck_state(node, COMMAND) && !ft_mtcheck_state(node,
-			EXPANSION))
-		return (1);
-	return (0);
+	if (ft_mtcheck_state(node, OPERATOR) || ft_mtcheck_state(node, REDIRECTION)
+		|| ft_mtcheck_state(node, PARENTESIS) || ft_mtcheck_state(node,
+			COMMAND))
+		return (0);
+	return (1);
+}
+
+static int	is_command(t_mt *node)
+{
+	if (!node)
+		return (0);
+	if (ft_mtcheck_state(node, OPERATOR) || ft_mtcheck_state(node, REDIRECTION)
+		|| ft_mtcheck_state(node, PARENTESIS) || ft_mtcheck_state(node, COMMAND)
+		|| ft_mtcheck_state(node, EXPANSION) || ft_mtcheck_state(node,
+			WILDCARD))
+		return (0);
+	return (1);
 }
 
 static t_mt	*set_arguments(t_mt **command)
@@ -31,10 +42,10 @@ static t_mt	*set_arguments(t_mt **command)
 	if (!(*command))
 		return (NULL);
 	arg = (*command)->vect[RIGHT];
-	if (is_argument((*command)))
+	if (is_command((*command)))
 	{
 		(*command)->values.state = COMMAND;
-		while (is_argument(arg) || ft_mtcheck_state(arg, EXPANSION))
+		while (is_argument(arg))
 			ft_mtpush_last(&(*command)->aux, &arg, RIGHT);
 		return (*command);
 	}

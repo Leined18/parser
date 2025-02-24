@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 09:15:31 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/13 09:17:14 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/02/24 12:05:27 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ e_pstate	handle_expantion(char c)
 		return (EXPANSION);
 	if (ft_strchr(" \v\t\n", c))
 		return (START);
+	if (ft_strchr("*", c))
+		return (WILDCARD);
 	if (ft_isascii(c))
 		return (WORD);
 	return (START);
