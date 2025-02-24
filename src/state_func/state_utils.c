@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:28:51 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/24 12:06:30 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/02/24 12:24:08 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ e_pstate	transition(e_pstate current, char c)
 	// Delegar la lógica a funciones específicas según el estado actual
 	if (current == START)
 		return (handle_start(c));
-	if (current == WORD)
+	if (current == WORD || current == WILDCARD)
 		return (handle_word(c));
 	if (current == REDIRECTION)
 		return (handle_redirection(c));
