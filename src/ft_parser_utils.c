@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 11:35:46 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/19 12:33:15 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/24 12:24:33 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,6 @@
 int	need_redirect_swap(t_mt *tokens)
 {
 	if (!ft_mtcheck_key(tokens->vect[RIGHT], "<"))
-		return (1);
-	if (!ft_mtcheck_key(tokens->vect[RIGHT], ">"))
-		return (1);
-	if (!ft_mtcheck_key(tokens->vect[RIGHT], ">>"))
 		return (1);
 	if (!ft_mtcheck_key(tokens->vect[RIGHT], "<<"))
 		return (1);
