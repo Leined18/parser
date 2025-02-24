@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ft_check.c                                         :+:      :+:    :+:   */
+/*   ft_validate.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/27 11:35:06 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/27 11:35:11 by danpalac         ###   ########.fr       */
+/*   Created: 2025/02/24 13:02:24 by danpalac          #+#    #+#             */
+/*   Updated: 2025/02/24 13:02:27 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,6 @@ int	ft_validate_list(t_mt *list)
 	int	error;
 
 	error = 0;
-	res = ft_mtfold(list, &error, ft_check); // fold es como un map pero con un acumulador
+	res = ft_mtfold(list, &error, ft_check);
 	return (res == 0);
 }

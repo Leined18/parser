@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 10:54:30 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/24 12:38:29 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/02/24 13:03:07 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * @tree: Pointer to the root of the list
  */
 
-int	ft_process_token(char *input, int *i, t_mt **list, e_pstate state)
+int	ft_process_token(char *input, int *i, t_mt **list, t_pstate state)
 {
 	if (!i || !input || !list)
 		return (0);

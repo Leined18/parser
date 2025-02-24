@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:34:20 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/24 11:46:07 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/02/24 12:57:04 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ int	ft_extend(char **input)
 	if (!input || !*input)
 		return (0);
 	ptr = *input;
-	if (!ft_is_open(ptr)) // me refiero a si esta cerrado todos se sale XD
+	if (!ft_is_open(ptr))
 		return (1);
-	while (!ft_is_all_closed(ptr)) // si no esta conectado todo sigue
+	while (!ft_is_all_closed(ptr))
 	{
 		ft_printf("> ");
 		add = get_next_line(0);
@@ -73,7 +73,7 @@ int	ft_extend(char **input)
 		ptr = ft_strjoin_free(&ptr, &add);
 		if (!ptr)
 			return (0);
-		*input = ptr; // Actualizamos el input con el nuevo contenido
+		*input = ptr;
 	}
-	return (1); // Paréntesis balanceados
+	return (1);
 }
