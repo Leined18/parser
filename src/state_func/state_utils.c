@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:28:51 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/24 12:37:44 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/02/24 12:40:03 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ e_pstate	transition(e_pstate current, char c)
 {
 	if (current == END || c == '\0')
 		return (END);
-	// Delegar la lógica a funciones específicas según el estado actual
 	if (current == START)
 		return (handle_start(c));
 	if (current == WORD || current == WILDCARD)
@@ -45,7 +44,6 @@ e_pstate	transition(e_pstate current, char c)
 	return (END);
 }
 
-// Implementación de funciones específicas para cada estado
 e_pstate	handle_start(char c)
 {
 	if (ft_strchr("\n \t", c))
@@ -64,7 +62,7 @@ e_pstate	handle_start(char c)
 		return (EXPANSION);
 	if (ft_strchr("*", c))
 		return (WILDCARD);
-	return (WORD); // Asumimos que cualquier otro carácter inicia una palabra
+	return (WORD);
 }
 
 int	ft_mtcheck_state(t_mt *mt, int state)
