@@ -6,11 +6,22 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:28:51 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/24 12:24:08 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/02/24 12:37:44 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "input.h"
+
+/**
+ * @brief Manages state transitions in the state machine.
+ *
+ * @param current The current state.
+ * @param c The input character.
+ * @return The next state based on the input.
+ *
+ * Delegates logic to state-specific handlers, ensuring modularity
+ * and adaptability. Returns END if the state is END or the character is '\0'.
+ */
 
 e_pstate	transition(e_pstate current, char c)
 {
