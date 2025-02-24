@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:28:51 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/13 09:17:35 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/02/24 10:45:12 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ e_pstate	handle_start(char c)
 		return (SINGLE_QUOTE);
 	if (ft_strchr("\"", c))
 		return (DOUBLE_QUOTE);
-	if (ft_strchr("|", c))
+	if (ft_strchr("|&", c))
 		return (OPERATOR);
 	if (ft_strchr("><", c))
 		return (REDIRECTION);
