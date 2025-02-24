@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   helpers_node_1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 14:41:22 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/27 17:07:27 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/02/24 13:03:07 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "input.h"
 
-t_mt	*ft_newnode(char *data, e_pstate state)
+t_mt	*ft_newnode(char *data, t_pstate state)
 {
 	t_mt	*node;
 

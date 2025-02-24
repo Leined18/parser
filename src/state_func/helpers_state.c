@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 10:20:51 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/24 12:46:42 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/02/24 13:03:58 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,17 @@
  *
  * @details Handlers determine the next state after processing a token.
  * When a token is fully parsed, the handler evaluates the next character
- * and returns the appropriate state transition.
+ * and returns the appropriate state ft_transition.
  *
  * @example handle_word:
  * - Whitespace -> START
  * - Operator -> OPERATOR
  * - Otherwise -> WORD
  *
- * This approach ensures dynamic transitions and robust parsing.
+ * This approach ensures dynamic ft_transitions and robust parsing.
  */
 
-e_pstate	handle_word(char c)
+t_pstate	handle_word(char c)
 {
 	if (ft_strchr(" \v\t\n", c))
 		return (START);
@@ -48,7 +48,7 @@ e_pstate	handle_word(char c)
 	return (WORD);
 }
 
-e_pstate	handle_quote(char c)
+t_pstate	handle_quote(char c)
 {
 	if (ft_strchr(" \v\t\n", c))
 		return (START);
@@ -67,7 +67,7 @@ e_pstate	handle_quote(char c)
 	return (START);
 }
 
-e_pstate	handle_operator(char c)
+t_pstate	handle_operator(char c)
 {
 	if (ft_strchr("|&", c))
 		return (OPERATOR);
@@ -90,14 +90,14 @@ e_pstate	handle_operator(char c)
 	return (START);
 }
 
-e_pstate	handle_parentesis(char c)
+t_pstate	handle_parentesis(char c)
 {
 	if (c == '(')
 		return (PARENTESIS);
 	return (START);
 }
 
-e_pstate	handle_redirection(char c)
+t_pstate	handle_redirection(char c)
 {
 	if (ft_strchr("|&", c))
 		return (OPERATOR);

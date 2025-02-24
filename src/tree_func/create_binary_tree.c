@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 10:25:11 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/24 12:41:45 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/02/24 12:52:35 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ t_mt	*find_prior_operator(t_mt *list)
 	}
 	return (ope);
 }
+
 void	disconnect_operator(t_mt *op, t_mt **left, t_mt **right, t_mt *list)
 {
 	*right = op->vect[RIGHT];
@@ -71,9 +72,9 @@ t_mt	*ft_tree_builder(t_mt *list)
 	if (!list)
 		return (NULL);
 	root = NULL;
-	operator= find_prior_operator(list);
+	operator = find_prior_operator(list);
 	if (!operator)
-		operator= take_word_parentesis(list);
+		operator = take_word_parentesis(list);
 	root = operator;
 	disconnect_operator(operator, & left, &right, list);
 	root->vect[LEFT] = ft_tree_builder(left);

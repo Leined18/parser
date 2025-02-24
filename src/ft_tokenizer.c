@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tokenizer.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 12:15:25 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/27 16:17:03 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/02/24 13:03:58 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 t_mt	*ft_tokenize(const char *input, int *i)
 {
-	e_pstate	state;
+	t_pstate	state;
 	t_mt		*list;
 	char		*str;
 
@@ -31,7 +31,7 @@ t_mt	*ft_tokenize(const char *input, int *i)
 	str = ft_strdup(input);
 	while (str[*i])
 	{
-		state = transition(state, str[*i]);
+		state = ft_transition(state, str[*i]);
 		if (state == END)
 			break ;
 		if (!ft_process_token(str, i, &list, state))

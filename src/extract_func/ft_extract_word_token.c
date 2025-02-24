@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 11:10:22 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/13 11:40:33 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/02/24 13:03:58 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*ft_extract_word_token(char *str, int *i, char *disallow)
 	if (str[*i] == '=')
 	{
 		(*i)++;
-		ft_process_token(str, i, &add, transition(START, str[*i]));
+		ft_process_token(str, i, &add, ft_transition(START, str[*i]));
 		ft_mtclear(&add);
 	}
 	token = ft_substr(str, start, *i - start);

@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 09:41:59 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/04 11:38:43 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/02/24 12:55:36 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,9 @@ int	ft_get_priority(char *str)
 		return (2);
 	if (ft_strchr(str, '='))
 		return (1);
-	return (0); // Valor por defecto para casos no reconocidos
+	return (0);
 }
 
-// Función para obtener la prioridad de un operador
 void	set_node_priority(t_mt *node, void *param)
 {
 	if (!node || !node->data)

@@ -6,13 +6,13 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 09:15:31 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/24 12:05:27 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/02/24 13:03:07 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
 
-e_pstate	handle_expantion(char c)
+t_pstate	handle_expantion(char c)
 {
 	if (ft_strchr("|&", c))
 		return (OPERATOR);

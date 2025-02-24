@@ -6,14 +6,14 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:28:51 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/24 12:40:03 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/02/24 13:03:58 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "input.h"
 
 /**
- * @brief Manages state transitions in the state machine.
+ * @brief Manages state ft_transitions in the state machine.
  *
  * @param current The current state.
  * @param c The input character.
@@ -23,7 +23,7 @@
  * and adaptability. Returns END if the state is END or the character is '\0'.
  */
 
-e_pstate	transition(e_pstate current, char c)
+t_pstate	ft_transition(t_pstate current, char c)
 {
 	if (current == END || c == '\0')
 		return (END);
@@ -44,7 +44,7 @@ e_pstate	transition(e_pstate current, char c)
 	return (END);
 }
 
-e_pstate	handle_start(char c)
+t_pstate	handle_start(char c)
 {
 	if (ft_strchr("\n \t", c))
 		return (START);

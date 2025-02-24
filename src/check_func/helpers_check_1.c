@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers_check_1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 10:11:34 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/28 12:43:46 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/02/24 12:56:47 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	ft_check_is_close(char *input, char open, char close)
 	}
 	return (open_count == close_count);
 }
+
 int	ft_check_is_close_quote(char *input, char quote)
 {
 	int	is_open;
@@ -63,7 +64,7 @@ int	ft_check_is_close_quote(char *input, char quote)
 		if (input[i] == '\"' && !in_single_quotes)
 			in_double_quotes = !in_double_quotes;
 		if (input[i] == quote && ((quote == '\'' && !in_double_quotes)
-					|| (quote == '\"' && !in_single_quotes)))
+				|| (quote == '\"' && !in_single_quotes)))
 			is_open = !is_open;
 		i++;
 	}
@@ -98,8 +99,7 @@ int	ft_check_redirections_mt(t_mt *op, int *error)
 	{
 		if (ft_mtcheck_state(op->vect[RIGHT], PARENTESIS))
 			return (0);
-		else
-		if (op->vect[RIGHT])
+		else if (op->vect[RIGHT])
 			s = ((char *)op->vect[RIGHT]->data);
 		return (*error = 1, ft_printf(SYNTAX_ERROR, s, 1));
 	}

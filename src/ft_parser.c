@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:19:37 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/13 10:06:33 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/02/24 13:00:18 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,39 +65,25 @@ int	ft_mtexchange(t_mt **lst, t_mt *curr, t_direction direction)
 	return (0);
 }
 
-
-void	check_swaps(t_mt **tokens)
+void	ft_check_swaps(t_mt **tokens)
 {
 	t_mt	*cur;
 
 	if (!tokens || !*tokens)
 		return ;
 	if (ft_mtcheck_state(*tokens, COMMAND) && need_redirection_swap(*tokens))
-	{
 		ft_mtswap(tokens, RIGHT);
-		ft_printf("Cambio swap primeros. Ahora tokens es %s\n", (*tokens)->key);
-		print_tokens(*tokens, 0);
-	}
 	cur = *tokens;
 	while (cur)
 	{
-		ft_printf("while curr es %s\n", cur->key);
 		if (!ft_mtcheck_key(cur, "<"))
 		{
-			ft_printf("encontrado <\n");
 			if (cur->vect[LEFT] && ft_mtcheck_state(cur->vect[LEFT], COMMAND))
-			{
-				ft_printf("left es command asi que entro en exchange\n");
 				ft_mtexchange(tokens, cur, LEFT);
-				print_tokens(*tokens, 0);
-			}
-			else
-				ft_printf("left NO es command asi que avanzo\n");
 		}
 		cur = cur->vect[RIGHT];
 	}
 }
-
 
 t_mt	*ft_parse_input(const char *input)
 {
@@ -112,7 +98,7 @@ t_mt	*ft_parse_input(const char *input)
 		return (free(input_new), NULL);
 	if (!ft_extend(&input_new))
 		return (free(input_new), NULL);
-	tokens = ft_tokenize(input_new, &i); // Tokenizamos el input en nodos
+	tokens = ft_tokenize(input_new, &i);
 	if (!tokens)
 		return (free(input_new), NULL);
 	if (!ft_validate_list(tokens))
@@ -120,10 +106,7 @@ t_mt	*ft_parse_input(const char *input)
 	if (!ft_process_argument(&tokens))
 		return (ft_mtclear(&tokens), free(input_new), NULL);
 	ft_set_priority(tokens, (void *)&(int){0}, set_node_priority);
-	//check_swaps(&tokens);
-	//print_tokens(tokens, 0);
+	ft_check_swaps(&tokens);
 	tree = ft_tree_builder(tokens);
-	//ft_printf("\n\n\n");
-	//print_tree(tree, 0);
 	return (free(input_new), tree);
 }

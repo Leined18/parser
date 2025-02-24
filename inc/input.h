@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   input.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/24 13:05:18 by danpalac          #+#    #+#             */
+/*   Updated: 2025/02/24 13:05:19 by danpalac         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef INPUT_H
 # define INPUT_H
 
@@ -6,44 +18,48 @@
 
 # define SYNTAX_ERROR "syntax error near unexpected token `%s'\n"
 
-typedef enum e_pstate
+typedef enum t_pstate
 {
-	END,          // Estado final
-	START,        // Estado inicial
-	PARENTESIS,   // Procesando paréntesis
-	SINGLE_QUOTE, // Procesando contenido entre comillas
-	DOUBLE_QUOTE, // Procesando contenido entre comillas dobles
-	REDIRECTION,  // Procesando redirecciones: >, >>, << (heredoc incluido)
-	OPERATOR,     // Operadores como |, &&, ||
-	EXPANSION,    // Procesando expansiones como $, ${}
+	END,
+	START,
+	PARENTESIS,
+	SINGLE_QUOTE,
+	DOUBLE_QUOTE,
+	REDIRECTION,
+	OPERATOR,
+	EXPANSION,
 	WILDCARD,
-	ASSIGNMENT,   // Procesando una asignación (VAR=value)
-	WORD,         // Procesando una palabra (comando o argumento)
+	ASSIGNMENT,
+	WORD,
 	COMMAND,
-	ARGUMENT, // Procesando un argumento
-	COMMENT   // Ignorar contenido después de un #
-
-}			e_pstate;
+	ARGUMENT,
+	COMMENT,
+	MAS_PSTATE
+}			t_pstate;
 
 // state.c
 
 int			ft_mtcheck_state(t_mt *mt, int state);
-e_pstate	transition(e_pstate current, char c);
+t_pstate	ft_transition(t_pstate current, char c);
 
 // helpers
-e_pstate	handle_start(char c);
-e_pstate	handle_word(char c);
-e_pstate	handle_redirection(char c);
-e_pstate	handle_quote(char c);
-e_pstate	handle_operator(char c);
-e_pstate	handle_parentesis(char c);
-e_pstate	handle_expantion(char c);
+t_pstate	handle_start(char c);
+t_pstate	handle_word(char c);
+t_pstate	handle_redirection(char c);
+t_pstate	handle_quote(char c);
+t_pstate	handle_operator(char c);
+t_pstate	handle_parentesis(char c);
+t_pstate	handle_expantion(char c);
+
 // tokenizer.c
+
 t_mt		*ft_tokenize(const char *input, int *i);
+
 // helpers_priority
+
 void		set_node_priority(t_mt *node, void *param);
 int			ft_get_priority(char *str);
-t_mt		*ft_newnode(char *data, e_pstate state);
+t_mt		*ft_newnode(char *data, t_pstate state);
 
 // extend
 
@@ -55,7 +71,7 @@ int			ft_validate_list(t_mt *list);
 int			ft_validate_input(char *s);
 void		set_node_priority(t_mt *node, void *param);
 int			get_priority(char *str);
-t_mt		*ft_newnode(char *data, e_pstate state);
+t_mt		*ft_newnode(char *data, t_pstate state);
 void		ft_token_add_left(t_mt **list, t_mt *new);
 void		ft_token_add_right(t_mt **list, t_mt *new);
 
@@ -78,14 +94,14 @@ char		*ft_extract_expantion_token(char *str, int *i);
 char		*ft_extract_token(char *str, int *i, char *allow,
 				int (*funtion)(int));
 // ft_process_token.c
-int			ft_process_token(char *input, int *i, t_mt **list, e_pstate state);
+int			ft_process_token(char *input, int *i, t_mt **list, t_pstate state);
 
 // ft_process.c
-int			ft_process_word(char *input, int *i, t_mt **list, e_pstate state);
+int			ft_process_word(char *input, int *i, t_mt **list, t_pstate state);
 int			ft_process_operator(char *input, int *i, t_mt **list);
 int			ft_process_parentheses(char *input, int *i, t_mt **list, char *key);
 int			ft_process_redirection(char *input, int *i, t_mt **list);
-int			ft_process_quote(char *input, int *i, t_mt **list, e_pstate state);
+int			ft_process_quote(char *input, int *i, t_mt **list, t_pstate state);
 int			ft_process_expantion(char *input, int *i, t_mt **list);
 
 // print_tree.c.c

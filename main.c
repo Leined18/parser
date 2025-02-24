@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/03 10:02:02 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/24 13:05:29 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int	main(void)
 		ft_error("Error\n", 1);
 		return (1);
 	}
-	//ft_mtiter(list, NULL, print_state);
 	print_tree(list, 0);
 	ft_mtclear(&list);
 	free(input);

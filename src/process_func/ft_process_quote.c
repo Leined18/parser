@@ -6,15 +6,15 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 11:32:01 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/13 10:51:50 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/02/24 13:03:07 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "input.h"
 
-int	ft_process_quote(char *input, int *i, t_mt **list, e_pstate state)
+int	ft_process_quote(char *input, int *i, t_mt **list, t_pstate state)
 {
-	char *token;
+	char	*token;
 
 	if (!input || !i || !list)
 		return (0);
