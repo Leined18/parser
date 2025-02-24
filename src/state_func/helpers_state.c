@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 10:20:51 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/13 09:20:12 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/02/24 12:05:55 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ e_pstate	handle_word(char c)
 		return (PARENTESIS);
 	if (ft_strchr("$", c))
 		return (EXPANSION);
+	if (ft_strchr("*", c))
+		return (WILDCARD);
 	return (WORD);
 }
 
@@ -43,6 +45,8 @@ e_pstate	handle_quote(char c)
 		return (PARENTESIS);
 	if (ft_strchr("$", c))
 		return (EXPANSION);
+	if (ft_strchr("*", c))
+		return (WILDCARD);
 	if (ft_isascii(c))
 		return (WORD);
 	return (START);
@@ -64,6 +68,8 @@ e_pstate	handle_operator(char c)
 		return (EXPANSION);
 	if (ft_strchr(" \v\t\n", c))
 		return (START);
+	if (ft_strchr("*", c))
+		return (WILDCARD);
 	if (ft_isascii(c))
 		return (WORD);
 	return (START);

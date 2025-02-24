@@ -16,6 +16,7 @@ typedef enum e_pstate
 	REDIRECTION,  // Procesando redirecciones: >, >>, << (heredoc incluido)
 	OPERATOR,     // Operadores como |, &&, ||
 	EXPANSION,    // Procesando expansiones como $, ${}
+	WILDCARD,
 	ASSIGNMENT,   // Procesando una asignación (VAR=value)
 	WORD,         // Procesando una palabra (comando o argumento)
 	COMMAND,

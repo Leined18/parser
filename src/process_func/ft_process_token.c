@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 10:54:30 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/30 11:49:45 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/02/24 11:55:57 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_process_token(char *input, int *i, t_mt **list, e_pstate state)
 		return (0);
 	if (state == PARENTESIS)
 		ft_process_parentheses(input, i, list, "()");
-	else if (state == WORD)
+	else if (state == WORD || state == WILDCARD)
 		ft_process_word(input, i, list, state);
 	else if (state == SINGLE_QUOTE || state == DOUBLE_QUOTE)
 		ft_process_quote(input, i, list, state);
