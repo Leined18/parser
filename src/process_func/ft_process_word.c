@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 11:32:14 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/24 13:03:07 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/02/27 10:19:33 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int	ft_process_word(char *input, int *i, t_mt **list, t_pstate state)
 		ft_mtaddlast_right(list, ft_newnode(token, ASSIGNMENT));
 		return (free(token), 1);
 	}
+	if (ft_strchr(token, '*'))
+		ft_mtaddlast_right(list, ft_newnode(token, WILDCARD));
 	else
 		ft_mtaddlast_right(list, ft_newnode(token, state));
 	free(token);
