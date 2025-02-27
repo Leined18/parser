@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_process_token.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 10:54:30 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/24 13:03:07 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/02/27 12:36:09 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ int	ft_process_token(char *input, int *i, t_mt **list, t_pstate state)
 	else if (state == EXPANSION)
 		ft_process_expantion(input, i, list);
 	else
+	{
 		(*i)++;
+		ft_mtlast(*list, RIGHT)->values.boolean = TRUE;
+	}
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:19:37 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/27 11:18:03 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/27 11:27:17 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ t_mt	*ft_parse_input(const char *input)
 		return (ft_mtclear(&tokens), free(input_new), NULL);
 	ft_set_priority(tokens, (void *)&(int){0}, set_node_priority);
 	check_swaps(&tokens);
-	// print_tokens(&tokens);
+	print_tokens(&tokens);
 	tree = ft_tree_builder(tokens);
 	// ft_printf("\n\n");
 	// print_tree(tree, 0);
