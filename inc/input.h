@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 13:05:18 by danpalac          #+#    #+#             */
-/*   Updated: 2025/03/03 08:33:25 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/03/03 17:10:29 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,8 +122,11 @@ void		check_follow_commands(t_mt **token);
 void		check_swaps(t_mt **token);
 
 // create_binary_tree.c
-int			endizide_nodes(t_mt *node);
 t_mt		*ft_tree_builder(t_mt *list);
 int			is_ope_or_red(t_mt *node);
+
+//endicize.c
+int			endizide_nodes(t_mt *node);
+int			endizide_redin_pipes(t_mt *node);
 
 #endif // INPUT_H

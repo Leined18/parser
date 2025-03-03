@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+         #
+#    By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 14:34:27 by danpalac          #+#    #+#              #
-#    Updated: 2025/03/03 08:34:04 by danpalac         ###   ########.fr        #
+#    Updated: 2025/03/03 17:11:26 by mvidal-h         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -100,7 +100,7 @@ LFLAGS		:= $(LIB) -fsanitize=address
 
 #==========SOURCES============================================================#
 
-SRC_SOURCE	:= ft_validate ft_extend ft_parser ft_parser_utils ft_tokenizer \
+SRC_SOURCE	:= ft_validate ft_extend ft_parser ft_tokenizer \
 
 CHECK_FUNC_FILES := helpers_check_1 ft_check_swaps
 EXTRACT_FUNC_FILES := ft_extract_operator_token ft_extract_parentheses_token ft_extract_quoted_token \
@@ -110,7 +110,7 @@ PRINT_FUNC_FILES := print_tokens print_tree
 PROCESS_FUNC_FILES := ft_process_token ft_process_operator ft_process_expantion ft_process_parentheses ft_process_quote ft_process_redirection \
 					ft_process_word ft_process_argument
 STATE_FUNC_FILES := state_utils helpers_state helpers_state-1
-TREE_FUNC_FILES := create_binary_tree
+TREE_FUNC_FILES := create_binary_tree endicize
 
 
 #==========FILES==============================================================#

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:19:37 by danpalac          #+#    #+#             */
-/*   Updated: 2025/03/03 08:47:08 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/03/03 16:48:04 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ t_mt	*ft_parse_input(const char *input)
 	ft_check_swaps(&tokens);
 	print_tokens(&tokens);
 	tree = ft_tree_builder(tokens);
-	// ft_printf("\n\n");
-	// print_tree(tree, 0);
+	endizide_redin_pipes(tree);
+	ft_printf("\n\n");
+	print_tree(tree, 0);
 	return (free(input_new), tree);
 }
