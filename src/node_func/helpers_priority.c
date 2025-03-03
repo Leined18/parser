@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers_priority.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 09:41:59 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/24 14:40:18 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/03 08:26:42 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,14 @@ int	ft_get_priority(char *str)
 	return (0);
 }
 
-void	set_node_priority(t_mt *node, void *param)
+void	ft_set_priority(t_mt *list, void *param, void (*func)(t_mt *, void *))
+{
+	if (!list || !func)
+		return ;
+	ft_mtiter(list, param, func);
+}
+
+void	ft_set_node_priority(t_mt *node, void *param)
 {
 	if (!node || !node->data)
 		return ;

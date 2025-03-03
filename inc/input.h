@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 13:05:18 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/24 13:05:19 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/03/03 08:33:25 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,9 @@ t_mt		*ft_tokenize(const char *input, int *i);
 
 // helpers_priority
 
-void		set_node_priority(t_mt *node, void *param);
+void		ft_set_priority(t_mt *list, void *param, void (*func)(t_mt *,
+					void *));
+void		ft_set_node_priority(t_mt *node, void *param);
 int			ft_get_priority(char *str);
 t_mt		*ft_newnode(char *data, t_pstate state);
 
@@ -69,13 +71,15 @@ int			ft_extend(char **input);
 
 int			ft_validate_list(t_mt *list);
 int			ft_validate_input(char *s);
-void		set_node_priority(t_mt *node, void *param);
-int			get_priority(char *str);
+void		ft_set_node_priority(t_mt *node, void *param);
+int			ft_get_priority(char *str);
 t_mt		*ft_newnode(char *data, t_pstate state);
 void		ft_token_add_left(t_mt **list, t_mt *new);
 void		ft_token_add_right(t_mt **list, t_mt *new);
 
-// helpers_parse.c
+// helpers_check.c
+
+void		ft_check_swaps(t_mt **tokens);
 int			ft_check_operators_mt(t_mt *op, int *error);
 int			ft_check_redirections_mt(t_mt *op, int *error);
 int			ft_check_is_close(char *input, char open, char close);
@@ -110,16 +114,16 @@ int			print_tree(t_mt *root, int level);
 // print_tokens
 void		print_tokens(t_mt **tokens);
 
-//ft_parser_utils.c
+// ft_parser_utils.c
 int			need_redirect_swap(t_mt *tokens);
 t_mt		*ft_disconnect_aux(t_mt **node);
 void		ft_mtlink_last_aux(t_mt **cur, t_mt *aux_substracted);
 void		check_follow_commands(t_mt **token);
 void		check_swaps(t_mt **token);
 
-//create_binary_tree.c
-int		endizide_nodes(t_mt *node);
-t_mt	*ft_tree_builder(t_mt *list);
-int		is_ope_or_red(t_mt *node);
+// create_binary_tree.c
+int			endizide_nodes(t_mt *node);
+t_mt		*ft_tree_builder(t_mt *list);
+int			is_ope_or_red(t_mt *node);
 
 #endif // INPUT_H
