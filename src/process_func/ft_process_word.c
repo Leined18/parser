@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 11:32:14 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/27 10:19:33 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/03/03 09:13:56 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_process_word(char *input, int *i, t_mt **list, t_pstate state)
 
 	if (!input || !i || !list)
 		return (0);
-	token = ft_extract_word_token(input, i, " \t\n|&;=<>\"'`$");
+	token = ft_extract_word_token(input, i, " \t\n|&=<>\"'`$");
 	if (!token)
 		return (0);
 	if (ft_strchr(token, '='))
@@ -35,8 +35,7 @@ int	ft_process_word(char *input, int *i, t_mt **list, t_pstate state)
 	}
 	if (ft_strchr(token, '*'))
 		ft_mtaddlast_right(list, ft_newnode(token, WILDCARD));
-	else
+	else if (*token)
 		ft_mtaddlast_right(list, ft_newnode(token, state));
-	free(token);
-	return (1);
+	return (free(token), 1);
 }
