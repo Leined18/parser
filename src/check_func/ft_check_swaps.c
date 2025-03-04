@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 16:06:11 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/03/03 16:06:16 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/03 18:32:09 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,9 @@ void	ft_check_swaps(t_mt **token)
 
 	if (!token || !*token)
 		return ;
-	if ((ft_mtcheck_state(*token, COMMAND) 
-		|| ft_mtcheck_state(*token, PARENTESIS)) && need_redirect_swap(*token))
+	if ((ft_mtcheck_state(*token, COMMAND)
+			|| ft_mtcheck_state(*token, PARENTESIS))
+		&& need_redirect_swap(*token))
 		ft_mtswap(token, RIGHT);
 	cur = *token;
 	while (cur)
