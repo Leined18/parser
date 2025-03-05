@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_binary_tree.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 10:25:11 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/24 12:52:35 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/03/03 17:07:23 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

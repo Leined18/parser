@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:28:51 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/24 13:03:58 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/03/03 09:05:53 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_pstate	ft_transition(t_pstate current, char c)
 
 t_pstate	handle_start(char c)
 {
-	if (ft_strchr("\n \t", c))
+	if (ft_strchr("\n \t\v", c))
 		return (START);
 	if (ft_strchr("()", c))
 		return (PARENTESIS);

@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 10:54:30 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/24 13:03:07 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/03/03 09:10:51 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,6 @@ int	ft_process_token(char *input, int *i, t_mt **list, t_pstate state)
 	else if (state == EXPANSION)
 		ft_process_expantion(input, i, list);
 	else
-		(*i)++;
+		return ((*i)++, ft_mtlast(*list, RIGHT)->values.boolean = TRUE);
 	return (1);
 }

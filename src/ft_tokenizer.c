@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 12:15:25 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/24 13:03:58 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/03/03 09:14:50 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,5 @@ t_mt	*ft_tokenize(const char *input, int *i)
 		if (!ft_process_token(str, i, &list, state))
 			return (NULL);
 	}
-	free(str);
-	return (list);
+	return (free(str), list);
 }
