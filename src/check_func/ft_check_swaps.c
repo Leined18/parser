@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 16:06:11 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/03/03 18:32:09 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/06 18:03:10 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,12 +109,18 @@ void	ft_check_swaps(t_mt **token)
 	cur = *token;
 	while (cur)
 	{
-		if (!ft_mtcheck_key(cur, "<") || !ft_mtcheck_key(cur, "<<"))
+		if (ft_mtcheck_state(cur, COMMAND))
+		{
+			if (cur->vect[LEFT] && ft_mtcheck_state(cur->vect[LEFT], COMMAND))
+			cur = cur->vect[RIGHT];
+		}
+		else if (!ft_mtcheck_key(cur, "<") || !ft_mtcheck_key(cur, "<<"))
 		{
 			if (cur->vect[LEFT] && ft_mtcheck_state(cur->vect[LEFT], COMMAND))
 				ft_mtexchange(token, cur, LEFT);
 		}
-		cur = cur->vect[RIGHT];
+		if (cur)
+			cur = cur->vect[RIGHT];
 	}
 	check_follow_commands(token);
 }

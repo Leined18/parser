@@ -3,14 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:19:37 by danpalac          #+#    #+#             */
-/*   Updated: 2025/03/06 10:24:20 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/03/06 18:23:32 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "input.h"
+
+// // void	check_follow_redout
+// {
+// 	MAÑANA SEGUIR AQUI
+// }
 
 t_mt	*ft_parse_input(const char *input)
 {
@@ -34,9 +39,9 @@ t_mt	*ft_parse_input(const char *input)
 		return (ft_mtclear(&tokens), free(input_new), NULL);
 	ft_set_priority(tokens, (void *)&(int){0}, ft_set_node_priority);
 	ft_check_swaps(&tokens);
-	//print_tokens(&tokens);
+	print_tokens(&tokens);
 	tree = ft_tree_builder(tokens);
 	endizide_redin_pipes(tree);
-	//print_tree(tree, 0);
+	print_tree(tree, 0);
 	return (free(input_new), tree);
 }
