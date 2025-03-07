@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 13:05:18 by danpalac          #+#    #+#             */
-/*   Updated: 2025/03/03 17:10:29 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/07 18:45:48 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,12 +114,8 @@ int			print_tree(t_mt *root, int level);
 // print_tokens
 void		print_tokens(t_mt **tokens);
 
-// ft_parser_utils.c
-int			need_redirect_swap(t_mt *tokens);
-t_mt		*ft_disconnect_aux(t_mt **node);
-void		ft_mtlink_last_aux(t_mt **cur, t_mt *aux_substracted);
-void		check_follow_commands(t_mt **token);
-void		check_swaps(t_mt **token);
+// ft_check_swaps.c
+void		ft_check_swaps(t_mt **token);
 
 // create_binary_tree.c
 t_mt		*ft_tree_builder(t_mt *list);
