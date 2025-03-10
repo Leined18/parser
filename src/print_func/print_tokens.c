@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 10:31:37 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/03/03 18:21:38 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/10 15:33:50 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,13 @@ void	print_aux_nodes(t_mt *node, int depth)
 {
 	int	i;
 
+	i = 1;
 	while (node)
 	{
 		while (i++ < depth)
-			ft_printf("      ");
+			ft_printf("   ");
 		if (depth > 0)
-			ft_printf("  |__[%s(p:%d)(e:%d)(flag:%d)]\n", (char *)(node->data),
+			ft_printf("|__[%s(p:%d)(e:%d)(flag:%d)]\n", (char *)(node->data),
 				node->values.priority, node->values.state,
 				node->values.boolean);
 		else

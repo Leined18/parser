@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers_node_1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 14:41:22 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/24 13:03:07 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/03/10 16:53:38 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_mt	*ft_newnode(char *data, t_pstate state)
 	if (!node)
 		return (NULL);
 	node->values.state = state;
+	node->values.swap_checked = FALSE;
 	return (node);
 }
 

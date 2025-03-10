@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 17:07:08 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/03/07 18:46:28 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/10 17:26:06 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int	endizide_redin_pipes(t_mt *node)
 {
 	if (!node || node->values.state == END)
 		return (0);
+	if (node->values.state == PARENTESIS)
+		endizide_redin_pipes(node->aux);
 	if ((ft_pmatch(node->key, "<", 1) || ft_pmatch(node->key, "<<", 2))
 		&& (node->vect[LEFT] && ft_pmatch(node->vect[LEFT]->key, "|", 1)))
 		endizide_nodes(node->vect[LEFT]);
