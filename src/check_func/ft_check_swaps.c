@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 16:06:11 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/03/07 18:50:23 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/10 11:09:02 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,45 +90,45 @@ int	check_prev_cmd(t_mt *cur)
 	return (0);
 }
 
-// int	is_redout(t_mt *cur)
-// {
-// 	if (!cur)
-// 		return (0);
-// 	if (ft_mtcheck_key(cur, ">") || ft_mtcheck_key(cur, ">>"))
-// 		return (1);
-// 	return (0);
-// }
+int	is_redout(t_mt *cur)
+{
+	if (!cur)
+		return (0);
+	if (!ft_mtcheck_key(cur, ">") || !ft_mtcheck_key(cur, ">>"))
+		return (1);
+	return (0);
+}
 
 
-// static void check_follow_redout(t_mt **token) //EN PROCESO
-// {
-// 	t_mt	*cur;
-// 	t_mt	*last;
-// 	t_mt	*first;
+static void check_follow_redout(t_mt **token) //EN PROCESO
+{
+	t_mt	*cur;
+	t_mt	*last;
+	t_mt	*first;
 
-// 	if (!token || !*token)
-// 		return ;
-// 	cur = *token;
-// 	first = NULL;
-// 	last = NULL;
-// 	while (cur && !last)
-// 	{
-// 		if (is_redout(cur))
-// 		{
-// 			if (!first)
-// 				first = cur;
-// 			if (!is_redout(cur->vect[RIGHT]))
-// 				last = cur;
-// 		}
-// 		cur = cur->vect[RIGHT];
-// 	}
-// 	if (first)
-// 		ft_printf("first: %s\n", first->key);
-// 	if (last)
-// 		ft_printf("last: %s\n", last->key);
-// 	if (first && last && first != last)
-// 		ft_mtexchange_nodes(token, first, last);
-// }
+	if (!token || !*token)
+		return ;
+	cur = *token;
+	first = NULL;
+	last = NULL;
+	while (cur && !last)
+	{
+		if (is_redout(cur))
+		{
+			if (!first)
+				first = cur;
+			if (!is_redout(cur->vect[RIGHT]))
+				last = cur;
+		}
+		cur = cur->vect[RIGHT];
+	}
+	if (first)
+		ft_printf("first: %s\n", first->key);
+	if (last)
+		ft_printf("last: %s\n", last->key);
+	if (first && last && first != last)
+		ft_mtexchange_nodes(token, first, last);
+}
 
 /*
 It swaps the positions of the redirections and the commands if the command
@@ -153,12 +153,12 @@ void	ft_check_swaps(t_mt **token)
 				&& (ft_mtcheck_state(cur->vect[LEFT], COMMAND)
 					|| ft_mtcheck_state(cur->vect[LEFT], PARENTESIS)) && !prev)
 			{
-				ft_mtexchange(token, cur, LEFT);
+				ft_mtexchange_dir(token, cur, LEFT);
 				prev = 0;
 			}
 		}
 		cur = cur->vect[RIGHT];
 	}
 	check_follow_commands(token);
-	// check_follow_redout(token); 
+	check_follow_redout(token); 
 }
