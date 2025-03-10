@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 13:05:18 by danpalac          #+#    #+#             */
-/*   Updated: 2025/03/10 09:59:13 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/03/10 13:13:42 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,12 @@ int			print_tree(t_mt *root, int level);
 
 // print_tokens
 void		print_tokens(t_mt **tokens);
+
+// check_follow_commands.c
+void		check_follow_commands(t_mt **token);
+
+// check_follow_redout.c
+void		check_follow_redout(t_mt **token);
 
 // ft_check_swaps.c
 void		ft_check_swaps(t_mt **token);

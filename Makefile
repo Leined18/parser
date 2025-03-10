@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+         #
+#    By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 14:34:27 by danpalac          #+#    #+#              #
-#    Updated: 2025/03/10 09:59:36 by danpalac         ###   ########.fr        #
+#    Updated: 2025/03/10 13:13:25 by mvidal-h         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -102,7 +102,7 @@ LFLAGS		:= $(LIB) -fsanitize=address
 
 SRC_SOURCE	:= ft_validate ft_extend ft_parser ft_tokenizer \
 
-CHECK_FUNC_FILES := helpers_check_1 helpers_check_2 ft_check_swaps
+CHECK_FUNC_FILES := helpers_check_1 helpers_check_2 check_follow_commands check_follow_redout ft_check_swaps 
 EXTRACT_FUNC_FILES := ft_extract_operator_token ft_extract_parentheses_token ft_extract_quoted_token \
 					ft_extract_word_token ft_extract_expantion_token ft_extract_token
 NODE_FUNC_FILES := helpers_node_1 helpers_priority
