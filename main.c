@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/24 13:05:29 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/03/10 09:52:21 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ int	main(void)
 	char	*input;
 	t_mt	*list;
 
-	input = get_next_line(0);
-	input[ft_strlen(input) - 1] = '\0';
+	input = readline("minishell: ");
 	list = NULL;
 	list = ft_parse_input(input);
 	if (!list)
@@ -44,7 +43,7 @@ int	main(void)
 		ft_error("Error\n", 1);
 		return (1);
 	}
-	print_tree(list, 0);
+	//print_tree(list, 0);
 	ft_mtclear(&list);
 	free(input);
 	ft_successful("Success\n", 1);

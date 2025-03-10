@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 13:05:18 by danpalac          #+#    #+#             */
-/*   Updated: 2025/03/07 18:45:48 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/10 09:59:13 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void		ft_token_add_right(t_mt **list, t_mt *new);
 void		ft_check_swaps(t_mt **tokens);
 int			ft_check_operators_mt(t_mt *op, int *error);
 int			ft_check_redirections_mt(t_mt *op, int *error);
+int			ft_check_parentesis_mt(t_mt *op, int *error);
 int			ft_check_is_close(char *input, char open, char close);
 int			ft_check_is_close_quote(char *input, char quote);
 char		*ft_strjoin_free(char **s1, char **s2);
@@ -121,7 +122,7 @@ void		ft_check_swaps(t_mt **token);
 t_mt		*ft_tree_builder(t_mt *list);
 int			is_ope_or_red(t_mt *node);
 
-//endicize.c
+// endicize.c
 int			endizide_nodes(t_mt *node);
 int			endizide_redin_pipes(t_mt *node);
 

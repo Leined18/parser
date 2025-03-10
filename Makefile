@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+         #
+#    By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 14:34:27 by danpalac          #+#    #+#              #
-#    Updated: 2025/03/03 17:11:26 by mvidal-h         ###   ########.fr        #
+#    Updated: 2025/03/10 09:59:36 by danpalac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -94,7 +94,7 @@ CFLAGS		:= -Wall -Wextra -Werror -g3 -fsanitize=address
 RM			:= rm -rf
 AR			:= ar rcs
 MKDIR 		:= mkdir -p
-LIB 		:= -L$(LIB_DIR) -lmt -lft
+LIB 		:= -L$(LIB_DIR) -lmt -lft -lreadline
 IFLAGS		:= -I$(LIB_DIR) -I$(INC)
 LFLAGS		:= $(LIB) -fsanitize=address
 
@@ -102,7 +102,7 @@ LFLAGS		:= $(LIB) -fsanitize=address
 
 SRC_SOURCE	:= ft_validate ft_extend ft_parser ft_tokenizer \
 
-CHECK_FUNC_FILES := helpers_check_1 ft_check_swaps
+CHECK_FUNC_FILES := helpers_check_1 helpers_check_2 ft_check_swaps
 EXTRACT_FUNC_FILES := ft_extract_operator_token ft_extract_parentheses_token ft_extract_quoted_token \
 					ft_extract_word_token ft_extract_expantion_token ft_extract_token
 NODE_FUNC_FILES := helpers_node_1 helpers_priority

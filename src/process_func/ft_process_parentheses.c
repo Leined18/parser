@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 11:31:09 by danpalac          #+#    #+#             */
-/*   Updated: 2025/03/03 09:10:51 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/03/10 10:08:51 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ int	ft_process_parentheses(char *input, int *i, t_mt **list, char *key)
 		return (0);
 	j = 0;
 	sublist = ft_tokenize(token, &j);
-	if (!sublist)
-		return (free(token), 0);
 	free(token);
 	new_node = ft_create_parentheses_node(key, sublist);
 	if (!new_node)

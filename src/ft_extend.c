@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:34:20 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/24 12:57:04 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/03/10 09:44:11 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,9 @@ int	ft_extend(char **input)
 		return (1);
 	while (!ft_is_all_closed(ptr))
 	{
-		ft_printf("> ");
-		add = get_next_line(0);
+		add = readline("> ");
 		if (!add)
 			return (0);
-		ptr = ft_straddc(ptr, '\n');
 		ptr = ft_strjoin_free(&ptr, &add);
 		if (!ptr)
 			return (0);

@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 13:02:24 by danpalac          #+#    #+#             */
-/*   Updated: 2025/03/03 08:41:15 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/03/10 10:05:04 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,7 @@ static int	ft_check(t_mt *mt, void *p)
 	else if (ft_mtcheck_state(mt, OPERATOR))
 		return (ft_check_operators_mt(mt, (int *)p));
 	else if (ft_mtcheck_state(mt, PARENTESIS))
-	{
-		if (!mt->aux)
-			return (*(int *)p = 1, ft_printf(SYNTAX_ERROR, ")"), 1);
-		if (ft_mtcheck_state(mt->vect[RIGHT], PARENTESIS))
-			return (*(int *)p = 1, ft_printf(SYNTAX_ERROR, "("), 1);
-		if (ft_mtcheck_state(mt->vect[LEFT], PARENTESIS))
-			return (*(int *)p = 1, ft_printf(SYNTAX_ERROR, "()"), 1);
-	}
+		return (ft_check_parentesis_mt(mt, (int *)p));
 	return (0);
 }
 
