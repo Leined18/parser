@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+         #
+#    By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 14:34:27 by danpalac          #+#    #+#              #
-#    Updated: 2025/03/10 13:13:25 by mvidal-h         ###   ########.fr        #
+#    Updated: 2025/03/12 13:15:18 by danpalac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -95,7 +95,7 @@ RM			:= rm -rf
 AR			:= ar rcs
 MKDIR 		:= mkdir -p
 LIB 		:= -L$(LIB_DIR) -lmt -lft -lreadline
-IFLAGS		:= -I$(LIB_DIR) -I$(INC)
+IFLAGS		:= -I$(LIB_DIR)$(INC) -I$(INC)
 LFLAGS		:= $(LIB) -fsanitize=address
 
 #==========SOURCES============================================================#
@@ -142,7 +142,7 @@ $(NAME): $(LIBFT) $(MEMTRACK) $(OBJS)
 	@echo "$(TURQUOISE)------------\n| Done! 👌 |\n------------$(DEF_COLOR)"
 	@mkdir -p $(LIB_DIR)
 	@$(MKDIR) $(LIB_DIR) 
-	@cp $(NAME) $(INCLUDES) $(LIB_DIR)
+	@cp -r $(NAME) inc $(LIB_DIR)
 
 $(EXE): main.c $(NAME)
 	@$(CC) $(CFLAGS) $(LFLAGS) -L. $(IFLAGS)  main.c $(NAME) -lmt -lft -o $(EXE)
