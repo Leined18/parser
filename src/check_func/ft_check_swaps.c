@@ -6,22 +6,25 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 16:06:11 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/03/10 16:57:33 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/12 13:39:09 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "input.h"
 
-static int	check_prev_cmd(t_mt *cur)
+static int	is_cmd_quotes_parentesis(t_mt *cur)
 {
-	if (cur->vect[LEFT] && ft_mtcheck_state(cur->vect[LEFT], COMMAND))
+	if (cur && (ft_mtcheck_state(cur, COMMAND)
+			|| ft_mtcheck_state(cur, SINGLE_QUOTE)
+			|| ft_mtcheck_state(cur, DOUBLE_QUOTE)
+			|| ft_mtcheck_state(cur, PARENTESIS)))
 		return (1);
 	return (0);
 }
 
 /*
 It swaps the positions of the redirections and the commands if the command
-is on the left side of the redirections. 
+is on the left side of the IN redirections. 
 */
 void	ft_check_swaps(t_mt **token)
 {
@@ -39,20 +42,15 @@ void	ft_check_swaps(t_mt **token)
 			ft_check_swaps(&cur->aux);
 			cur->values.swap_checked = TRUE;
 		}
-		else if (ft_mtcheck_state(cur, COMMAND))
-			prev = check_prev_cmd(cur);
+		else if (is_cmd_quotes_parentesis(cur))
+			prev = is_cmd_quotes_parentesis(cur->vect[LEFT]);
 		else if (!ft_mtcheck_key(cur, "<") || !ft_mtcheck_key(cur, "<<"))
 		{
-			if (cur->vect[LEFT]
-				&& (ft_mtcheck_state(cur->vect[LEFT], COMMAND)
-					|| ft_mtcheck_state(cur->vect[LEFT], PARENTESIS)) && !prev)
-			{
+			if (is_cmd_quotes_parentesis(cur->vect[LEFT]) && !prev)
 				ft_mtexchange_dir(token, cur, LEFT);
-				prev = 0;
-			}
 		}
 		cur = cur->vect[RIGHT];
 	}
 	check_follow_commands(token);
-	check_follow_redout(token); 
+	check_follow_redout(token);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers_check_1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 10:11:34 by danpalac          #+#    #+#             */
-/*   Updated: 2025/03/10 10:02:19 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/03/12 13:50:18 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	ft_check_is_close_quote(char *input, char quote)
 		if (input[i] == '\"' && !in_single_quotes)
 			in_double_quotes = !in_double_quotes;
 		if (input[i] == quote && ((quote == '\'' && !in_double_quotes)
-					|| (quote == '\"' && !in_single_quotes)))
+				|| (quote == '\"' && !in_single_quotes)))
 			is_open = !is_open;
 		i++;
 	}
