@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 12:54:22 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/24 12:54:25 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/03/12 09:52:57 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,9 @@ static int	is_command(t_mt *node)
 {
 	if (!node)
 		return (0);
-	if (ft_mtcheck_state(node, OPERATOR) || ft_mtcheck_state(node, REDIRECTION)
-		|| ft_mtcheck_state(node, PARENTESIS) || ft_mtcheck_state(node, COMMAND)
-		|| ft_mtcheck_state(node, EXPANSION) || ft_mtcheck_state(node,
-			WILDCARD))
-		return (0);
-	return (1);
+	if (ft_mtcheck_state(node, WORD))
+		return (1);
+	return (0);
 }
 
 static t_mt	*set_arguments(t_mt **command)

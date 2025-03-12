@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_follow_redout.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:38:14 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/03/10 11:42:40 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/12 09:44:10 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
