@@ -6,14 +6,13 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 13:05:18 by danpalac          #+#    #+#             */
-/*   Updated: 2025/03/10 13:13:42 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/12 19:52:54 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef INPUT_H
 # define INPUT_H
 
-# include "libft.h"
 # include "mt.h"
 
 # define SYNTAX_ERROR "syntax error near unexpected token `%s'\n"

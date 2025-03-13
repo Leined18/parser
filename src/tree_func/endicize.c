@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 17:07:08 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/03/10 17:26:06 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/13 17:35:40 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ int	endizide_nodes(t_mt *node)
 {
 	if (!node || node->values.state == END)
 		return (0);
-	node->values.state = END;
+	if (node->values.state != REDIRECTION)
+		node->values.state = END;
 	if (node->vect[LEFT])
 		endizide_nodes(node->vect[LEFT]);
 	if (node->vect[RIGHT])
