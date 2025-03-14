@@ -6,25 +6,13 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 17:07:08 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/03/13 17:35:40 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/14 15:24:36 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "input.h"
 
-int	endizide_nodes(t_mt *node)
-{
-	if (!node || node->values.state == END)
-		return (0);
-	if (node->values.state != REDIRECTION)
-		node->values.state = END;
-	if (node->vect[LEFT])
-		endizide_nodes(node->vect[LEFT]);
-	if (node->vect[RIGHT])
-		endizide_nodes(node->vect[RIGHT]);
-	return (0);
-}
-
+// Returns 1 if s1 and s2 are equal, 0 if they are not.
 static int	ft_pmatch(const char *s1, const char *s2, size_t n)
 {
 	if (!s1 || !s2)
@@ -34,6 +22,21 @@ static int	ft_pmatch(const char *s1, const char *s2, size_t n)
 	if (s1[n] != '\0')
 		return (0);
 	return (1);
+}
+
+int	endizide_nodes(t_mt *node)
+{
+	if (!node || node->values.state == END)
+		return (0);
+	if (node->values.state != REDIRECTION
+		|| (!ft_pmatch(node->key, "<<", 2)
+			&& !ft_pmatch(node->key, "<", 1)))
+		node->values.state = END;
+	if (node->vect[LEFT])
+		endizide_nodes(node->vect[LEFT]);
+	if (node->vect[RIGHT])
+		endizide_nodes(node->vect[RIGHT]);
+	return (0);
 }
 
 // Bash obvia todo lo que haya mas allá del ultimo comando de una serie 
