@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 10:19:37 by danpalac          #+#    #+#             */
-/*   Updated: 2025/03/10 13:13:57 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/21 10:44:20 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ t_mt	*ft_parse_input(const char *input)
 	i = 0;
 	input_new = ft_strtrim(input, "\n\v\t ");
 	if (!ft_validate_input(input_new))
-		return (free(input_new), NULL);
-	if (!ft_extend(&input_new))
 		return (free(input_new), NULL);
 	tokens = ft_tokenize(input_new, &i);
 	if (!tokens)

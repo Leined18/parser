@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:34:20 by danpalac          #+#    #+#             */
-/*   Updated: 2025/03/10 09:44:11 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/03/21 13:34:29 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,73 @@ static int	ft_is_open(char *p)
 	return (1);
 }
 
+char	*advanced_readline(const char *prompt)
+{
+	int		pipefd[2];
+	pid_t	pid;
+	char	buffer[BUFFER_SIZE];
+	char	*line;
+	int		status;
+	ssize_t	nbytes;
+
+	line = NULL;
+	if (pipe(pipefd) == -1)
+	{
+		perror("pipe");
+		return (NULL);
+	}
+	pid = fork();
+	if (pid == -1)
+	{
+		perror("fork");
+		return (NULL);
+	}
+	if (pid == 0)
+	{
+		signal(SIGQUIT, SIG_DFL);
+		signal(SIGINT, SIG_DFL);
+		close(pipefd[0]);
+		line = readline(prompt);
+		if (!line)
+			exit(EXIT_FAILURE);
+		if (!*line)
+		{
+			free(line);
+			exit(EXIT_SUCCESS);
+		}
+		nbytes = strlen(line) + 1;
+		if (write(pipefd[1], line, nbytes) == -1)
+		{
+			perror("write");
+			free(line);
+			exit(EXIT_FAILURE);
+		}
+		free(line);
+		close(pipefd[1]);
+		exit(EXIT_SUCCESS);
+	}
+	else
+	{
+		close(pipefd[1]);
+		nbytes = read(pipefd[0], buffer, BUFFER_SIZE);
+		if (nbytes == -1)
+		{
+			perror("read");
+			close(pipefd[0]);
+			return (NULL);
+		}
+		buffer[nbytes] = '\0';
+		close(pipefd[0]);
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_FAILURE)
+			return (NULL);
+		if (nbytes == 0)
+			return (ft_strdup(""));
+		return (strdup(buffer));
+	}
+	return (NULL);
+}
+
 int	ft_extend(char **input)
 {
 	char	*add;
@@ -65,13 +132,15 @@ int	ft_extend(char **input)
 		return (1);
 	while (!ft_is_all_closed(ptr))
 	{
-		add = readline("> ");
+		add = advanced_readline("> ");
 		if (!add)
-			return (0);
+			return (ft_printf(SYNTAX_ERROR3, ptr), 0);
+		if (*add == '\0')
+			return (free(add), 0);
 		ptr = ft_strjoin_free(&ptr, &add);
 		if (!ptr)
 			return (0);
 		*input = ptr;
 	}
-	return (1);
+	return (*input = ptr, 1);
 }
