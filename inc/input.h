@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 13:05:18 by danpalac          #+#    #+#             */
-/*   Updated: 2025/03/12 19:52:54 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/23 20:14:38 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ t_mt		*ft_newnode(char *data, t_pstate state);
 // extend
 
 int			ft_extend(char **input);
+char		*advanced_readline(const char *prompt);
 
 // validate
 
