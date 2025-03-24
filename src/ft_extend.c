@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_extend.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:34:20 by danpalac          #+#    #+#             */
-/*   Updated: 2025/03/21 13:34:29 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/03/24 16:07:30 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,11 @@ char	*advanced_readline(const char *prompt)
 	if (pid == 0)
 	{
 		signal(SIGQUIT, SIG_DFL);
-		signal(SIGINT, SIG_DFL);
+		signal(SIGINT, handle_sigint);
 		close(pipefd[0]);
 		line = readline(prompt);
 		if (!line)
-			exit(EXIT_FAILURE);
+			exit(EXIT_EOF);
 		if (!*line)
 		{
 			free(line);
@@ -111,13 +111,17 @@ char	*advanced_readline(const char *prompt)
 		buffer[nbytes] = '\0';
 		close(pipefd[0]);
 		waitpid(pid, &status, 0);
-		if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_FAILURE)
+		if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_SIGINT)
+		{
+			g_sig_received = SIGINT;
+			return (NULL);
+		}
+		if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_EOF)
 			return (NULL);
 		if (nbytes == 0)
 			return (ft_strdup(""));
 		return (strdup(buffer));
 	}
-	return (NULL);
 }
 
 int	ft_extend(char **input)
@@ -136,7 +140,10 @@ int	ft_extend(char **input)
 		if (!add)
 			return (ft_printf(SYNTAX_ERROR3, ptr), 0);
 		if (*add == '\0')
-			return (free(add), 0);
+		{
+			//stroin a ptr un \n. No pedo hacer ptr = ft_strjoin_free(&ptr, &"\n");
+			continue ;
+		}
 		ptr = ft_strjoin_free(&ptr, &add);
 		if (!ptr)
 			return (0);

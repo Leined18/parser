@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 13:05:18 by danpalac          #+#    #+#             */
-/*   Updated: 2025/03/23 20:14:38 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/24 13:59:43 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,5 +131,8 @@ int			is_ope_or_red(t_mt *node);
 // endicize.c
 int			endizide_nodes(t_mt *node);
 int			endizide_redin_pipes(t_mt *node);
+
+// manage_signals.c
+void		handle_sigint(int sig);
 
 #endif // INPUT_H

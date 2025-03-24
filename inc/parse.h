@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 13:01:35 by danpalac          #+#    #+#             */
-/*   Updated: 2025/03/23 21:03:04 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/24 12:32:25 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "input.h"
 # include "libft.h"
 # include "mt.h"
+# include "global_signal.h"
 # include <readline/readline.h>
 
 # define SYNTAX_ERROR "syntax error near unexpected token `%s'\n"
