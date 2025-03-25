@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:34:20 by danpalac          #+#    #+#             */
-/*   Updated: 2025/03/24 16:07:30 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/25 16:43:46 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,36 @@ char	*advanced_readline(const char *prompt)
 	}
 }
 
+
+char	*ft_strjoin_free_literal(char **s1, char *s2)
+{
+	char	*result;
+
+	if (!s1 || !s2)
+		return (NULL);
+	result = ft_strjoin(*s1, s2);
+	free(*s1);
+	return (result);
+}
+
+char	*manage_void_str(char **str, char **add)
+{
+	if (*add)
+		free(*add);
+	if (str && *str)
+		return (ft_strjoin_free_literal(str, "\n"));
+	return (NULL);
+}
+
+char	*manage_no_void_str(char **str, char **add)
+{
+	char	*result;
+	//ESTO HAY QUE VERLO PORQUE FALTARIA UN SALTO DE LINEA SI ADD NO ES EL CARACTER DE APERTURA
+	result = ft_strjoin_free(str, add);
+	result = ft_strjoin_free_literal(&result, "\n");
+	return (result);
+}
+
 int	ft_extend(char **input)
 {
 	char	*add;
@@ -137,14 +167,14 @@ int	ft_extend(char **input)
 	while (!ft_is_all_closed(ptr))
 	{
 		add = advanced_readline("> ");
-		if (!add)
-			return (ft_printf(SYNTAX_ERROR3, ptr), 0);
+		if (!add && g_sig_received != SIGINT)
+			return (ft_printf(SYNTAX_ERROR3, ptr), -1);
+		else if (!add && g_sig_received == SIGINT)
+			return (-2);
 		if (*add == '\0')
-		{
-			//stroin a ptr un \n. No pedo hacer ptr = ft_strjoin_free(&ptr, &"\n");
-			continue ;
-		}
-		ptr = ft_strjoin_free(&ptr, &add);
+			ptr = manage_void_str(&ptr, &add);
+		else
+			ptr = manage_no_void_str(&ptr, &add);
 		if (!ptr)
 			return (0);
 		*input = ptr;
