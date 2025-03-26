@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 13:05:18 by danpalac          #+#    #+#             */
-/*   Updated: 2025/03/24 13:59:43 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/26 11:24:23 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,9 @@ t_pstate	handle_quote(char c);
 t_pstate	handle_operator(char c);
 t_pstate	handle_parentesis(char c);
 t_pstate	handle_expantion(char c);
+
+// manage_signals.c
+void		handle_sigint(int sig);
 
 // tokenizer.c
 
@@ -132,7 +135,8 @@ int			is_ope_or_red(t_mt *node);
 int			endizide_nodes(t_mt *node);
 int			endizide_redin_pipes(t_mt *node);
 
-// manage_signals.c
-void		handle_sigint(int sig);
+// ft_advanced_readline
+
+char		*advanced_readline(const char *prompt);
 
 #endif // INPUT_H
