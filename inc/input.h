@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 13:05:18 by danpalac          #+#    #+#             */
-/*   Updated: 2025/03/26 11:24:23 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/03/27 11:03:53 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int			ft_check_redirections_mt(t_mt *op, int *error);
 int			ft_check_parentesis_mt(t_mt *op, int *error);
 int			ft_check_is_close(char *input, char open, char close);
 int			ft_check_is_close_quote(char *input, char quote);
-char		*ft_strjoin_free(char **s1, char **s2);
+char		*ft_strjoin_free(char **s1, char **s2, int free_s2);
 // helpers_process_1.c
 
 int			ft_process_argument(t_mt **list);

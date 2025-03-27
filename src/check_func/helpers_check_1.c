@@ -6,13 +6,13 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 10:11:34 by danpalac          #+#    #+#             */
-/*   Updated: 2025/03/12 13:50:18 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/27 11:03:44 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "input.h"
 
-char	*ft_strjoin_free(char **s1, char **s2)
+char	*ft_strjoin_free(char **s1, char **s2, int free_s2)
 {
 	char	*result;
 
@@ -20,7 +20,8 @@ char	*ft_strjoin_free(char **s1, char **s2)
 		return (NULL);
 	result = ft_strjoin(*s1, *s2);
 	free_null((void **)s1);
-	free_null((void **)s2);
+	if (free_s2)
+		free_null((void **)s2);
 	return (result);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_extend.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:34:20 by danpalac          #+#    #+#             */
-/*   Updated: 2025/03/26 11:29:32 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/03/27 11:04:38 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	ft_extend(char **input)
 		else if (!add && g_sig_received == SIGINT)
 			return (-2);
 		ptr = ft_straddc(ptr, '\n');
-		ptr = ft_strjoin_free(&ptr, &add);
+		ptr = ft_strjoin_free(&ptr, &add, 1);
 		if (!ptr)
 			return (0);
 		*input = ptr;
