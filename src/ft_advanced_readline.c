@@ -22,7 +22,6 @@ static char	*a_parent(int *pipefd, int pid)
 	nbytes = read(pipefd[0], buffer, BUFFER_SIZE);
 	if (nbytes == -1)
 		return (perror("read"), close(pipefd[0]), NULL);
-	buffer[nbytes] = '\0';
 	(close(pipefd[0]), waitpid(pid, &status, 0));
 	if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_SIGINT)
 		return (g_sig_received = SIGINT, NULL);
@@ -30,6 +29,7 @@ static char	*a_parent(int *pipefd, int pid)
 		return (NULL);
 	if (nbytes == 0)
 		return (ft_strdup(""));
+	buffer[nbytes - 1] = 0;
 	return (strdup(buffer));
 }
 
@@ -48,7 +48,7 @@ static void	a_child(int *pipefd, char *prompt)
 	nbytes = strlen(line) + 1;
 	if (write(pipefd[1], line, nbytes) == -1)
 		(perror("write"), free(line), exit(EXIT_FAILURE));
-	(free(line), close(pipefd[1]), exit(EXIT_SUCCESS));
+	(free(line), close(pipefd[1]));
 	exit(EXIT_SUCCESS);
 }
 

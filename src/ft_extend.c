@@ -35,11 +35,11 @@ static int	ft_is_open(char *p)
 {
 	if (!p)
 		return (0);
-	if (!ft_check_is_close(p, '(', ')') 
-	|| !ft_check_is_close(p, '{', '}') 
-	|| !ft_check_is_close_quote(p, '\'') 
-	|| !ft_check_is_close_quote(p, '\"') 
-	|| !ft_is_pipe_arg(p))
+	if (!ft_check_is_close(p, '(', ')')
+		|| !ft_check_is_close(p, '{', '}')
+		|| !ft_check_is_close_quote(p, '\'')
+		|| !ft_check_is_close_quote(p, '\"')
+		|| !ft_is_pipe_arg(p))
 		return (1);
 	return (0);
 }
